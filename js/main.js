@@ -12,12 +12,22 @@ async function xLuIncludeFile() {
                 let content = await response.text();
 
                 // Lógica para inyectar datos en plantillas dinámicas (como el hero.html)
-                if (el.hasAttribute("data-title")) {
-                    content = content.replace(/{{title}}/g, el.getAttribute("data-title") || '')
-                        .replace(/{{text}}/g, el.getAttribute("data-text") || '')
-                        .replace(/{{imageUrl}}/g, el.getAttribute("data-image") || '')
-                        .replace(/{{buttonText}}/g, el.getAttribute("data-btn-text") || 'Saber más')
-                        .replace(/{{buttonLink}}/g, el.getAttribute("data-btn-link") || '#');
+                if (file === "templates/hero.html" || file === "hero.html") {
+                    let heroData = {
+                        title: elements[i].getAttribute("data-title") || '',
+                        text: elements[i].getAttribute("data-text") || '',
+                        buttonText: elements[i].getAttribute("data-button-text") || '',
+                        buttonLink: elements[i].getAttribute("data-button-link") || '#',
+                        imageUrl: elements[i].getAttribute("data-image-url") || '',
+                        imageAlt: elements[i].getAttribute("data-image-alt") || ''
+                    };
+
+                    content = content.replace(/{{title}}/g, heroData.title)
+                        .replace(/{{text}}/g, heroData.text)
+                        .replace(/{{buttonText}}/g, heroData.buttonText)
+                        .replace(/{{buttonLink}}/g, heroData.buttonLink)
+                        .replace(/{{imageUrl}}/g, heroData.imageUrl)
+                        .replace(/{{imageAlt}}/g, heroData.imageAlt);
                 }
 
                 // Reemplazamos el marcador por el contenido real

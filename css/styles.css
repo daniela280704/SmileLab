@@ -66,7 +66,8 @@ nav a:hover { color: var(--negro-smile); }
 }
 
 /* --- 3. SECCIONES HERO (El título grande de cada página) --- */
-main > section:first-of-type {
+/* Excluimos .hero-section para evitar conflictos con nuestra plantilla */
+main > section:first-of-type:not(.hero-section) {
     padding: 4rem 10%;
     background: var(--gradient-inicio);
     display: flex;
@@ -81,8 +82,8 @@ main h1 {
 }
 
 /* --- 4. GRID DE TARJETAS (Equipo, Servicios, Utilidades) --- */
-/* Esta regla ordena automáticamente tus <article> en 3 columnas */
-section > div, .contact-cards-container {
+/* Excluimos .hero-section para no romper la estructura de la foto y texto */
+section:not(.hero-section) > div, .contact-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
@@ -156,4 +157,53 @@ footer {
     display: flex;
     justify-content: center;
     gap: 2rem;
+}
+
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 4rem auto;
+    /* Cambiado a 5% para alinearse perfectamente con tu header */
+    padding: 0 5%;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    color: var(--negro-smile);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.btn-primary {
+    background-color: var(--negro-smile);
+    color: var(--blanco);
+    border: none;
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    object-fit: cover;
 }
