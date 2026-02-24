@@ -8,15 +8,15 @@ const ROUTES = {
     "#contacto": "pages/contacto.html",
     "#perfil": "pages/perfil.html",
     "#citas": "pages/citas.html",
-    "#utilidades": "pages/utilidades.html",
     "#producto": "pages/producto.html",
+    "#login": "pages/login.html",
     "equipo.html": "pages/equipo.html",
     "servicios.html": "pages/servicios.html",
     "contacto.html": "pages/contacto.html",
     "perfil.html": "pages/perfil.html",
     "citas.html": "pages/citas.html",
-    "utilidades.html": "pages/utilidades.html",
-    "producto.html": "pages/producto.html"
+    "producto.html": "pages/producto.html",
+    "login.html": "pages/login.html"
 };
 
 function getTemplateFromHref(href) {

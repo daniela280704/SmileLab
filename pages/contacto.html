@@ -29,38 +29,16 @@
         <label for="user-email">Correo electrónico:</label>
         <input type="email" id="user-email" name="user-email" required>
 
-        <label for="appointment-day">Día:</label>
-        <input type="text" id="appointment-day" name="appointment-day" placeholder="Ej: Lunes 25">
+        <label for="appointment-day">Fecha:</label>
+        <input type="text" id="appointment-day" name="appointment-day" placeholder="Ej: 01/01/2026">
 
         <label for="appointment-time">Hora:</label>
         <input type="text" id="appointment-time" name="appointment-time" placeholder="Ej: 10:30">
 
-        <button type="submit">Call to action →</button>
+        <button type="submit">Enviar</button>
     </form>
 </section>
 
-<section class="contact-map-section">
-    <div class="contact-map-layout">
-        <div class="contact-map-info">
-            <h3>Encuéntranos aquí</h3>
-            <p class="contact-address">The Location<br>1234 Garden Boulevard<br>City, ZZ 98765</p>
-            <button type="button" class="btn-primary">Call to action →</button>
-        </div>
-        <div class="contact-map-panel">
-            <div class="map-pin-icon" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 38" width="80" height="100" fill="none">
-                    <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 26 12 26s12-17 12-26C24 5.4 18.6 0 12 0z" fill="url(#pin-gradient)"/>
-                    <circle cx="12" cy="12" r="5" fill="#FACC15"/>
-                    <defs>
-                        <linearGradient id="pin-gradient" x1="0" y1="0" x2="24" y2="38" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#4285F4"/>
-                            <stop offset="0.35" stop-color="#EA4335"/>
-                            <stop offset="0.65" stop-color="#FBBC04"/>
-                            <stop offset="1" stop-color="#34A853"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
-        </div>
-    </div>
-</section>
+<div xlu-include-file="templates/hero.html" data-custom-class="hero-section" data-title="Encuéntranos aquí"
+    data-text="The Location<br>1234 Garden Boulevard<br>City, ZZ 98765" data-button-text="Abrir en Google Maps"
+    data-button-class="btn-primary" data-button-link="#" data-image-url="" data-image-alt="Mapa de ubicación"></div>
