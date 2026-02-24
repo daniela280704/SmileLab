@@ -1,20 +1,12 @@
-<main>
-  <section>
-    <div>
-      <h1>Nombre del usuario</h1>
-      <p>información de la cuenta del usuario</p>
-      <button>Gestionar Cuenta</button>
-    </div>
-    <div>
-      <img src="" alt="User Decor">
-    </div>
-  </section>
+<div xlu-include-file="templates/hero.html" data-custom-class="perfil-hero" data-title="Nombre del usuario"
+    data-text="información de la cuenta del usuario" data-button-text="Gestionar Cuenta" data-button-class="btn-outline"
+    data-button-link="#" data-image-url="img/perfil-decor.jpg" data-image-alt="User Decor">
+</div>
 
-  <section>
+<section class="perfil-cta-banner">
     <h2>Pide tu cita aquí</h2>
-    <div>
-      <button>Cita</button>
-      <button>Agenda</button>
+    <div class="perfil-tabs">
+        <a href="#contacto"><button type="button" class="tab-active">Cita</button></a>
+        <a href="#utilidades"><button type="button" class="tab-inactive">Agenda</button></a>
     </div>
-  </section>
-</main>
+</section>

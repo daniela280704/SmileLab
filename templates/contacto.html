@@ -1,51 +1,66 @@
-<main>
-  <section>
+<section class="page-hero" style="background-image: url('img/contacto-hero.jpg');">
     <h1>Contacto</h1>
-    <img src="" alt="Instalaciones de SmileLab">
-    <h2>Para recibir más información de nuestros tratamientos, contáctanos sin compromiso</h2>
-  </section>
+</section>
 
-  <section>
+<section>
+    <h2 class="section-title">Para recibir más información de nuestros tratamientos, contáctanos sin compromiso</h2>
     <div class="contact-cards-container">
-      <article>
-        <strong>Teléfono</strong>
-        <p>+34928256485</p>
-      </article>
-      <article>
-        <strong>Whatsapp</strong>
-        <p>+628457895</p>
-      </article>
-      <article>
-        <strong>Email</strong>
-        <p>correo@gmail.com</p>
-      </article>
+        <article class="contact-card">
+            <div class="contact-icon tel" aria-hidden="true">📞</div>
+            <strong>Teléfono</strong>
+            <p>+34928256485</p>
+        </article>
+        <article class="contact-card">
+            <div class="contact-icon whatsapp" aria-hidden="true">💬</div>
+            <strong>Whatsapp</strong>
+            <p>+628457895</p>
+        </article>
+        <article class="contact-card">
+            <div class="contact-icon email" aria-hidden="true">✉</div>
+            <strong>Email</strong>
+            <p>correo@gmail.com</p>
+        </article>
     </div>
-  </section>
+</section>
 
-  <section>
+<section class="contact-form-section">
     <h3>Solicita tu cita</h3>
     <form action="#" method="post">
-      <label for="user-email">Correo electrónico:</label>
-      <input type="email" id="user-email" name="user-email" required>
+        <label for="user-email">Correo electrónico:</label>
+        <input type="email" id="user-email" name="user-email" required>
 
-      <label for="appointment-day">Día:</label>
-      <input type="text" id="appointment-day" name="appointment-day" placeholder="Ej: Lunes 25">
+        <label for="appointment-day">Día:</label>
+        <input type="text" id="appointment-day" name="appointment-day" placeholder="Ej: Lunes 25">
 
-      <label for="appointment-time">Hora:</label>
-      <input type="text" id="appointment-time" name="appointment-time" placeholder="Ej: 10:30">
+        <label for="appointment-time">Hora:</label>
+        <input type="text" id="appointment-time" name="appointment-time" placeholder="Ej: 10:30">
 
-      <button type="submit">Call to action -></button>
+        <button type="submit">Call to action →</button>
     </form>
-  </section>
+</section>
 
-  <section>
-    <h3>Encuentranos aquí</h3>
-    <p>The Location, 1234 Garden Boulevard, City, ZZ 98765</p>
-
-    <div class="map-container">
-      <img src="" alt="Mapa de ubicación en Garden Boulevard">
+<section class="contact-map-section">
+    <div class="contact-map-layout">
+        <div class="contact-map-info">
+            <h3>Encuéntranos aquí</h3>
+            <p class="contact-address">The Location<br>1234 Garden Boulevard<br>City, ZZ 98765</p>
+            <button type="button" class="btn-primary">Call to action →</button>
+        </div>
+        <div class="contact-map-panel">
+            <div class="map-pin-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 38" width="80" height="100" fill="none">
+                    <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 26 12 26s12-17 12-26C24 5.4 18.6 0 12 0z" fill="url(#pin-gradient)"/>
+                    <circle cx="12" cy="12" r="5" fill="#FACC15"/>
+                    <defs>
+                        <linearGradient id="pin-gradient" x1="0" y1="0" x2="24" y2="38" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#4285F4"/>
+                            <stop offset="0.35" stop-color="#EA4335"/>
+                            <stop offset="0.65" stop-color="#FBBC04"/>
+                            <stop offset="1" stop-color="#34A853"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+        </div>
     </div>
-
-    <button type="button">Call to action -></button>
-  </section>
-</main>
+</section>
