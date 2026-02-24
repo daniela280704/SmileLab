@@ -1,40 +1,110 @@
-async function xLuIncludeFile() {
-    // Buscamos todos los elementos con el atributo de inclusión
-    let elements = document.querySelectorAll("[xlu-include-file]");
+const ROUTES = {
+    "index.html": "templates/inicio.html",
+    "": "templates/inicio.html",
+    "#": "templates/inicio.html",
+    "#inicio": "templates/inicio.html",
+    "#equipo": "templates/equipo.html",
+    "#servicios": "templates/servicios.html",
+    "#contacto": "templates/contacto.html",
+    "#perfil": "templates/perfil.html",
+    "#citas": "templates/citas.html",
+    "#utilidades": "templates/utilidades.html",
+    "#producto": "templates/producto.html",
+    "equipo.html": "templates/equipo.html",
+    "servicios.html": "templates/servicios.html",
+    "contacto.html": "templates/contacto.html",
+    "perfil.html": "templates/perfil.html",
+    "citas.html": "templates/citas.html",
+    "utilidades.html": "templates/utilidades.html",
+    "producto.html": "templates/producto.html"
+};
 
-    for (let i = 0; i < elements.length; i++) {
-        let el = elements[i];
+function getTemplateFromHref(href) {
+    if (!href) return null;
+    const hash = href.split("?")[0];
+    if (ROUTES[hash]) return ROUTES[hash];
+    const path = hash === "" || hash.endsWith("/") ? "index.html" : hash.replace(/.*\//, "");
+    return ROUTES[path] || null;
+}
+
+async function loadPage(templatePath) {
+    const pageContent = document.getElementById("page-content");
+    if (!pageContent) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.setAttribute("xlu-include-file", templatePath);
+    pageContent.innerHTML = "";
+    pageContent.appendChild(wrapper);
+    await xLuIncludeFile();
+}
+
+function setupNavigation() {
+    document.addEventListener("click", async (e) => {
+        const link = e.target.closest("a[href]");
+        if (!link) return;
+
+        const href = link.getAttribute("href");
+        const template = getTemplateFromHref(href);
+
+        if (!template || link.target === "_blank") return;
+        if (href.startsWith("http") && new URL(link.href).origin !== window.location.origin) return;
+
+        e.preventDefault();
+
+        const hash = (href === "" || href === "#" || href === "index.html") ? "#inicio" : (href.startsWith("#") ? href : "#" + href.replace(/.*\//, "").replace(".html", ""));
+        const url = hash === "#inicio" ? "index.html" : "index.html" + hash;
+        window.history.pushState({ template }, "", url);
+        await loadPage(template);
+    });
+
+    window.addEventListener("popstate", async (e) => {
+        if (e.state && e.state.template) {
+            await loadPage(e.state.template);
+        } else {
+            const template = ROUTES[window.location.hash] || ROUTES["#inicio"];
+            await loadPage(template);
+        }
+    });
+}
+
+async function xLuIncludeFile() {
+    let elements = Array.from(document.querySelectorAll("[xlu-include-file]"));
+
+    if (elements.length === 0) return;
+
+    for (let el of elements) {
         let file = el.getAttribute("xlu-include-file");
+        el.removeAttribute("xlu-include-file");
 
         try {
             let response = await fetch(file);
             if (response.ok) {
                 let content = await response.text();
 
-                // Lógica para inyectar datos en plantillas dinámicas (como el hero.html)
                 if (file === "templates/hero.html" || file === "hero.html") {
                     let heroData = {
-                        title: elements[i].getAttribute("data-title") || '',
-                        text: elements[i].getAttribute("data-text") || '',
-                        buttonText: elements[i].getAttribute("data-button-text") || '',
-                        buttonLink: elements[i].getAttribute("data-button-link") || '#',
-                        imageUrl: elements[i].getAttribute("data-image-url") || '',
-                        imageAlt: elements[i].getAttribute("data-image-alt") || ''
+                        customClass: el.getAttribute("data-custom-class") || 'hero-section',
+                        title: el.getAttribute("data-title") || '',
+                        text: el.getAttribute("data-text") || '',
+                        buttonText: el.getAttribute("data-button-text") || '',
+                        buttonLink: el.getAttribute("data-button-link") || '#',
+                        buttonClass: el.getAttribute("data-button-class") || 'btn-primary',
+                        imageUrl: el.getAttribute("data-image-url") || '',
+                        imageAlt: el.getAttribute("data-image-alt") || ''
                     };
 
-                    content = content.replace(/{{title}}/g, heroData.title)
+                    let buttonHtml = heroData.buttonText ? `<a href="${heroData.buttonLink}"><button class="${heroData.buttonClass}">${heroData.buttonText}</button></a>` : '';
+
+                    content = content.replace(/{{customClass}}/g, heroData.customClass)
+                        .replace(/{{title}}/g, heroData.title)
                         .replace(/{{text}}/g, heroData.text)
-                        .replace(/{{buttonText}}/g, heroData.buttonText)
-                        .replace(/{{buttonLink}}/g, heroData.buttonLink)
+                        .replace(/{{buttonHtml}}/g, buttonHtml)
                         .replace(/{{imageUrl}}/g, heroData.imageUrl)
                         .replace(/{{imageAlt}}/g, heroData.imageAlt);
                 }
 
-                // Reemplazamos el marcador por el contenido real
                 el.outerHTML = content;
 
-                // Volvemos a escanear por si la pieza traída tiene más inclusiones (recursividad)
-                await xLuIncludeFile();
             } else {
                 console.error("Error: No se encontró el archivo " + file);
             }
@@ -42,7 +112,14 @@ async function xLuIncludeFile() {
             console.error("Error de conexión al cargar plantilla:", error);
         }
     }
+
+    await xLuIncludeFile();
 }
 
-// Se ejecuta automáticamente al cargar la página
-document.addEventListener("DOMContentLoaded", xLuIncludeFile);
+document.addEventListener("DOMContentLoaded", async () => {
+    await xLuIncludeFile();
+    setupNavigation();
+    const hash = window.location.hash || "#inicio";
+    const template = ROUTES[hash] || "templates/inicio.html";
+    window.history.replaceState({ template }, "", "index.html" + (hash === "#inicio" ? "" : hash));
+});
