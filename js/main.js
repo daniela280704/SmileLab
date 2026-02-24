@@ -1,22 +1,22 @@
 const ROUTES = {
-    "index.html": "templates/inicio.html",
-    "": "templates/inicio.html",
-    "#": "templates/inicio.html",
-    "#inicio": "templates/inicio.html",
-    "#equipo": "templates/equipo.html",
-    "#servicios": "templates/servicios.html",
-    "#contacto": "templates/contacto.html",
-    "#perfil": "templates/perfil.html",
-    "#citas": "templates/citas.html",
-    "#utilidades": "templates/utilidades.html",
-    "#producto": "templates/producto.html",
-    "equipo.html": "templates/equipo.html",
-    "servicios.html": "templates/servicios.html",
-    "contacto.html": "templates/contacto.html",
-    "perfil.html": "templates/perfil.html",
-    "citas.html": "templates/citas.html",
-    "utilidades.html": "templates/utilidades.html",
-    "producto.html": "templates/producto.html"
+    "index.html": "pages/inicio.html",
+    "": "pages/inicio.html",
+    "#": "pages/inicio.html",
+    "#inicio": "pages/inicio.html",
+    "#equipo": "pages/equipo.html",
+    "#servicios": "pages/servicios.html",
+    "#contacto": "pages/contacto.html",
+    "#perfil": "pages/perfil.html",
+    "#citas": "pages/citas.html",
+    "#utilidades": "pages/utilidades.html",
+    "#producto": "pages/producto.html",
+    "equipo.html": "pages/equipo.html",
+    "servicios.html": "pages/servicios.html",
+    "contacto.html": "pages/contacto.html",
+    "perfil.html": "pages/perfil.html",
+    "citas.html": "pages/citas.html",
+    "utilidades.html": "pages/utilidades.html",
+    "producto.html": "pages/producto.html"
 };
 
 function getTemplateFromHref(href) {
@@ -120,6 +120,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     await xLuIncludeFile();
     setupNavigation();
     const hash = window.location.hash || "#inicio";
-    const template = ROUTES[hash] || "templates/inicio.html";
+    const template = ROUTES[hash] || "pages/inicio.html";
     window.history.replaceState({ template }, "", "index.html" + (hash === "#inicio" ? "" : hash));
 });
