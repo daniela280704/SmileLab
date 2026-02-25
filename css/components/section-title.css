@@ -1,0 +1,13 @@
+/* ========== TÍTULO DE SECCIÓN CENTRADO ========== */
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--negro-smile);
+    margin: 3rem 0 2rem;
+    padding: 0 5%;
+}
+
+.section-title+div {
+    padding: 0 10% 3rem;
+}
+

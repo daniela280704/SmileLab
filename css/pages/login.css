@@ -1,0 +1,78 @@
+/* ========== PÁGINA LOGIN (Identifícate) ========== */
+.login-section {
+    max-width: 650px;
+    margin: 6rem auto;
+    padding: 0 5%;
+}
+
+.login-section h2 {
+    font-size: 2.2rem;
+    color: var(--negro-smile);
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+form.login-form {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2.5rem;
+    background: var(--blanco);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.login-form .input-group {
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    gap: 1rem;
+    border: none;
+}
+
+.login-form .input-group .icon {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.login-form .input-group input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #111;
+    padding: 0;
+    outline: none;
+}
+
+.login-form .input-group input::placeholder {
+    color: #111;
+    font-weight: bold;
+}
+
+.login-btn-container {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-btn-container .btn-dark {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-btn-container .btn-dark:hover {
+    background: #333;
+}

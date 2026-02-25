@@ -1,0 +1,52 @@
+/* ========== PÁGINA EQUIPO ========== */
+.team-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 10%;
+}
+
+@media (max-width: 768px) {
+    .team-hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+.team-hero .hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.team-hero .hero-content p {
+    color: #555;
+    font-size: 1.05rem;
+}
+
+.team-hero .hero-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    object-fit: cover;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 3rem 10%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.team-grid article {
+    margin: 0;
+}
+
+.team-grid .thumb-placeholder,
+.team-grid .img-box-gris {
+    aspect-ratio: 1;
+}
+

@@ -1,0 +1,58 @@
+/* ========== CARDS UTILIDADES ========== */
+.utilidades-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 0 10% 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.util-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.util-card:hover {
+    transform: translateY(-5px);
+}
+
+.util-card .util-card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px 12px 0 0;
+}
+
+.util-card .util-card-img.grad-1 {
+    background: var(--gradient-util-1);
+}
+
+.util-card .util-card-img.grad-2 {
+    background: var(--gradient-util-2);
+}
+
+.util-card .util-card-img.grad-3 {
+    background: var(--gradient-util-3);
+}
+
+.util-card h3 {
+    padding: 1.25rem 1.5rem 0.25rem;
+    font-size: 1.1rem;
+    color: var(--negro-smile);
+}
+
+.util-card a {
+    display: inline-block;
+    padding: 0 1.5rem 1.25rem;
+    color: #555;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.util-card a:hover {
+    color: var(--negro-smile);
+}
+

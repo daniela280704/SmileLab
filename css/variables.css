@@ -1,0 +1,37 @@
+/* --- 1. VARIABLES - Gama de azules --- */
+:root {
+    --azul-oscuro: #1e40af;
+    --azul-medio: #2563eb;
+    --azul: #3b82f6;
+    --azul-claro: #60a5fa;
+    --azul-pastel: #93c5fd;
+    --azul-muy-claro: #bfdbfe;
+    --azul-fondo: #dbeafe;
+    --azul-hielo: #eff6ff;
+    --negro-smile: #1e3a5f;
+    --gris-fondo: #f8fafc;
+    --gris-borde: #e2e8f0;
+    --blanco: #ffffff;
+    --shadow: 0 4px 12px rgba(30, 64, 175, 0.12);
+    --gradient-inicio: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    --gradient-hero-home: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1e40af 100%);
+    --gradient-citas-banner: linear-gradient(90deg, #bfdbfe 0%, #93c5fd 100%);
+    --gradient-perfil-cta: linear-gradient(90deg, #93c5fd 0%, #bfdbfe 100%);
+    --gradient-util-1: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
+    --gradient-util-2: linear-gradient(135deg, #bfdbfe 0%, #60a5fa 50%, #93c5fd 100%);
+    --gradient-util-3: linear-gradient(135deg, #93c5fd 0%, #60a5fa 50%, #3b82f6 100%);
+    --gradient-servicio: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--blanco);
+    color: #1e3a5f;
+}
+
