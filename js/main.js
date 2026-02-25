@@ -19,6 +19,7 @@ const ROUTES = {
     "login.html": "pages/login.html"
 };
 
+
 function getTemplateFromHref(href) {
     if (!href) return null;
     const hash = href.split("?")[0];
@@ -51,17 +52,53 @@ function setupNavigation() {
 
         e.preventDefault();
 
+        // Si el usuario clica en Perfil y ya "inició sesión" en la simulación
+        if (href === "#login" && sessionStorage.getItem("isLoggedIn") === "true") {
+            e.preventDefault();
+            const perfilHref = "#perfil";
+            const perfilTemplate = getTemplateFromHref(perfilHref);
+            window.history.pushState({ template: perfilTemplate }, "", "index.html" + perfilHref);
+            await loadPage(perfilTemplate);
+            return;
+        }
+
         const hash = (href === "" || href === "#" || href === "index.html") ? "#inicio" : (href.startsWith("#") ? href : "#" + href.replace(/.*\//, "").replace(".html", ""));
         const url = hash === "#inicio" ? "index.html" : "index.html" + hash;
         window.history.pushState({ template }, "", url);
+
+        // Hide products on login page
+        const productsElement = document.querySelector('[xlu-include-file="templates/products.html"]') || document.querySelector('.pre-footer-products');
+        if (productsElement) {
+            productsElement.style.display = hash === '#login' ? 'none' : 'block';
+        }
+
         await loadPage(template);
     });
 
+    // Handle login / register form submission
+    document.addEventListener("submit", async (e) => {
+        if (e.target.matches("form.login-form")) {
+            e.preventDefault();
+            sessionStorage.setItem("isLoggedIn", "true");
+
+            // Redirect natively manually via JS since we prevented default
+            const hash = "#perfil";
+            window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
+            await loadPage(getTemplateFromHref(hash));
+        }
+    });
+
     window.addEventListener("popstate", async (e) => {
+        const hash = window.location.hash || "#inicio";
+        const productsElement = document.querySelector('[xlu-include-file="templates/products.html"]') || document.querySelector('.pre-footer-products');
+        if (productsElement) {
+            productsElement.style.display = hash === '#login' ? 'none' : 'block';
+        }
+
         if (e.state && e.state.template) {
             await loadPage(e.state.template);
         } else {
-            const template = ROUTES[window.location.hash] || ROUTES["#inicio"];
+            const template = ROUTES[hash] || ROUTES["#inicio"];
             await loadPage(template);
         }
     });
@@ -81,6 +118,22 @@ async function xLuIncludeFile() {
             if (response.ok) {
                 let content = await response.text();
 
+                // Dynamic product page handling
+                if (file === "pages/producto.html") {
+                    const params = new URLSearchParams(window.location.hash.split('?')[1]);
+                    const productId = params.get('id');
+                    const productInfo = productId ? PRODUCTS_DATA[productId] : null;
+
+                    if (productInfo) {
+                        content = content.replace(/data-title="[^"]*"/, `data-title="${productInfo.title}"`)
+                            .replace(/data-text="[^"]*"/, `data-text="${productInfo.description}"`)
+                            .replace(/data-button-text="[^"]*"/, `data-button-text="${productInfo.price}"`)
+                            .replace(/data-image-url="[^"]*"/, `data-image-url="${productInfo.image}"`)
+                            .replace(/data-image-alt="[^"]*"/, `data-image-alt="${productInfo.title}"`);
+                    }
+                }
+
+
                 if (file === "templates/hero.html" || file === "hero.html") {
                     let heroData = {
                         customClass: el.getAttribute("data-custom-class") || 'hero-section',
@@ -89,11 +142,13 @@ async function xLuIncludeFile() {
                         buttonText: el.getAttribute("data-button-text") || '',
                         buttonLink: el.getAttribute("data-button-link") || '#',
                         buttonClass: el.getAttribute("data-button-class") || 'btn-primary',
+                        buttonTarget: el.getAttribute("data-button-target") || '_self',
                         imageUrl: el.getAttribute("data-image-url") || '',
                         imageAlt: el.getAttribute("data-image-alt") || ''
                     };
 
-                    let buttonHtml = heroData.buttonText ? `<a href="${heroData.buttonLink}"><button class="${heroData.buttonClass}">${heroData.buttonText}</button></a>` : '';
+                    let targetAttr = heroData.buttonTarget !== '_self' ? ` target="${heroData.buttonTarget}" rel="noopener noreferrer"` : '';
+                    let buttonHtml = heroData.buttonText ? `<a href="${heroData.buttonLink}"${targetAttr}><button class="${heroData.buttonClass}">${heroData.buttonText}</button></a>` : '';
 
                     content = content.replace(/{{customClass}}/g, heroData.customClass)
                         .replace(/{{title}}/g, heroData.title)
@@ -101,6 +156,31 @@ async function xLuIncludeFile() {
                         .replace(/{{buttonHtml}}/g, buttonHtml)
                         .replace(/{{imageUrl}}/g, heroData.imageUrl)
                         .replace(/{{imageAlt}}/g, heroData.imageAlt);
+                } else if (file === "templates/form.html" || file === "form.html") {
+                    let formData = {
+                        sectionClass: el.getAttribute("data-section-class") || '',
+                        titleTag: el.getAttribute("data-title-tag") || 'h2',
+                        title: el.getAttribute("data-title") || '',
+                        formAction: el.getAttribute("data-form-action") || '#',
+                        formMethod: el.getAttribute("data-form-method") || 'post',
+                        formClass: el.getAttribute("data-form-class") || '',
+                        btnContainerClass: el.getAttribute("data-btn-container-class") || '',
+                        btnClass: el.getAttribute("data-btn-class") || '',
+                        btnText: el.getAttribute("data-btn-text") || 'Enviar'
+                    };
+
+                    let titleHtml = formData.title ? `<${formData.titleTag}>${formData.title}</${formData.titleTag}>` : '';
+                    let innerContent = el.innerHTML;
+
+                    content = content.replace(/{{sectionClass}}/g, formData.sectionClass)
+                        .replace(/{{titleHtml}}/g, titleHtml)
+                        .replace(/{{formAction}}/g, formData.formAction)
+                        .replace(/{{formMethod}}/g, formData.formMethod)
+                        .replace(/{{formClass}}/g, formData.formClass)
+                        .replace(/{{btnContainerClass}}/g, formData.btnContainerClass)
+                        .replace(/{{btnClass}}/g, formData.btnClass)
+                        .replace(/{{btnText}}/g, formData.btnText)
+                        .replace(/{{slot}}/g, innerContent);
                 }
 
                 el.outerHTML = content;
@@ -120,6 +200,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     await xLuIncludeFile();
     setupNavigation();
     const hash = window.location.hash || "#inicio";
+
+    const productsElement = document.querySelector('.pre-footer-products');
+    if (productsElement) {
+        productsElement.style.display = hash === '#login' ? 'none' : 'block';
+    }
+
     const template = ROUTES[hash] || "pages/inicio.html";
     window.history.replaceState({ template }, "", "index.html" + (hash === "#inicio" ? "" : hash));
 });

@@ -8,37 +8,36 @@
         <article class="contact-card">
             <div class="contact-icon tel" aria-hidden="true">📞</div>
             <strong>Teléfono</strong>
-            <p>+34928256485</p>
+            <p><a href="tel:+34928256485">928 256 485</a></p>
         </article>
         <article class="contact-card">
             <div class="contact-icon whatsapp" aria-hidden="true">💬</div>
             <strong>Whatsapp</strong>
-            <p>+628457895</p>
+            <p><a href="https://wa.me/34628478954" target="_blank" rel="noopener noreferrer">628 478 954</a></p>
         </article>
         <article class="contact-card">
             <div class="contact-icon email" aria-hidden="true">✉</div>
             <strong>Email</strong>
-            <p>correo@gmail.com</p>
+            <p><a href="mailto:info@smilelab.com">info@smilelab.com</a></p>
         </article>
     </div>
 </section>
 
-<section class="contact-form-section">
-    <h3>Solicita tu cita</h3>
-    <form action="#" method="post">
-        <label for="user-email">Correo electrónico:</label>
-        <input type="email" id="user-email" name="user-email" required>
+<div xlu-include-file="templates/form.html" data-section-class="contact-form-section" data-title-tag="h3"
+    data-title="Solicita tu cita" data-form-action="#" data-form-method="post" data-btn-text="Enviar">
 
-        <label for="appointment-day">Fecha:</label>
-        <input type="text" id="appointment-day" name="appointment-day" placeholder="Ej: 01/01/2026">
+    <label for="user-email">Correo electrónico:</label>
+    <input type="email" id="user-email" name="user-email" required>
 
-        <label for="appointment-time">Hora:</label>
-        <input type="text" id="appointment-time" name="appointment-time" placeholder="Ej: 10:30">
+    <label for="appointment-day">Fecha:</label>
+    <input type="text" id="appointment-day" name="appointment-day" placeholder="Ej: 01/01/2026">
 
-        <button type="submit">Enviar</button>
-    </form>
-</section>
+    <label for="appointment-time">Hora:</label>
+    <input type="text" id="appointment-time" name="appointment-time" placeholder="Ej: 10:30">
+</div>
 
 <div xlu-include-file="templates/hero.html" data-custom-class="hero-section" data-title="Encuéntranos aquí"
-    data-text="The Location<br>1234 Garden Boulevard<br>City, ZZ 98765" data-button-text="Abrir en Google Maps"
-    data-button-class="btn-primary" data-button-link="#" data-image-url="" data-image-alt="Mapa de ubicación"></div>
+    data-text="Calle Avenida Marítima, 34,<br>35002 Las Palmas de Gran Canaria, Las Palmas"
+    data-button-text="Abrir en Google Maps" data-button-class="btn-primary"
+    data-button-link="https://www.google.com/maps/search/?api=1&query=Avenida+Marítima,+34,+35002+Las+Palmas+de+Gran+Canaria"
+    data-button-target="_blank" data-image-url="" data-image-alt="Mapa de ubicación"></div>
