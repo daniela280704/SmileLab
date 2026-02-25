@@ -75,7 +75,6 @@ function setupNavigation() {
         await loadPage(template);
     });
 
-    // Handle login / register form submission
     document.addEventListener("submit", async (e) => {
         if (e.target.matches("form.login-form")) {
             e.preventDefault();

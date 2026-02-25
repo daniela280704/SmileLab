@@ -1,5 +1,3 @@
-/* --- 4. GRID DE TARJETAS (Equipo, Servicios, Utilidades) --- */
-/* Excluimos secciones con su propio grid */
 main>section:not(.hero-section):not(.hero-banner):not(.page-hero):not(.citas-banner):not(.team-hero):not(.perfil-hero):not(.servicios-section):not(.servicios-page):not(.contact-form-section):not(.contact-map-section)>div:not(.hero-content):not(.hero-image):not(.utilidades-grid):not(.contact-cards-container):not(.citas-cards-grid):not(.team-grid):not(.feature-blocks):not(.perfil-tabs):not(.product-container) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -20,7 +18,6 @@ article:hover {
     transform: translateY(-5px);
 }
 
-/* Marcadores para fotos (cajas grises de tus mockups) */
 .thumb-placeholder,
 .preview-img,
 .img-box-gris,

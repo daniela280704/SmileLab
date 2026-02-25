@@ -1,4 +1,3 @@
-/* --- 2. HEADER (Fijo en todas las páginas) --- */
 body>header {
     display: flex;
     justify-content: space-between;

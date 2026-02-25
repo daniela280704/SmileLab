@@ -1,4 +1,3 @@
-/* ========== PRODUCTOS ========== */
 .product-card-mini {
     background: #fff;
     border-radius: 16px;
@@ -41,7 +40,6 @@
     display: block;
 }
 
-/* Placeholders transparentes para que se vea la foto original con fondo blanco */
 .product-placeholder-1,
 .product-placeholder-3 {
     min-height: 200px;

@@ -1,4 +1,3 @@
-/* ========== HERO BANNER (Inicio - título grande con gradiente) ========== */
 .hero-banner {
     background: linear-gradient(-45deg, var(--azul-claro), var(--azul-medio), var(--azul-oscuro), var(--azul));
     background-size: 400% 400%;
