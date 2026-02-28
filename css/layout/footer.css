@@ -67,6 +67,16 @@ footer {
     transition: color 0.3s ease;
 }
 
+.footer-column li.contact-item a {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.footer-column li.contact-item a .contact-icon {
+    flex-shrink: 0;
+}
+
 .footer-column a:hover {
     color: var(--azul-medio);
 }
