@@ -8,15 +8,19 @@ const ROUTES = {
     "#contacto": "pages/contacto.html",
     "#perfil": "pages/perfil.html",
     "#citas": "pages/citas.html",
-    "#producto": "pages/producto.html",
     "#login": "pages/login.html",
+    "#cepillo_electrico": "pages/cepillo_electrico.html",
+    "#kit_blanqueamiento": "pages/kit_blanqueamiento.html",
+    "#irrigador_bucal": "pages/irrigador_bucal.html",
     "equipo.html": "pages/equipo.html",
     "servicios.html": "pages/servicios.html",
     "contacto.html": "pages/contacto.html",
     "perfil.html": "pages/perfil.html",
     "citas.html": "pages/citas.html",
-    "producto.html": "pages/producto.html",
-    "login.html": "pages/login.html"
+    "login.html": "pages/login.html",
+    "cepillo_electrico.html": "pages/cepillo_electrico.html",
+    "kit_blanqueamiento.html": "pages/kit_blanqueamiento.html",
+    "irrigador_bucal.html": "pages/irrigador_bucal.html"
 };
 
 
@@ -116,22 +120,6 @@ async function xLuIncludeFile() {
             let response = await fetch(file);
             if (response.ok) {
                 let content = await response.text();
-
-                // Dynamic product page handling
-                if (file === "pages/producto.html") {
-                    const params = new URLSearchParams(window.location.hash.split('?')[1]);
-                    const productId = params.get('id');
-                    const productInfo = productId ? PRODUCTS_DATA[productId] : null;
-
-                    if (productInfo) {
-                        content = content.replace(/data-title="[^"]*"/, `data-title="${productInfo.title}"`)
-                            .replace(/data-text="[^"]*"/, `data-text="${productInfo.description}"`)
-                            .replace(/data-button-text="[^"]*"/, `data-button-text="${productInfo.price}"`)
-                            .replace(/data-image-url="[^"]*"/, `data-image-url="${productInfo.image}"`)
-                            .replace(/data-image-alt="[^"]*"/, `data-image-alt="${productInfo.title}"`);
-                    }
-                }
-
 
                 if (file === "templates/hero.html" || file === "hero.html") {
                     let heroData = {
