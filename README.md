@@ -47,7 +47,7 @@ Para cumplir con el principio DRY (*Don't Repeat Yourself*) y optimizar el rendi
 1. **`templates/header.html`**: Contiene la barra de navegación superior. **Se carga en:** Todas las páginas principales (`index.html`, `contacto.html`, etc.).
 2. **`templates/footer.html`**: Contiene los enlaces de pie de página. **Se carga en:** Todas las páginas principales.
 3. **`templates/hero.html`**: Plantilla dinámica que genera la sección principal de cada página (Título, descripción, botón e imagen). **Se carga en:** `inicio.html`, `equipo.html`, `perfil.html`, `contacto.html`, etc. El contenido inyectado es único para cada página y se pasa a través de atributos `data-title`, `data-text`, etc.
-4. **`templates/products.html`**: Componente visual que muestra una cuadrícula (Grid) destacando 3 productos físicos que se venden en la clínica. **Se carga en:** La página principal (`index.html` / `inicio.html`).
+4. **`templates/products.html`**: Componente visual que muestra una cuadrícula (Grid) destacando 3 productos físicos que se venden en la clínica. **Se carga en:** Todas las páginas principales excepto en `login.html`.
 5. **`templates/form.html`**: Plantilla reutilizable para estructurar los elementos de formulario indicando clases, la acción y renderizando campos dinámicamente (`slot`). **Se carga en:** `contacto.html` y `login.html`.
 ---
 
