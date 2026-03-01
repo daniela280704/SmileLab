@@ -19,21 +19,25 @@ SmileLab es una aplicación web diseñada para la gestión de una clínica denta
 * El sistema debe hacer énfasis visual en una sección de "Tienda" o productos destacados. Esta sección mostrará artículos relacionados con la salud dental que la clínica promociona o vende.
 
 ## 🎨 Diseño y Planificación
-* **Archivo de Mockups y Storyboard:** `[ruta/del/archivo/Mockups_SmileLab.pdf]`
+* **Archivo de Mockups:** `MOCKUPS.pdf` (Documento PDF con el diseño de las interfaces).
+* **Storyboard:** [Ver vídeo demostrativo de la navegación (OneDrive)](https://ulpgc-my.sharepoint.com/:f:/g/personal/daniela_melian102_alu_ulpgc_es/IgAEp6X6x1D7SayT0C3R1E-RAcBixE2dy0MqR7onQR3IyGk?e=rDSZto)
 ---
 
 ## 📄 Estructura de Páginas HTML
-> **Página de inicio de la aplicación web:** `index.html`
+> **Página de inicio de la aplicación web:** `index.html` (y su versión navegable referenciada en el menú `pages/inicio.html`)
 
 | Archivo HTML     | Nombre del Mockup que implementa | Descripción                                              |
 |:-----------------| :--- |:---------------------------------------------------------|
-| `index.html`     | Mockup_Inicio | Página principal con el resumen de la clínica.           |
-| `servicios.html` | Mockup_Servicios | Catálogo de tratamientos dentales ofrecidos.             |
-| `equipo.html`    | Mockup_Equipo | Presentación de los profesionales médicos.               |
-| `contacto.html`  | Mockup_Contacto | Formulario de contacto y datos de ubicación.             |
-| `perfil.html`    | Mockup_Perfil | Panel de control del paciente.                           |
-| `citas.html`     | Mockup_Citas | Interfaz para obtener información de citas.              |
-| `producto.html`  | Mockup_Productos | Información de un producto.                              |
+| `index.html` / `pages/inicio.html` | Mockup_Inicio | Página principal con el resumen de la clínica.           |
+| `pages/servicios.html` | Mockup_Servicios | Catálogo de tratamientos dentales ofrecidos.             |
+| `pages/equipo.html`    | Mockup_Equipo | Presentación de los profesionales médicos.               |
+| `pages/contacto.html`  | Mockup_Contacto | Formulario de contacto y datos de ubicación.             |
+| `pages/perfil.html`    | Mockup_Perfil | Panel de control del paciente.                           |
+| `pages/citas.html`     | Mockup_Citas | Interfaz para obtener información de citas.              |
+| `pages/login.html`     | Mockup_Login | Página de inicio de sesión de usuario y registro.        |
+| `pages/cepillo_electrico.html` | Mockup_Productos | Información detallada del producto: Cepillo Eléctrico.   |
+| `pages/kit_blanqueamiento.html`| Mockup_Productos | Información detallada del producto: Kit Blanqueamiento.  |
+| `pages/irrigador_bucal.html` | Mockup_Productos | Información detallada del producto: Irrigador Bucal.     |
 
 ---
 
@@ -43,13 +47,15 @@ Para cumplir con el principio DRY (*Don't Repeat Yourself*) y optimizar el rendi
 1. **`templates/header.html`**: Contiene la barra de navegación superior. **Se carga en:** Todas las páginas principales (`index.html`, `contacto.html`, etc.).
 2. **`templates/footer.html`**: Contiene los enlaces de pie de página. **Se carga en:** Todas las páginas principales.
 3. **`templates/hero.html`**: Plantilla dinámica que genera la sección principal de cada página (Título, descripción, botón e imagen). **Se carga en:** `inicio.html`, `equipo.html`, `perfil.html`, `contacto.html`, etc. El contenido inyectado es único para cada página y se pasa a través de atributos `data-title`, `data-text`, etc.
-4. **`templates/products.html`**: Componente visual que muestra una cuadrícula (Grid) destacando 3 productos físicos que se venden en la clínica. **Se carga en:** La página principal (`index.html`/`inicio.html`) y en la sección dedicada a productos (`producto.html`).
+4. **`templates/products.html`**: Componente visual que muestra una cuadrícula (Grid) destacando 3 productos físicos que se venden en la clínica. **Se carga en:** La página principal (`index.html` / `inicio.html`).
+5. **`templates/form.html`**: Plantilla reutilizable para estructurar los elementos de formulario indicando clases, la acción y renderizando campos dinámicamente (`slot`). **Se carga en:** `contacto.html` y `login.html`.
 ---
 
 ## 🚀 Otros Aspectos de Evaluación a Considerar
 
 * **Motor de Plantillas con JavaScript (Vanilla JS):** Se ha implementado una función asíncrona (`xLuIncludeFile()`) utilizando la API `Fetch` para cargar los archivos HTML de la carpeta *templates* de forma dinámica. Se ha optimizado el código para inyectar los datos en el DOM de forma segura (usando `insertAdjacentHTML` para evitar errores de modificación de nodos padre) y permite recursividad para plantillas anidadas.
 * **Arquitectura de Hojas de Estilo (CSS):**
+  * **Metodología BEM (Block, Element, Modifier):** Se ha utilizado la nomenclatura estructural BEM para organizar las clases CSS, lo que asegura selectores directos, legibles y evita colisiones de estilos entre componentes.
   * Se han aplicado los conceptos de **CSS Grid** para la estructura general de las tarjetas y **Flexbox** para la alineación interna de componentes (Header, Hero layout), siguiendo las mejores prácticas actuales.
   * Uso de **Variables CSS (`:root`)** para mantener consistencia en la paleta de colores (`--negro-smile`, `--blanco`, `--gris-fondo`) y sombras, facilitando el mantenimiento.
   * *Separation of Concerns:* El código específico de cada sección se mantiene independiente de las plantillas globales utilizando el pseudo-selector `:not()` para evitar conflictos de cascada.
