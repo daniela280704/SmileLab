@@ -1,3 +1,5 @@
+let usuariosDB = [];
+
 const ROUTES = {
     "index.html": "pages/inicio.html",
     "": "pages/inicio.html",
@@ -23,6 +25,23 @@ const ROUTES = {
     "irrigador_bucal.html": "pages/irrigador_bucal.html"
 };
 
+async function cargarBaseDeDatos() {
+    try {
+        const respuesta = await fetch('./db.json');
+
+        if (!respuesta.ok) {
+            throw new Error('Error al leer el archivo db.json');
+        }
+
+        const datos = await respuesta.json();
+
+        usuariosDB = datos.usuarios || datos;
+
+        console.log("Usuarios cargados desde el JSON:", usuariosDB);
+    } catch (error) {
+        console.error("Hubo un problema cargando la base de datos:", error);
+    }
+}
 
 function getTemplateFromHref(href) {
     if (!href) return null;
@@ -82,12 +101,22 @@ function setupNavigation() {
     document.addEventListener("submit", async (e) => {
         if (e.target.matches("form.login-form")) {
             e.preventDefault();
-            sessionStorage.setItem("isLoggedIn", "true");
 
-            // Redirect natively manually via JS since we prevented default
-            const hash = "#perfil";
-            window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
-            await loadPage(getTemplateFromHref(hash));
+            const email = document.getElementById("login-email").value;
+            const pass = document.getElementById("login-password").value;
+
+            const userMatch = usuariosDB.find(u => u.email === email && u.pass === pass);
+
+            if (userMatch) {
+                sessionStorage.setItem("isLoggedIn", "true");
+                sessionStorage.setItem("userRole", userMatch.rol);
+
+                const hash = "#perfil";
+                window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
+                await loadPage(getTemplateFromHref(hash));
+            } else {
+                alert("Credenciales incorrectas. Revisa tu email o contraseña.");
+            }
         }
     });
 
@@ -184,6 +213,7 @@ async function xLuIncludeFile() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    await cargarBaseDeDatos();
     await xLuIncludeFile();
     setupNavigation();
     const hash = window.location.hash || "#inicio";
@@ -196,3 +226,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     const template = ROUTES[hash] || "pages/inicio.html";
     window.history.replaceState({ template }, "", "index.html" + (hash === "#inicio" ? "" : hash));
 });
+
+
