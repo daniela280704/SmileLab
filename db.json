@@ -1,0 +1,6 @@
+{
+  "usuarios": [
+    { "email": "paciente@web.com", "pass": "123456", "rol": "usuario" },
+    { "email": "enfermero@web.com", "pass": "123456", "rol": "enfermero" }
+  ]
+}
