@@ -2,6 +2,20 @@
   "site": {
     "name": "SmileLab",
     "year": 2026
-  }
+  },
+  "usuarios": [
+    {
+      "email": "paciente@web.com",
+      "pass": "123456",
+      "rol": "usuario",
+      "nombre": "Paciente Demo"
+    },
+    {
+      "email": "enfermero@web.com",
+      "pass": "1234567",
+      "rol": "enfermero",
+      "nombre": "Enfermero Demo"
+    }
+  ]
 
 }
