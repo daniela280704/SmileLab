@@ -80,3 +80,20 @@
     font-weight: 600;
 }
 
+.perfil-tabs .btn-logout {
+    background: var(--blanco); /* Usa el fondo blanco de tus variables */
+    color: #d9534f; /* Rojo para indicar una acción de salida */
+    border: 2px solid #d9534f;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease; /* Le damos una transición suave */
+}
+
+/* Efecto hover opcional para cuando pasas el ratón por encima */
+.perfil-tabs .btn-logout:hover {
+    background: #d9534f;
+    color: var(--blanco);
+}
+
