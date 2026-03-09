@@ -104,6 +104,11 @@ async function loadPage(templatePath) {
     await xLuIncludeFile();
 }
 
+async function loadPageConContenido(templatePath) {
+    await loadPage(templatePath);
+    renderizarContenidoDinamico();
+}
+
 function renderizarContenidoDinamico() {
     const hash = window.location.hash || "#inicio";
 
