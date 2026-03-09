@@ -235,6 +235,22 @@ function renderContactoDinamico() {
 
 function setupNavigation() {
     document.addEventListener("click", async (e) => {
+        if (e.target.id === "btn-cerrar-sesion" || e.target.closest("#btn-cerrar-sesion")) {
+            e.preventDefault();
+
+            sessionStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("userRole");
+            sessionStorage.removeItem("userEmail");
+
+            actualizarBotonHeader();
+
+            const hash = "#inicio";
+            const template = getTemplateFromHref(hash);
+            window.history.pushState({ template }, "", "index.html" + hash);
+            await loadPage(template);
+
+            return;
+        }
         const link = e.target.closest("a[href]");
         if (!link) return;
 
