@@ -51,6 +51,30 @@ function getTemplateFromHref(href) {
     return ROUTES[path] || null;
 }
 
+function actualizarBotonHeader() {
+    const contenedorAcciones = document.querySelector('.header-actions');
+    if (!contenedorAcciones) return;
+
+    const enlaceHeader = contenedorAcciones.querySelector('a');
+    const botonDentro = contenedorAcciones.querySelector('button');
+
+    if (!enlaceHeader || !botonDentro) return;
+
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+    const userEmail = sessionStorage.getItem("userEmail");
+
+    if (isLoggedIn && userEmail) {
+        enlaceHeader.setAttribute("href", "#perfil");
+
+        const nombreUsuario = userEmail.split('@')[0];
+
+        botonDentro.textContent = `${nombreUsuario}`;
+    } else {
+        enlaceHeader.setAttribute("href", "#login");
+        botonDentro.textContent = "Perfil";
+    }
+}
+
 async function loadPage(templatePath) {
     const pageContent = document.getElementById("page-content");
     if (!pageContent) return;
@@ -110,6 +134,9 @@ function setupNavigation() {
             if (userMatch) {
                 sessionStorage.setItem("isLoggedIn", "true");
                 sessionStorage.setItem("userRole", userMatch.rol);
+                sessionStorage.setItem("userEmail", userMatch.email);
+
+                actualizarBotonHeader();
 
                 const hash = "#perfil";
                 window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
@@ -215,6 +242,7 @@ async function xLuIncludeFile() {
 document.addEventListener("DOMContentLoaded", async () => {
     await cargarBaseDeDatos();
     await xLuIncludeFile();
+    actualizarBotonHeader();
     setupNavigation();
     const hash = window.location.hash || "#inicio";
 
