@@ -27,5 +27,24 @@
       "imagen": "img/sobre-nosotros.jpg",
       "alt": "SmileLab"
     }
+  },
+  "equipo": {
+    "titulo": "Nuestro Equipo",
+    "miembros": [
+      {
+        "nombre": "Dra. Laura Sánchez",
+        "cargo": "Especialista en Ortodoncia",
+        "imagen": "img/doc-laura.jpg",
+        "alt": "Dra. Laura Sánchez",
+        "descripcion": "Especialista en ortodoncia invisible."
+      },
+      {
+        "nombre": "Dr. Marcos Vidal",
+        "cargo": "Implantología",
+        "imagen": "img/doc-marcos.jpg",
+        "alt": "Dr. Marcos Vidal",
+        "descripcion": "Especialista en implantes dentales."
+      }
+    ]
   }
 }
