@@ -46,5 +46,24 @@
         "descripcion": "Especialista en implantes dentales."
       }
     ]
+  },
+  "servicios": {
+    "titulo": "Servicios",
+    "items": [
+      {
+        "id": "implantes",
+        "titulo": "Implantes Dentales",
+        "imagen": "img/implantes-dentales.jpg",
+        "alt": "Implantes Dentales",
+        "descripcion": "Recupera la funcionalidad y estética de tu boca."
+      },
+      {
+        "id": "ortodoncia",
+        "titulo": "Ortodoncia Invisible",
+        "imagen": "img/ortodoncia.jpg",
+        "alt": "Ortodoncia Invisible",
+        "descripcion": "Corrige la alineación dental de forma discreta."
+      }
+    ]
   }
 }
