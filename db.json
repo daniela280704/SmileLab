@@ -65,5 +65,21 @@
         "descripcion": "Corrige la alineación dental de forma discreta."
       }
     ]
+  },
+  "productos": {
+    "items": [
+      {
+        "nombre": "Cepillo Eléctrico Sónico",
+        "imagen": "img/cepillo-electrico.jpg",
+        "alt": "Cepillo Eléctrico",
+        "href": "#cepillo_electrico"
+      },
+      {
+        "nombre": "Kit de Blanqueamiento",
+        "imagen": "img/kit-blanqueamiento.jpg",
+        "alt": "Kit de Blanqueamiento",
+        "href": "#kit_blanqueamiento"
+      }
+    ]
   }
 }
