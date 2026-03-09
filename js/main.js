@@ -1,4 +1,5 @@
 let usuariosDB = [];
+let contenidoDB = {};
 
 const ROUTES = {
     "index.html": "pages/inicio.html",
@@ -43,6 +44,23 @@ async function cargarBaseDeDatos() {
     }
 }
 
+async function cargarContenidoDB() {
+    try {
+        const respuesta = await fetch('./db.json');
+
+        if (!respuesta.ok) {
+            throw new Error('Error al leer el archivo db.json');
+        }
+
+        const datos = await respuesta.json();
+        contenidoDB = datos;
+
+        console.log("Contenido completo cargado desde db.json:", contenidoDB);
+    } catch (error) {
+        console.error("Hubo un problema cargando el contenido:", error);
+    }
+}
+
 function getTemplateFromHref(href) {
     if (!href) return null;
     const hash = href.split("?")[0];
@@ -84,6 +102,26 @@ async function loadPage(templatePath) {
     pageContent.innerHTML = "";
     pageContent.appendChild(wrapper);
     await xLuIncludeFile();
+}
+
+function renderizarContenidoDinamico() {
+    const hash = window.location.hash || "#inicio";
+
+    if (hash === "#inicio" || hash === "" || hash === "#") {
+        renderInicioDinamico();
+    }
+
+    if (hash === "#equipo") {
+        renderEquipoDinamico();
+    }
+
+    if (hash === "#servicios") {
+        renderServiciosDinamico();
+    }
+
+    if (hash === "#contacto") {
+        renderContactoDinamico();
+    }
 }
 
 function setupNavigation() {
