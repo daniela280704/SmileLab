@@ -180,6 +180,30 @@ function renderEquipoDinamico() {
     });
 }
 
+function renderServiciosDinamico() {
+    if (!contenidoDB.servicios) return;
+
+    const titulo = document.getElementById("services-title");
+    if (titulo) {
+        titulo.textContent = contenidoDB.servicios.titulo || "";
+    }
+
+    const contenedor = document.getElementById("services-container");
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    (contenidoDB.servicios.items || []).forEach(servicio => {
+        contenedor.innerHTML += `
+            <article class="service-card">
+                <img src="${servicio.imagen}" alt="${servicio.alt}">
+                <h3>${servicio.titulo}</h3>
+                <p>${servicio.descripcion}</p>
+            </article>
+        `;
+    });
+}
+
 function setupNavigation() {
     document.addEventListener("click", async (e) => {
         const link = e.target.closest("a[href]");
