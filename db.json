@@ -16,6 +16,16 @@
       "rol": "enfermero",
       "nombre": "Enfermero Demo"
     }
-  ]
-
+  ],
+  "inicio": {
+    "titulo": "¡Tu mejor sonrisa empieza aquí!",
+    "sobreNosotros": {
+      "titulo": "Sobre nosotros...",
+      "texto": "En SmileLab nos apasiona cuidar de ti y de los tuyos. Contamos con un equipo cercano y tecnología moderna para hacer de cada visita al dentista una experiencia cómoda, segura y sin estrés.",
+      "botonTexto": "Conocer al equipo",
+      "botonLink": "#equipo",
+      "imagen": "img/sobre-nosotros.jpg",
+      "alt": "SmileLab"
+    }
+  }
 }
