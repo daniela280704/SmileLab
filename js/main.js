@@ -252,7 +252,7 @@ function setupNavigation() {
             const perfilHref = "#perfil";
             const perfilTemplate = getTemplateFromHref(perfilHref);
             window.history.pushState({ template: perfilTemplate }, "", "index.html" + perfilHref);
-            await loadPage(perfilTemplate);
+            await loadPageConContenido(perfilTemplate);
             return;
         }
 
@@ -266,7 +266,7 @@ function setupNavigation() {
             productsElement.style.display = hash === '#login' ? 'none' : 'block';
         }
 
-        await loadPage(template);
+        await loadPageConContenido(template);
     });
 
     document.addEventListener("submit", async (e) => {
@@ -287,7 +287,7 @@ function setupNavigation() {
 
                 const hash = "#perfil";
                 window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
-                await loadPage(getTemplateFromHref(hash));
+                await loadPageConContenido(getTemplateFromHref(hash));
             } else {
                 alert("Credenciales incorrectas. Revisa tu email o contraseña.");
             }
@@ -302,10 +302,10 @@ function setupNavigation() {
         }
 
         if (e.state && e.state.template) {
-            await loadPage(e.state.template);
+            await loadPageConContenido(e.state.template);
         } else {
             const template = ROUTES[hash] || ROUTES["#inicio"];
-            await loadPage(template);
+            await loadPageConContenido(template);
         }
     });
 }
