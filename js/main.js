@@ -388,6 +388,7 @@ async function xLuIncludeFile() {
 
 document.addEventListener("DOMContentLoaded", async () => {
     await cargarBaseDeDatos();
+    await cargarContenidoDB();
     await xLuIncludeFile();
     actualizarBotonHeader();
     setupNavigation();
@@ -400,6 +401,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const template = ROUTES[hash] || "pages/inicio.html";
     window.history.replaceState({ template }, "", "index.html" + (hash === "#inicio" ? "" : hash));
+    await loadPageConContenido(template);
 });
 
 
