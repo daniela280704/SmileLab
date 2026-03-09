@@ -204,6 +204,30 @@ function renderServiciosDinamico() {
     });
 }
 
+function renderContactoDinamico() {
+    if (!contenidoDB.contacto) return;
+
+    const titulo = document.getElementById("contact-title");
+    if (titulo) {
+        titulo.textContent = contenidoDB.contacto.titulo || "";
+    }
+
+    const telefono = document.getElementById("contact-phone");
+    if (telefono) {
+        telefono.textContent = contenidoDB.contacto.telefono || "";
+    }
+
+    const whatsapp = document.getElementById("contact-whatsapp");
+    if (whatsapp) {
+        whatsapp.textContent = contenidoDB.contacto.whatsapp || "";
+    }
+
+    const email = document.getElementById("contact-email");
+    if (email) {
+        email.textContent = contenidoDB.contacto.email || "";
+    }
+}
+
 function setupNavigation() {
     document.addEventListener("click", async (e) => {
         const link = e.target.closest("a[href]");
