@@ -81,5 +81,15 @@
         "href": "#kit_blanqueamiento"
       }
     ]
+  },
+  "contacto": {
+    "titulo": "Contacto",
+    "telefono": "928 256 485",
+    "whatsapp": "628 478 954",
+    "email": "info@smilelab.com"
+  },
+  "footer": {
+    "marca": "SmileLab",
+    "texto": "Tu clínica dental de confianza."
   }
 }
