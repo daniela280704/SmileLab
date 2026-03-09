@@ -124,6 +124,62 @@ function renderizarContenidoDinamico() {
     }
 }
 
+function renderInicioDinamico() {
+    if (!contenidoDB.inicio) return;
+
+    const titulo = document.getElementById("home-title");
+    if (titulo) {
+        titulo.textContent = contenidoDB.inicio.titulo || "";
+    }
+
+    const aboutTitle = document.getElementById("about-title");
+    if (aboutTitle) {
+        aboutTitle.textContent = contenidoDB.inicio.sobreNosotros?.titulo || "";
+    }
+
+    const aboutText = document.getElementById("about-text");
+    if (aboutText) {
+        aboutText.textContent = contenidoDB.inicio.sobreNosotros?.texto || "";
+    }
+
+    const aboutImage = document.getElementById("about-image");
+    if (aboutImage) {
+        aboutImage.src = contenidoDB.inicio.sobreNosotros?.imagen || "";
+        aboutImage.alt = contenidoDB.inicio.sobreNosotros?.alt || "";
+    }
+
+    const aboutButton = document.getElementById("about-button");
+    if (aboutButton) {
+        aboutButton.textContent = contenidoDB.inicio.sobreNosotros?.botonTexto || "";
+        aboutButton.href = contenidoDB.inicio.sobreNosotros?.botonLink || "#";
+    }
+}
+
+function renderEquipoDinamico() {
+    if (!contenidoDB.equipo) return;
+
+    const titulo = document.getElementById("team-title");
+    if (titulo) {
+        titulo.textContent = contenidoDB.equipo.titulo || "";
+    }
+
+    const contenedor = document.getElementById("team-members");
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    (contenidoDB.equipo.miembros || []).forEach(miembro => {
+        contenedor.innerHTML += `
+            <article class="team-card">
+                <img src="${miembro.imagen}" alt="${miembro.alt}">
+                <h3>${miembro.nombre}</h3>
+                <p><strong>${miembro.cargo}</strong></p>
+                <p>${miembro.descripcion}</p>
+            </article>
+        `;
+    });
+}
+
 function setupNavigation() {
     document.addEventListener("click", async (e) => {
         const link = e.target.closest("a[href]");
