@@ -318,16 +318,10 @@ function setupNavigation() {
             productsElement.style.display = hash === '#login' ? 'none' : 'block';
         }
         else if (e.target.closest(".contact-form-section")) {
-            e.preventDefault(); // Evitamos que la página se recargue
-
-            // Si llega aquí, es que las validaciones HTML5 (required, date, etc.) han pasado con éxito.
-            alert("¡Tu solicitud de cita ha sido enviada correctamente! Nos pondremos en contacto contigo pronto.");
-
-            // Opcional: limpiar el formulario después de enviarlo
-            e.target.reset();
-
-            // Si estaba logueado, le volvemos a poner el email que se acaba de borrar con el reset
-            gestionarFormularioCitas();
+            e.preventDefault(); // Evita que la página dé el salto raro
+            alert("¡Tu solicitud de cita ha sido enviada correctamente!");
+            e.target.reset(); // Limpia los campos
+            gestionarFormularioCitas(); // Vuelve a rellenar el email si estaba logueado
         }
 
         await loadPageConContenido(template);
