@@ -93,6 +93,41 @@ function actualizarBotonHeader() {
     }
 }
 
+function gestionarFormularioCitas() {
+    const seccionFormulario = document.querySelector(".contact-form-section");
+    const inputEmail = document.getElementById("user-email");
+
+    if (!seccionFormulario) return;
+
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+    const rolActual = sessionStorage.getItem("userRole");
+    const emailActual = sessionStorage.getItem("userEmail");
+
+    if (isLoggedIn && inputEmail) {
+        inputEmail.value = emailActual;
+        inputEmail.readOnly = true;
+        inputEmail.style.backgroundColor = "#f0f0f0";
+    }
+
+    if (rolActual === "enfermero") {
+        seccionFormulario.style.display = "none";
+
+        let mensajeEnfermero = document.getElementById("mensaje-personal");
+        if (!mensajeEnfermero) {
+            mensajeEnfermero = document.createElement("div");
+            mensajeEnfermero.id = "mensaje-personal";
+            mensajeEnfermero.innerHTML = "<h3>Área de Personal</h3><p>Has iniciado sesión como Enfermero. Gestiona las citas desde tu panel de intranet.</p>";
+            mensajeEnfermero.style.textAlign = "center";
+            mensajeEnfermero.style.padding = "3rem 1rem";
+            seccionFormulario.parentNode.insertBefore(mensajeEnfermero, seccionFormulario);
+        }
+    } else {
+        seccionFormulario.style.display = "block";
+        const msg = document.getElementById("mensaje-personal");
+        if (msg) msg.remove();
+    }
+}
+
 async function loadPage(templatePath) {
     const pageContent = document.getElementById("page-content");
     if (!pageContent) return;
@@ -107,6 +142,7 @@ async function loadPage(templatePath) {
 async function loadPageConContenido(templatePath) {
     await loadPage(templatePath);
     renderizarContenidoDinamico();
+    gestionarFormularioCitas();
 }
 
 function renderizarContenidoDinamico() {
@@ -281,6 +317,18 @@ function setupNavigation() {
         if (productsElement) {
             productsElement.style.display = hash === '#login' ? 'none' : 'block';
         }
+        else if (e.target.closest(".contact-form-section")) {
+            e.preventDefault(); // Evitamos que la página se recargue
+
+            // Si llega aquí, es que las validaciones HTML5 (required, date, etc.) han pasado con éxito.
+            alert("¡Tu solicitud de cita ha sido enviada correctamente! Nos pondremos en contacto contigo pronto.");
+
+            // Opcional: limpiar el formulario después de enviarlo
+            e.target.reset();
+
+            // Si estaba logueado, le volvemos a poner el email que se acaba de borrar con el reset
+            gestionarFormularioCitas();
+        }
 
         await loadPageConContenido(template);
     });
@@ -408,6 +456,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await xLuIncludeFile();
     actualizarBotonHeader();
     setupNavigation();
+    gestionarFormularioCitas();
     const hash = window.location.hash || "#inicio";
 
     const productsElement = document.querySelector('.pre-footer-products');
