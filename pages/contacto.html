@@ -24,22 +24,22 @@
 </section>
 
 <div xlu-include-file="templates/form.html" data-section-class="contact-form-section" data-title-tag="h3"
-    data-title="Solicita tu cita" data-form-action="#" data-form-method="post" data-btn-text="Enviar">
+      data-title="Solicita tu cita" data-form-action="#" data-form-method="post" data-btn-text="Enviar">
 
     <label for="user-email">Correo electrónico:</label>
     <input type="email" id="user-email" name="user-email" required>
 
     <label for="appointment-day">Fecha:</label>
-    <input type="text" id="appointment-day" name="appointment-day" placeholder="Ej: 01/01/2026">
+    <input type="date" id="appointment-day" name="appointment-day" required>
 
     <label for="appointment-time">Hora:</label>
-    <input type="text" id="appointment-time" name="appointment-time" placeholder="Ej: 10:30">
+    <input type="time" id="appointment-time" name="appointment-time" required>
 
     <label for="appointment-reason">Motivo de la cita:</label>
-    <input type="text" id="appointment-reason" name="appointment-reason" placeholder="Ej: Revisión anual" required>
+    <input type="text" id="appointment-reason" name="appointment-reason" placeholder="Ej: Revisión anual" required minlength="5">
 
     <label for="appointment-professional">Nombre del profesional:</label>
-    <input type="text" id="appointment-professional" name="appointment-professional" placeholder="Ej: Dr. García">
+    <input type="text" id="appointment-professional" name="appointment-professional" placeholder="Ej: Dr. García" required>
 </div>
 
 <div xlu-include-file="templates/hero.html" data-custom-class="hero-section" data-title="Encuéntranos aquí"
