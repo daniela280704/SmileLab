@@ -370,6 +370,36 @@ function setupNavigation() {
         }
     });
 
+    document.addEventListener("click", (e) => {
+        // Lógica del Acordeón en Servicios
+        const h3 = e.target.closest('.feature-block h3');
+        if (h3) {
+            if (window.innerWidth <= 768) {
+                const block = h3.closest('.feature-block');
+                const icon = block.querySelector('.accordion-icon');
+                if (block && icon) {
+                    block.classList.toggle('expanded');
+                    icon.textContent = block.classList.contains('expanded') ? '-' : '+';
+                }
+            }
+            return;
+        }
+
+        // Lógica del Menú Móvil
+        const menuBtn = e.target.closest('.btn-menu-mobile');
+        if (menuBtn) {
+            document.body.classList.toggle('menu-open');
+            // Cambiar texto del botón si es necesario (opcional, el diseño usa "Menú" siempre)
+            return;
+        }
+
+        // Si se hace clic en un enlace del menú móvil, cerrarlo
+        const mobileNavLink = e.target.closest('.mobile-menu-overlay a');
+        if (mobileNavLink) {
+            document.body.classList.remove('menu-open');
+        }
+    });
+
     window.addEventListener("popstate", async (e) => {
         const hash = window.location.hash || "#inicio";
         const productsElement = document.querySelector('[xlu-include-file="templates/products.html"]') || document.querySelector('.pre-footer-products');
@@ -396,7 +426,7 @@ async function xLuIncludeFile() {
         el.removeAttribute("xlu-include-file");
 
         try {
-            let response = await fetch(file);
+            let response = await fetch(file + "?v=" + new Date().getTime());
             if (response.ok) {
                 let content = await response.text();
 
