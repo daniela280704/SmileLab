@@ -128,6 +128,29 @@ function gestionarFormularioCitas() {
     }
 }
 
+function actualizarDatosPerfil() {
+    if (window.location.hash !== "#perfil") return;
+    const emailActual = sessionStorage.getItem("userEmail");
+    const usuario = usuariosDB.find(u => u.email === emailActual);
+
+    if (usuario) {
+        const tituloPerfil = document.querySelector(".perfil-hero h1, .perfil-hero h2");
+        if (tituloPerfil && usuario.nombre) {
+            tituloPerfil.textContent = `¡Hola, ${usuario.nombre.split(' ')[0]}!`;
+        }
+        const textoPerfil = document.querySelector(".perfil-hero p");
+        if (textoPerfil) {
+            textoPerfil.innerHTML = `
+                <strong>Paciente:</strong> ${usuario.nombre || 'No especificado'}<br>
+                <strong>Email:</strong> ${usuario.email}<br>
+                <strong>Teléfono:</strong> ${usuario.telefono || 'No especificado'}<br>
+                <strong>Próxima limpieza:</strong> ${usuario.proximaLimpieza || 'No especificada'}<br>
+                <strong>Doctor habitual:</strong> ${usuario.doctor || 'No especificado'}
+            `;
+        }
+    }
+}
+
 async function loadPage(templatePath) {
     const pageContent = document.getElementById("page-content");
     if (!pageContent) return;
@@ -143,6 +166,7 @@ async function loadPageConContenido(templatePath) {
     await loadPage(templatePath);
     renderizarContenidoDinamico();
     gestionarFormularioCitas();
+    actualizarDatosPerfil();
 }
 
 function renderizarContenidoDinamico() {
@@ -271,22 +295,19 @@ function renderContactoDinamico() {
 
 function setupNavigation() {
     document.addEventListener("click", async (e) => {
-        if (e.target.id === "btn-cerrar-sesion" || e.target.closest("#btn-cerrar-sesion")) {
+        if (e.target.closest(".btn-logout")) {
             e.preventDefault();
-
             sessionStorage.removeItem("isLoggedIn");
             sessionStorage.removeItem("userRole");
             sessionStorage.removeItem("userEmail");
-
             actualizarBotonHeader();
-
             const hash = "#inicio";
             const template = getTemplateFromHref(hash);
             window.history.pushState({ template }, "", "index.html" + hash);
-            await loadPage(template);
-
+            await loadPageConContenido(template);
             return;
         }
+
         const link = e.target.closest("a[href]");
         if (!link) return;
 
@@ -298,7 +319,6 @@ function setupNavigation() {
 
         e.preventDefault();
 
-        // Si el usuario clica en Perfil y ya "inició sesión" en la simulación
         if (href === "#login" && sessionStorage.getItem("isLoggedIn") === "true") {
             e.preventDefault();
             const perfilHref = "#perfil";
@@ -312,16 +332,9 @@ function setupNavigation() {
         const url = hash === "#inicio" ? "index.html" : "index.html" + hash;
         window.history.pushState({ template }, "", url);
 
-        // Hide products on login page
         const productsElement = document.querySelector('[xlu-include-file="templates/products.html"]') || document.querySelector('.pre-footer-products');
         if (productsElement) {
             productsElement.style.display = hash === '#login' ? 'none' : 'block';
-        }
-        else if (e.target.closest(".contact-form-section")) {
-            e.preventDefault(); // Evita que la página dé el salto raro
-            alert("¡Tu solicitud de cita ha sido enviada correctamente!");
-            e.target.reset(); // Limpia los campos
-            gestionarFormularioCitas(); // Vuelve a rellenar el email si estaba logueado
         }
 
         await loadPageConContenido(template);
@@ -330,24 +343,29 @@ function setupNavigation() {
     document.addEventListener("submit", async (e) => {
         if (e.target.matches("form.login-form")) {
             e.preventDefault();
-
             const email = document.getElementById("login-email").value;
             const pass = document.getElementById("login-password").value;
-
             const userMatch = usuariosDB.find(u => u.email === email && u.pass === pass);
 
             if (userMatch) {
                 sessionStorage.setItem("isLoggedIn", "true");
                 sessionStorage.setItem("userRole", userMatch.rol);
                 sessionStorage.setItem("userEmail", userMatch.email);
-
                 actualizarBotonHeader();
-
                 const hash = "#perfil";
                 window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
                 await loadPageConContenido(getTemplateFromHref(hash));
             } else {
                 alert("Credenciales incorrectas. Revisa tu email o contraseña.");
+            }
+        }
+        else {
+            const esFormularioContacto = e.target.querySelector("#user-email");
+            if (esFormularioContacto) {
+                e.preventDefault();
+                alert("¡Tu solicitud de cita ha sido enviada correctamente!");
+                e.target.reset();
+                gestionarFormularioCitas();
             }
         }
     });
@@ -451,6 +469,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     actualizarBotonHeader();
     setupNavigation();
     gestionarFormularioCitas();
+    actualizarDatosPerfil();
     const hash = window.location.hash || "#inicio";
 
     const productsElement = document.querySelector('.pre-footer-products');
