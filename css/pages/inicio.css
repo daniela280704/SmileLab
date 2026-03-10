@@ -64,3 +64,28 @@
     display: inline-block;
 }
 
+/* --- Responsive Web Design --- */
+
+/* --- TABLET (hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .servicios-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        padding: 0 5% 2rem;
+    }
+}
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    .servicios-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .servicios-section {
+        padding: 0 5% 2rem;
+    }
+
+    .servicios-section h2 {
+        font-size: 1.8rem;
+    }
+}

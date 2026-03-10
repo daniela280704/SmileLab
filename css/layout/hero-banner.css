@@ -27,7 +27,7 @@
 
 .hero-banner h1 {
     color: var(--blanco);
-    font-size: 3rem;
+    font-size: clamp(1.5rem, 8vw, 3rem);
     margin-bottom: 1.5rem;
 }
 
@@ -47,3 +47,19 @@
     background: var(--azul-fondo);
 }
 
+/* --- Responsive Web Design --- */
+
+/* --- TABLET (hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .hero-banner {
+        padding: 4rem 5%;
+    }
+}
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    .hero-banner {
+        padding: 3rem 1rem;
+        min-height: 25vh;
+    }
+}

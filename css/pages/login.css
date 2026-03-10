@@ -6,7 +6,7 @@
 }
 
 .login-section h2 {
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
     color: var(--negro-smile);
     margin-bottom: 2rem;
     text-align: left;
@@ -75,4 +75,13 @@ form.login-form {
 
 .login-btn-container .btn-dark:hover {
     background: #333;
+}
+
+/* --- Responsive Web Design --- */
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    form.login-form {
+        padding: 1.5rem;
+    }
 }

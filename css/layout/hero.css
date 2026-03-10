@@ -1,4 +1,4 @@
-main>section:first-of-type:not(.hero-section):not(.hero-banner):not(.page-hero):not(.citas-banner):not(.team-hero):not(.perfil-hero) {
+main>section:first-of-type:not(.pre-footer-products):not(.hero-section):not(.hero-banner):not(.page-hero):not(.citas-banner):not(.team-hero):not(.perfil-hero) {
     padding: 4rem 10%;
     background: var(--gradient-inicio);
     display: flex;
@@ -11,4 +11,3 @@ main h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
 }
-

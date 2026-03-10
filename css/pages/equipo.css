@@ -9,14 +9,16 @@
     padding: 4rem 10%;
 }
 
-@media (max-width: 768px) {
+/* --- TABLET y MÓVIL (hasta 1024px) --- */
+@media (max-width: 1024px) {
     .team-hero {
         grid-template-columns: 1fr;
+        text-align: center;
     }
 }
 
 .team-hero .hero-content h1 {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 6vw, 2.5rem);
     margin-bottom: 1rem;
 }
 
@@ -50,3 +52,78 @@
     aspect-ratio: 1;
 }
 
+/* --- Responsive Web Design --- */
+
+/* --- TABLET (hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-grid article {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        column-gap: 2rem;
+        text-align: left;
+    }
+
+    .team-grid article .thumb-placeholder,
+    .team-grid article .img-box-gris {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        width: 100%;
+        height: auto;
+    }
+
+    .team-grid article h3 {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: end;
+        margin-bottom: 0.5rem;
+    }
+
+    .team-grid article p {
+        grid-column: 2;
+        grid-row: 2;
+        align-self: start;
+        margin-top: 0;
+    }
+
+    /* Alternating layout for tablet */
+    .team-grid article:nth-child(even) .thumb-placeholder,
+    .team-grid article:nth-child(even) .img-box-gris {
+        grid-column: 2;
+    }
+
+    .team-grid article:nth-child(even) h3,
+    .team-grid article:nth-child(even) p {
+        grid-column: 1;
+    }
+}
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    .team-grid article {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .team-grid article .thumb-placeholder,
+    .team-grid article .img-box-gris,
+    .team-grid article h3,
+    .team-grid article p {
+        width: 100%;
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
+
+    .team-grid article .thumb-placeholder,
+    .team-grid article .img-box-gris {
+        width: 100%;
+        max-width: 300px;
+    }
+}

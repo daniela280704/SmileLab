@@ -73,3 +73,46 @@
     border-radius: 12px;
 }
 
+/* --- Responsive Web Design --- */
+
+/* --- TABLET (hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .product-card-mini header {
+        padding: 1rem 0.75rem 0;
+    }
+
+    .product-card-mini h4 {
+        font-size: 1rem;
+    }
+
+    .product-image-container {
+        padding: 1rem 0.75rem 1rem;
+    }
+
+    .product-placeholder-1,
+    .product-placeholder-2,
+    .product-placeholder-3 {
+        min-height: 150px;
+    }
+}
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    .product-card-mini header {
+        padding: 0.75rem 0.5rem 0;
+    }
+
+    .product-card-mini h4 {
+        font-size: 0.9rem;
+    }
+
+    .product-image-container {
+        padding: 0.75rem 0.5rem 1rem;
+    }
+
+    .product-placeholder-1,
+    .product-placeholder-2,
+    .product-placeholder-3 {
+        min-height: 120px;
+    }
+}

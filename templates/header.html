@@ -14,6 +14,22 @@
         </ul>
     </nav>
     <div class="header-actions">
-        <a href="#login"><button class="btn-dark">Perfil</button></a>
+        <a href="#login"><button class="btn-dark btn-perfil-desktop">Perfil</button></a>
+        <button class="btn-menu-mobile">Menú</button>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <div class="mobile-nav-container">
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#equipo">Equipo</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><a href="#perfil">Perfil</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="mobile-menu-footer" xlu-include-file="templates/footer.html"></div>
     </div>
 </header>

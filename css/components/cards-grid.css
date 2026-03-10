@@ -30,3 +30,11 @@ article img:not(.product-image) {
     object-fit: cover;
 }
 
+/* --- Responsive Web Design --- */
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    main>section:not(.hero-section):not(.hero-banner):not(.page-hero):not(.citas-banner):not(.team-hero):not(.perfil-hero):not(.servicios-section):not(.servicios-page):not(.contact-form-section):not(.contact-map-section)>div:not(.hero-content):not(.hero-image):not(.utilidades-grid):not(.contact-cards-container):not(.citas-cards-grid):not(.team-grid):not(.feature-blocks):not(.perfil-tabs):not(.product-container) {
+        padding: 2rem 5%;
+    }
+}

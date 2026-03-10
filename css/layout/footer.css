@@ -131,14 +131,14 @@ article .product-image {
 }
 
 .hero-content h1 {
-    font-size: 2.8rem;
+    font-size: clamp(1.5rem, 8vw, 2.8rem);
     color: var(--negro-smile);
     margin-bottom: 1.5rem;
     line-height: 1.2;
 }
 
 .hero-content p {
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
     color: #555;
     margin-bottom: 2.5rem;
     line-height: 1.6;
@@ -168,3 +168,84 @@ article .product-image {
     object-fit: cover;
 }
 
+/* --- Responsive Web Design --- */
+
+/* --- TABLET (hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .pre-footer-products {
+        padding: 2.5rem 5%;
+    }
+
+    .footer-container {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .product-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .hero-section {
+        gap: 1.5rem;
+    }
+}
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    footer {
+        padding: 3rem 5% 2rem;
+    }
+
+    .pre-footer-products {
+        padding: 2rem 5%;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
+
+    .footer-brand .social-links {
+        justify-content: center;
+    }
+
+    /* Eliminado centrado de footer column para mantener alineación izquierda */
+
+    .product-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .product-card-link:nth-child(1) {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .product-card-link:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+        margin-top: 0;
+    }
+
+    .product-card-link:nth-child(3) {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .hero-section {
+        display: flex;
+        flex-direction: column-reverse;
+        text-align: left;
+        margin: 2rem auto;
+        gap: 2rem;
+    }
+}
