@@ -215,7 +215,6 @@ article .product-image {
         justify-content: center;
     }
 
-    /* Eliminado centrado de footer column para mantener alineación izquierda */
 
     .product-container {
         display: grid;

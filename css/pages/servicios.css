@@ -13,16 +13,31 @@
     margin-bottom: 3rem;
 }
 
+.accordion-icon {
+    display: none;
+}
+
+.feature-block .img-box-gris {
+    aspect-ratio: 4/3;
+    max-height: 280px;
+}
+
+.feature-block h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--negro-smile);
+}
+
+.feature-block p {
+    color: #555;
+    line-height: 1.6;
+}
+
 /* --- TABLET (hasta 1024px) --- */
 @media (max-width: 1024px) {
     .feature-block {
         grid-template-columns: 1fr;
     }
-}
-
-.accordion-icon {
-    display: none;
-    /* Solo visible en móvil */
 }
 
 /* --- MÓVIL (hasta 768px) --- */
@@ -33,7 +48,6 @@
         width: 100%;
         height: auto;
         margin-bottom: 1rem;
-        /* Ocultamos la imagen en móvil por defecto */
     }
 
     .feature-block.expanded img {
@@ -70,14 +84,12 @@
     .feature-block p {
         order: 3;
         display: none;
-        /* Oculto por defecto */
         padding: 0 0 1.5rem;
         margin-bottom: 0;
     }
 
     .feature-block.expanded p {
         display: block;
-        /* Visible al hacer clic */
     }
 
     .accordion-icon {
@@ -94,20 +106,4 @@
         font-size: 1.2rem;
         font-weight: bold;
     }
-}
-
-.feature-block .img-box-gris {
-    aspect-ratio: 4/3;
-    max-height: 280px;
-}
-
-.feature-block h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    color: var(--negro-smile);
-}
-
-.feature-block p {
-    color: #555;
-    line-height: 1.6;
 }
