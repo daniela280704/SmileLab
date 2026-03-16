@@ -89,7 +89,7 @@ function actualizarBotonHeader() {
         botonDentro.textContent = `${nombreUsuario}`;
     } else {
         enlaceHeader.setAttribute("href", "#login");
-        botonDentro.textContent = "Perfil";
+        botonDentro.textContent = "Iniciar Sesión";
     }
 }
 
