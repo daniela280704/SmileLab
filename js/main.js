@@ -75,6 +75,7 @@ function actualizarBotonHeader() {
 
     const enlaceHeader = contenedorAcciones.querySelector('a');
     const botonDentro = contenedorAcciones.querySelector('button');
+    const enlaceMobile = document.querySelector('.mobile-nav ul li a[href="#perfil"], .mobile-nav ul li a[href="#login"]');
 
     if (!enlaceHeader || !botonDentro) return;
 
@@ -83,13 +84,21 @@ function actualizarBotonHeader() {
 
     if (isLoggedIn && userEmail) {
         enlaceHeader.setAttribute("href", "#perfil");
-
         const nombreUsuario = userEmail.split('@')[0];
-
         botonDentro.textContent = `${nombreUsuario}`;
+
+        if (enlaceMobile) {
+            enlaceMobile.setAttribute("href", "#perfil");
+            enlaceMobile.textContent = `${nombreUsuario}`;
+        }
     } else {
         enlaceHeader.setAttribute("href", "#login");
         botonDentro.textContent = "Iniciar Sesión";
+
+        if (enlaceMobile) {
+            enlaceMobile.setAttribute("href", "#login");
+            enlaceMobile.textContent = "Iniciar Sesión";
+        }
     }
 }
 
