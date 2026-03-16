@@ -93,6 +93,19 @@ function actualizarBotonHeader() {
     }
 }
 
+function actualizarEnlaceActivoMobile(hash) {
+    const mobileLinks = document.querySelectorAll('.mobile-nav a');
+    if (!mobileLinks.length) return;
+    const currentHash = (hash === "" || hash === "#" || hash === "index.html" || !hash) ? "#inicio" : hash;
+    mobileLinks.forEach(link => {
+        if (link.getAttribute('href') === currentHash) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
 function gestionarFormularioCitas() {
     const seccionFormulario = document.querySelector(".contact-form-section");
     const inputEmail = document.getElementById("user-email");
@@ -305,6 +318,7 @@ function setupNavigation() {
             const template = getTemplateFromHref(hash);
             window.history.pushState({ template }, "", "index.html" + hash);
             await loadPageConContenido(template);
+            actualizarEnlaceActivoMobile(hash);
             return;
         }
 
@@ -325,6 +339,7 @@ function setupNavigation() {
             const perfilTemplate = getTemplateFromHref(perfilHref);
             window.history.pushState({ template: perfilTemplate }, "", "index.html" + perfilHref);
             await loadPageConContenido(perfilTemplate);
+            actualizarEnlaceActivoMobile(perfilHref);
             return;
         }
 
@@ -338,6 +353,7 @@ function setupNavigation() {
         }
 
         await loadPageConContenido(template);
+        actualizarEnlaceActivoMobile(hash);
     });
 
     document.addEventListener("submit", async (e) => {
@@ -355,6 +371,7 @@ function setupNavigation() {
                 const hash = "#perfil";
                 window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
                 await loadPageConContenido(getTemplateFromHref(hash));
+                actualizarEnlaceActivoMobile(hash);
             } else {
                 alert("Credenciales incorrectas. Revisa tu email o contraseña.");
             }
@@ -379,7 +396,7 @@ function setupNavigation() {
                 const icon = block.querySelector('.accordion-icon');
                 if (block && icon) {
                     block.classList.toggle('expanded');
-                    icon.textContent = block.classList.contains('expanded') ? '-' : '+';
+                    icon.textContent = block.classList.contains('expanded') ? '✕' : '☰';
                 }
             }
             return;
@@ -413,6 +430,7 @@ function setupNavigation() {
             const template = ROUTES[hash] || ROUTES["#inicio"];
             await loadPageConContenido(template);
         }
+        actualizarEnlaceActivoMobile(hash);
     });
 }
 
@@ -510,6 +528,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const template = ROUTES[hash] || "pages/inicio.html";
     window.history.replaceState({ template }, "", "index.html" + (hash === "#inicio" ? "" : hash));
     await loadPageConContenido(template);
+    actualizarEnlaceActivoMobile(hash);
 });
 
 
