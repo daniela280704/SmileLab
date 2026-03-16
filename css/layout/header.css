@@ -212,6 +212,11 @@ nav a:hover {
         font-size: 1.3rem;
         font-weight: 700;
         display: block;
+        transition: color 0.3s;
+    }
+
+    .mobile-menu-overlay .mobile-nav a.active {
+        color: var(--azul-medio);
     }
 
     /* Botón invertido cuando el menú está abierto */
