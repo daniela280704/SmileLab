@@ -605,36 +605,67 @@ document.addEventListener("DOMContentLoaded", async () => {
 function cargarMisCitas() {
     const contenedor = document.getElementById("contenedor-citas");
 
-    // Si no estamos en la página de citas, no hacemos nada
     if (!contenedor) return;
 
-    // 1. Saber quién está logueado
     const emailActual = sessionStorage.getItem("userEmail");
+    const rolActual = sessionStorage.getItem("userRole"); // Sacamos el rol: "usuario" o "enfermero"
 
     if (!emailActual) {
-        contenedor.innerHTML = "<p>Debes iniciar sesión para ver tus citas.</p>";
+        contenedor.innerHTML = "<p>Debes iniciar sesión para ver las citas.</p>";
         return;
     }
 
-    // 2. Buscar sus datos en la base de datos simulada
-    const usuario = usuariosDB.find(u => u.email === emailActual);
+    // Limpiamos el contenedor antes de inyectar nada
+    contenedor.innerHTML = "";
 
-    // 3. Comprobar si tiene una cita guardada y dibujarla
-    if (usuario && usuario.motivoCita) {
-        contenedor.innerHTML = `
-            <article>
-                <h3>${usuario.motivoCita}</h3>
-                <p><strong>Fecha y hora:</strong> ${usuario.proximaLimpieza}</p>
-                <p><strong>Doctor:</strong> ${usuario.doctor}</p>
-                <p><em>Estado: Próxima</em></p>
-                <div class="acciones-cita">
-                    <p style="font-size: 0.85rem; color: #666; margin: 0;">Para modificar o cancelar esta cita, por favor <a href="#contacto">contacta con nosotros</a>.</p>
-                </div>
-            </article>
-        `;
-    } else {
-        // Si es un usuario que no tiene citas (como el Paciente Demo original)
-        contenedor.innerHTML = `<p style="text-align:center; width:100%;">No tienes ninguna cita programada actualmente.</p>`;
+    // ==========================================
+    // VISTA DEL ENFERMERO (Ve todas las citas)
+    // ==========================================
+    if (rolActual === "enfermero") {
+
+        // Filtramos la base de datos para quedarnos solo con los usuarios que tienen una cita pedida
+        const pacientesConCita = usuariosDB.filter(u => u.motivoCita && u.motivoCita !== "");
+
+        if (pacientesConCita.length === 0) {
+            contenedor.innerHTML = "<p style='text-align:center; width:100%;'>No hay ninguna cita programada en la agenda hoy.</p>";
+            return;
+        }
+
+        // Por cada paciente con cita, dibujamos una tarjeta
+        // Fíjate que aquí le mostramos el nombre del paciente y su teléfono, datos útiles para el enfermero
+        pacientesConCita.forEach(paciente => {
+            contenedor.innerHTML += `
+                <article>
+                    <h3>${paciente.motivoCita}</h3>
+                    <p><strong>Paciente:</strong> ${paciente.nombre} (Tel: ${paciente.telefono || 'No indicado'})</p>
+                    <p><strong>Fecha y hora:</strong> ${paciente.proximaLimpieza}</p>
+                    <p><strong>Profesional solicitado:</strong> ${paciente.doctor}</p>
+                    <p><em>Estado: Pendiente de atender</em></p>
+                </article>
+            `;
+        });
+    }
+        // ==========================================
+        // VISTA DEL PACIENTE (Solo ve su propia cita)
+    // ==========================================
+    else {
+        const usuario = usuariosDB.find(u => u.email === emailActual);
+
+        if (usuario && usuario.motivoCita) {
+            contenedor.innerHTML = `
+                <article>
+                    <h3>${usuario.motivoCita}</h3>
+                    <p><strong>Fecha y hora:</strong> ${usuario.proximaLimpieza}</p>
+                    <p><strong>Doctor:</strong> ${usuario.doctor}</p>
+                    <p><em>Estado: Próxima</em></p>
+                    <div class="acciones-cita">
+                        <p style="font-size: 0.85rem; color: #666; margin: 0;">Para modificar o cancelar esta cita, por favor <a href="#contacto">contacta con nosotros</a>.</p>
+                    </div>
+                </article>
+            `;
+        } else {
+            contenedor.innerHTML = `<p style="text-align:center; width:100%;">No tienes ninguna cita programada actualmente.</p>`;
+        }
     }
 }
 
