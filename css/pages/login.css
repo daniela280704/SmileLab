@@ -7,6 +7,12 @@
     padding: 0 5%;
 }
 
+@media (max-width: 768px) {
+    .login-section {
+        margin: 3rem auto;
+    }
+}
+
 .login-section h2 {
     font-size: clamp(1.8rem, 5vw, 2.2rem);
     color: var(--negro-smile);
@@ -25,21 +31,24 @@ form.login-form {
     background: var(--blanco);
     border-radius: 12px;
     box-shadow: var(--shadow);
+    position: relative;
+    z-index: 15;
 }
 
 .login-form .input-group {
-    display: flex;
-    align-items: center;
     background: #f3f4f6;
     border-radius: 12px;
-    padding: 1.2rem 1.5rem;
-    gap: 1rem;
     border: none;
+    padding: 0;
 }
 
-.login-form .input-group .icon {
-    color: #555;
-    font-size: 0.9rem;
+.login-form .input-label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1.2rem 1.5rem;
+    cursor: text;
 }
 
 .login-form .input-group input {
@@ -51,11 +60,13 @@ form.login-form {
     color: #111;
     padding: 0;
     outline: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .login-form .input-group input::placeholder {
-    color: #111;
-    font-weight: bold;
+    color: #888;
+    font-weight: normal;
 }
 
 .login-btn-container {
@@ -64,19 +75,22 @@ form.login-form {
 }
 
 .login-btn-container .btn-dark {
-    background: #000;
+    background: var(--negro-smile);
     color: #fff;
     border: none;
     padding: 1rem 2.5rem;
     border-radius: 50px;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s;
+    width: 100%;
+    max-width: 300px;
 }
 
 .login-btn-container .btn-dark:hover {
-    background: #333;
+    background: var(--azul-oscuro);
+    transform: translateY(-2px);
 }
 
 /* --- Responsive Web Design --- */
