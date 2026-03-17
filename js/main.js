@@ -28,17 +28,30 @@ const ROUTES = {
 
 async function cargarBaseDeDatos() {
     try {
-        const respuesta = await fetch('./db.json');
+        // 1. Comprobamos si ya tenemos usuarios guardados en el navegador
+        const usuariosGuardados = localStorage.getItem('usuariosGuardados');
 
-        if (!respuesta.ok) {
-            throw new Error('Error al leer el archivo db.json');
+        if (usuariosGuardados) {
+            // Si hay datos en memoria, los cargamos (aquí estarán los nuevos registros)
+            usuariosDB = JSON.parse(usuariosGuardados);
+            console.log("Usuarios cargados desde la memoria del navegador:", usuariosDB);
+        } else {
+            // Si no hay datos (la primera vez que abres la web), leemos tu archivo db.json
+            const respuesta = await fetch('./db.json');
+
+            if (!respuesta.ok) {
+                throw new Error('Error al leer el archivo db.json');
+            }
+
+            const datos = await respuesta.json();
+
+            usuariosDB = Array.isArray(datos) ? datos[0].usuarios : (datos.usuarios || datos);
+
+            console.log("Usuarios cargados desde el JSON por primera vez:", usuariosDB);
+
+            // 2. IMPORTANTE: Guardamos estos usuarios iniciales en el navegador para el futuro
+            localStorage.setItem('usuariosGuardados', JSON.stringify(usuariosDB));
         }
-
-        const datos = await respuesta.json();
-
-        usuariosDB = datos.usuarios || datos;
-
-        console.log("Usuarios cargados desde el JSON:", usuariosDB);
     } catch (error) {
         console.error("Hubo un problema cargando la base de datos:", error);
     }
