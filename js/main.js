@@ -202,6 +202,7 @@ async function loadPageConContenido(templatePath) {
     renderizarContenidoDinamico();
     gestionarFormularioCitas();
     actualizarDatosPerfil();
+    cargarMisCitas();
 }
 
 function renderizarContenidoDinamico() {
@@ -600,5 +601,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadPageConContenido(template);
     actualizarEnlaceActivoMobile(hash);
 });
+
+function cargarMisCitas() {
+    const contenedor = document.getElementById("contenedor-citas");
+
+    // Si no estamos en la página de citas, no hacemos nada
+    if (!contenedor) return;
+
+    // 1. Saber quién está logueado
+    const emailActual = sessionStorage.getItem("userEmail");
+
+    if (!emailActual) {
+        contenedor.innerHTML = "<p>Debes iniciar sesión para ver tus citas.</p>";
+        return;
+    }
+
+    // 2. Buscar sus datos en la base de datos simulada
+    const usuario = usuariosDB.find(u => u.email === emailActual);
+
+    // 3. Comprobar si tiene una cita guardada y dibujarla
+    if (usuario && usuario.motivoCita) {
+        contenedor.innerHTML = `
+            <article>
+                <h3>${usuario.motivoCita}</h3>
+                <p><strong>Fecha y hora:</strong> ${usuario.proximaLimpieza}</p>
+                <p><strong>Doctor:</strong> ${usuario.doctor}</p>
+                <p><em>Estado: Próxima</em></p>
+                <div class="acciones-cita">
+                    <p style="font-size: 0.85rem; color: #666; margin: 0;">Para modificar o cancelar esta cita, por favor <a href="#contacto">contacta con nosotros</a>.</p>
+                </div>
+            </article>
+        `;
+    } else {
+        // Si es un usuario que no tiene citas (como el Paciente Demo original)
+        contenedor.innerHTML = `<p style="text-align:center; width:100%;">No tienes ninguna cita programada actualmente.</p>`;
+    }
+}
 
 
