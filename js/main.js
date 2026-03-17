@@ -385,13 +385,61 @@ function setupNavigation() {
                 alert("Credenciales incorrectas. Revisa tu email o contraseña.");
             }
         }
-        else {
-            const esFormularioContacto = e.target.querySelector("#user-email");
-            if (esFormularioContacto) {
-                e.preventDefault();
-                alert("¡Tu solicitud de cita ha sido enviada correctamente!");
-                e.target.reset();
-                gestionarFormularioCitas();
+        else if (e.target.matches("form.combined-form")) {
+            e.preventDefault(); // Evitamos que la página recargue
+
+            // 1. Recogemos los datos personales y de cuenta
+            const nombre = document.getElementById("reg-nombre").value;
+            const email = document.getElementById("user-email").value; // Usamos el ID unificado
+            const tel = document.getElementById("reg-tel").value;
+            const pass = document.getElementById("reg-password").value;
+
+            // 2. Recogemos los datos de la cita médica
+            const dia = document.getElementById("appointment-day").value;
+            const hora = document.getElementById("appointment-time").value;
+            const motivo = document.getElementById("appointment-reason").value;
+            const profesional = document.getElementById("appointment-professional").value;
+
+            // 3. Comprobamos si el email ya existe en nuestra "base de datos"
+            const existe = usuariosDB.find(u => u.email === email);
+            if (existe) {
+                alert("Este correo ya está registrado. Por favor, ve a la página de Login para entrar y pedir tu cita.");
+                return;
+            }
+
+            // 4. Creamos el nuevo usuario guardando TAMBIÉN su cita
+            const nuevoUsuario = {
+                email: email,
+                pass: pass,
+                rol: "usuario",
+                nombre: nombre,
+                telefono: tel,
+                proximaLimpieza: `${dia} a las ${hora}`,
+                doctor: profesional,
+                motivoCita: motivo
+            };
+
+            usuariosDB.push(nuevoUsuario); // Lo guardamos en memoria
+            localStorage.setItem("usuariosGuardados", JSON.stringify(usuariosDB));
+
+            // 5. Lo logueamos automáticamente (Autenticación)
+            sessionStorage.setItem("isLoggedIn", "true");
+            sessionStorage.setItem("userRole", "usuario");
+            sessionStorage.setItem("userEmail", email);
+            sessionStorage.setItem("userName", nombre);
+
+            // 6. Actualizamos el diseño de la web (Control de acceso/Roles)
+            if (typeof actualizarBotonHeader === "function") {
+                actualizarBotonHeader();
+            }
+
+            alert("¡Registro y cita completados con éxito! Bienvenido a SmileLab.");
+
+            // 7. Redirigimos al área privada (Perfil)
+            const hash = "#perfil";
+            window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
+            if (typeof loadPageConContenido === "function") {
+                await loadPageConContenido(getTemplateFromHref(hash));
             }
         }
     });
