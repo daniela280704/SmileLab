@@ -24,21 +24,12 @@
 </section>
 
 <div xlu-include-file="templates/form.html" data-section-class="contact-form-section" data-title-tag="h3"
-     data-title="Solicita tu cita y crea tu cuenta" data-form-action="#perfil" data-form-method="post" data-form-class="combined-form" data-btn-text="Enviar y registrarme">
-
-    <label for="reg-nombre">Nombre:</label>
-    <input type="text" id="reg-nombre" name="reg-nombre" placeholder="Ej: Juan Pérez" required minlength="3">
+      data-title="Solicita tu cita" data-form-action="#" data-form-method="post" data-btn-text="Enviar">
 
     <label for="user-email">Correo electrónico:</label>
-    <input type="email" id="user-email" name="user-email" placeholder="Ej: juan@email.com" required>
+    <input type="email" id="user-email" name="user-email" required>
 
-    <label for="reg-tel">Teléfono (9 dígitos):</label>
-    <input type="tel" id="reg-tel" name="reg-tel" placeholder="Ej: 600123456" required pattern="[0-9]{9}" title="Debe contener exactamente 9 números">
-
-    <label for="reg-password">Contraseña (mín. 6 caracteres):</label>
-    <input type="password" id="reg-password" name="reg-password" placeholder="Para acceder a tu área de paciente" required minlength="6">
-
-    <label for="appointment-day">Fecha de la cita:</label>
+    <label for="appointment-day">Fecha:</label>
     <input type="date" id="appointment-day" name="appointment-day" required>
 
     <label for="appointment-time">Hora:</label>

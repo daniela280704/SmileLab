@@ -28,30 +28,17 @@ const ROUTES = {
 
 async function cargarBaseDeDatos() {
     try {
-        // 1. Comprobamos si ya tenemos usuarios guardados en el navegador
-        const usuariosGuardados = localStorage.getItem('usuariosGuardados');
+        const respuesta = await fetch('./db.json');
 
-        if (usuariosGuardados) {
-            // Si hay datos en memoria, los cargamos (aquí estarán los nuevos registros)
-            usuariosDB = JSON.parse(usuariosGuardados);
-            console.log("Usuarios cargados desde la memoria del navegador:", usuariosDB);
-        } else {
-            // Si no hay datos (la primera vez que abres la web), leemos tu archivo db.json
-            const respuesta = await fetch('./db.json');
-
-            if (!respuesta.ok) {
-                throw new Error('Error al leer el archivo db.json');
-            }
-
-            const datos = await respuesta.json();
-
-            usuariosDB = Array.isArray(datos) ? datos[0].usuarios : (datos.usuarios || datos);
-
-            console.log("Usuarios cargados desde el JSON por primera vez:", usuariosDB);
-
-            // 2. IMPORTANTE: Guardamos estos usuarios iniciales en el navegador para el futuro
-            localStorage.setItem('usuariosGuardados', JSON.stringify(usuariosDB));
+        if (!respuesta.ok) {
+            throw new Error('Error al leer el archivo db.json');
         }
+
+        const datos = await respuesta.json();
+
+        usuariosDB = datos.usuarios || datos;
+
+        console.log("Usuarios cargados desde el JSON:", usuariosDB);
     } catch (error) {
         console.error("Hubo un problema cargando la base de datos:", error);
     }
@@ -202,7 +189,6 @@ async function loadPageConContenido(templatePath) {
     renderizarContenidoDinamico();
     gestionarFormularioCitas();
     actualizarDatosPerfil();
-    cargarMisCitas();
 }
 
 function renderizarContenidoDinamico() {
@@ -399,61 +385,13 @@ function setupNavigation() {
                 alert("Credenciales incorrectas. Revisa tu email o contraseña.");
             }
         }
-        else if (e.target.matches("form.combined-form")) {
-            e.preventDefault(); // Evitamos que la página recargue
-
-            // 1. Recogemos los datos personales y de cuenta
-            const nombre = document.getElementById("reg-nombre").value;
-            const email = document.getElementById("user-email").value; // Usamos el ID unificado
-            const tel = document.getElementById("reg-tel").value;
-            const pass = document.getElementById("reg-password").value;
-
-            // 2. Recogemos los datos de la cita médica
-            const dia = document.getElementById("appointment-day").value;
-            const hora = document.getElementById("appointment-time").value;
-            const motivo = document.getElementById("appointment-reason").value;
-            const profesional = document.getElementById("appointment-professional").value;
-
-            // 3. Comprobamos si el email ya existe en nuestra "base de datos"
-            const existe = usuariosDB.find(u => u.email === email);
-            if (existe) {
-                alert("Este correo ya está registrado. Por favor, ve a la página de Login para entrar y pedir tu cita.");
-                return;
-            }
-
-            // 4. Creamos el nuevo usuario guardando TAMBIÉN su cita
-            const nuevoUsuario = {
-                email: email,
-                pass: pass,
-                rol: "usuario",
-                nombre: nombre,
-                telefono: tel,
-                proximaLimpieza: `${dia} a las ${hora}`,
-                doctor: profesional,
-                motivoCita: motivo
-            };
-
-            usuariosDB.push(nuevoUsuario); // Lo guardamos en memoria
-            localStorage.setItem("usuariosGuardados", JSON.stringify(usuariosDB));
-
-            // 5. Lo logueamos automáticamente (Autenticación)
-            sessionStorage.setItem("isLoggedIn", "true");
-            sessionStorage.setItem("userRole", "usuario");
-            sessionStorage.setItem("userEmail", email);
-            sessionStorage.setItem("userName", nombre);
-
-            // 6. Actualizamos el diseño de la web (Control de acceso/Roles)
-            if (typeof actualizarBotonHeader === "function") {
-                actualizarBotonHeader();
-            }
-
-            alert("¡Registro y cita completados con éxito! Bienvenido a SmileLab.");
-
-            // 7. Redirigimos al área privada (Perfil)
-            const hash = "#perfil";
-            window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
-            if (typeof loadPageConContenido === "function") {
-                await loadPageConContenido(getTemplateFromHref(hash));
+        else {
+            const esFormularioContacto = e.target.querySelector("#user-email");
+            if (esFormularioContacto) {
+                e.preventDefault();
+                alert("¡Tu solicitud de cita ha sido enviada correctamente!");
+                e.target.reset();
+                gestionarFormularioCitas();
             }
         }
     });
@@ -601,72 +539,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadPageConContenido(template);
     actualizarEnlaceActivoMobile(hash);
 });
-
-function cargarMisCitas() {
-    const contenedor = document.getElementById("contenedor-citas");
-
-    if (!contenedor) return;
-
-    const emailActual = sessionStorage.getItem("userEmail");
-    const rolActual = sessionStorage.getItem("userRole"); // Sacamos el rol: "usuario" o "enfermero"
-
-    if (!emailActual) {
-        contenedor.innerHTML = "<p>Debes iniciar sesión para ver las citas.</p>";
-        return;
-    }
-
-    // Limpiamos el contenedor antes de inyectar nada
-    contenedor.innerHTML = "";
-
-    // ==========================================
-    // VISTA DEL ENFERMERO (Ve todas las citas)
-    // ==========================================
-    if (rolActual === "enfermero") {
-
-        // Filtramos la base de datos para quedarnos solo con los usuarios que tienen una cita pedida
-        const pacientesConCita = usuariosDB.filter(u => u.motivoCita && u.motivoCita !== "");
-
-        if (pacientesConCita.length === 0) {
-            contenedor.innerHTML = "<p style='text-align:center; width:100%;'>No hay ninguna cita programada en la agenda hoy.</p>";
-            return;
-        }
-
-        // Por cada paciente con cita, dibujamos una tarjeta
-        // Fíjate que aquí le mostramos el nombre del paciente y su teléfono, datos útiles para el enfermero
-        pacientesConCita.forEach(paciente => {
-            contenedor.innerHTML += `
-                <article>
-                    <h3>${paciente.motivoCita}</h3>
-                    <p><strong>Paciente:</strong> ${paciente.nombre} (Tel: ${paciente.telefono || 'No indicado'})</p>
-                    <p><strong>Fecha y hora:</strong> ${paciente.proximaLimpieza}</p>
-                    <p><strong>Profesional solicitado:</strong> ${paciente.doctor}</p>
-                    <p><em>Estado: Pendiente de atender</em></p>
-                </article>
-            `;
-        });
-    }
-        // ==========================================
-        // VISTA DEL PACIENTE (Solo ve su propia cita)
-    // ==========================================
-    else {
-        const usuario = usuariosDB.find(u => u.email === emailActual);
-
-        if (usuario && usuario.motivoCita) {
-            contenedor.innerHTML = `
-                <article>
-                    <h3>${usuario.motivoCita}</h3>
-                    <p><strong>Fecha y hora:</strong> ${usuario.proximaLimpieza}</p>
-                    <p><strong>Doctor:</strong> ${usuario.doctor}</p>
-                    <p><em>Estado: Próxima</em></p>
-                    <div class="acciones-cita">
-                        <p style="font-size: 0.85rem; color: #666; margin: 0;">Para modificar o cancelar esta cita, por favor <a href="#contacto">contacta con nosotros</a>.</p>
-                    </div>
-                </article>
-            `;
-        } else {
-            contenedor.innerHTML = `<p style="text-align:center; width:100%;">No tienes ninguna cita programada actualmente.</p>`;
-        }
-    }
-}
 
 

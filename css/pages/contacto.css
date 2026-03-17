@@ -113,9 +113,12 @@
     box-shadow: var(--shadow);
 }
 
-.contact-form-section input {
+.contact-form-section input,
+.flatpickr-input {
     width: 100%;
     box-sizing: border-box;
+    font-size: 16px; /* Evita el zoom automático en móviles */
+    padding: 0.8rem;
 }
 
 .contact-form-section label {
@@ -195,6 +198,23 @@
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
 }
 
+/* ===== FLATPICKR ===== */
+.flatpickr-calendar {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+
+.flatpickr-day.selected {
+    background: #1e3a8a;
+    border-color: #1e3a8a;
+}
+
+.flatpickr-day:hover {
+    background: #dbeafe;
+}
+
 /* --- TABLET (hasta 1024px) --- */
 @media (max-width: 1024px) {
     .contact-cards-container {
@@ -220,5 +240,19 @@
 
     .contact-map-panel {
         min-height: 220px;
+    }
+
+    .contact-form-section form {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    /* Centrado forzado del Flatpickr para evitar desbordamiento */
+    .flatpickr-calendar {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        right: auto !important;
+        width: auto !important;
+        max-width: 95vw !important;
     }
 }
