@@ -243,7 +243,32 @@ async function loadPageConContenido(templatePath) {
     renderizarContenidoDinamico();
     gestionarFormularioCitas();
     actualizarDatosPerfil();
+    inicializarFlatpickr();
     cargarMisCitas();
+}
+
+function inicializarFlatpickr() {
+    if (typeof flatpickr !== "undefined") {
+        const dateInput = document.getElementById("appointment-day");
+        if (dateInput && !dateInput.classList.contains("flatpickr-input")) {
+            flatpickr(dateInput, {
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                disableMobile: true
+            });
+        }
+        
+        const timeInput = document.getElementById("appointment-time");
+        if (timeInput && !timeInput.classList.contains("flatpickr-input")) {
+            flatpickr(timeInput, {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                disableMobile: true
+            });
+        }
+    }
 }
 
 function renderizarContenidoDinamico() {
