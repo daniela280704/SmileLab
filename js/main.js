@@ -138,12 +138,17 @@ function gestionarFormularioCitas() {
     const rolActual = sessionStorage.getItem("userRole");
     const emailActual = sessionStorage.getItem("userEmail");
 
+    // IDs de los campos que son solo para registrarse
+    const regCampos = ["reg-nombre", "reg-tel", "reg-password"];
+
+    // 1. Si está logueado, bloqueamos el email siempre
     if (isLoggedIn && inputEmail) {
         inputEmail.value = emailActual;
         inputEmail.readOnly = true;
         inputEmail.style.backgroundColor = "#f0f0f0";
     }
 
+    // 2. Control de roles
     if (rolActual === "enfermero") {
         seccionFormulario.style.display = "none";
 
@@ -160,6 +165,42 @@ function gestionarFormularioCitas() {
         seccionFormulario.style.display = "block";
         const msg = document.getElementById("mensaje-personal");
         if (msg) msg.remove();
+
+        // 3. ¡NUEVO! Adaptar el formulario si el PACIENTE ya está logueado
+        if (isLoggedIn) {
+            // Cambiamos el título y botón dinámicamente para que tenga sentido
+            const titulo = seccionFormulario.querySelector("h3");
+            const boton = seccionFormulario.querySelector("button");
+            if (titulo) titulo.textContent = "Solicita una nueva cita";
+            if (boton) boton.textContent = "Confirmar cita";
+
+            // Ocultamos nombre, teléfono y contraseña
+            regCampos.forEach(id => {
+                const input = document.getElementById(id);
+                const label = document.querySelector(`label[for="${id}"]`);
+                if (input) {
+                    input.style.display = "none";
+                    input.removeAttribute("required"); // ¡Vital para que deje enviar el formulario!
+                }
+                if (label) label.style.display = "none";
+            });
+        } else {
+            // Si NO está logueado (entró directo a contacto), nos aseguramos de mostrar todo
+            const titulo = seccionFormulario.querySelector("h3");
+            const boton = seccionFormulario.querySelector("button");
+            if (titulo) titulo.textContent = "Solicita tu cita y crea tu cuenta";
+            if (boton) boton.textContent = "Enviar y registrarme";
+
+            regCampos.forEach(id => {
+                const input = document.getElementById(id);
+                const label = document.querySelector(`label[for="${id}"]`);
+                if (input) {
+                    input.style.display = "block";
+                    input.setAttribute("required", "true");
+                }
+                if (label) label.style.display = "block";
+            });
+        }
     }
 }
 
@@ -400,60 +441,72 @@ function setupNavigation() {
             }
         }
         else if (e.target.matches("form.combined-form")) {
-            e.preventDefault(); // Evitamos que la página recargue
+            e.preventDefault();
 
-            // 1. Recogemos los datos personales y de cuenta
-            const nombre = document.getElementById("reg-nombre").value;
-            const email = document.getElementById("user-email").value; // Usamos el ID unificado
-            const tel = document.getElementById("reg-tel").value;
-            const pass = document.getElementById("reg-password").value;
+            const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+            const email = document.getElementById("user-email").value;
 
-            // 2. Recogemos los datos de la cita médica
+            // Datos de la cita (lo rellenan todos)
             const dia = document.getElementById("appointment-day").value;
             const hora = document.getElementById("appointment-time").value;
             const motivo = document.getElementById("appointment-reason").value;
             const profesional = document.getElementById("appointment-professional").value;
 
-            // 3. Comprobamos si el email ya existe en nuestra "base de datos"
-            const existe = usuariosDB.find(u => u.email === email);
-            if (existe) {
-                alert("Este correo ya está registrado. Por favor, ve a la página de Login para entrar y pedir tu cita.");
-                return;
-            }
+            if (isLoggedIn) {
+                // CASO A: Ya eres un usuario. Solo guardamos tu nueva cita.
+                const usuario = usuariosDB.find(u => u.email === email);
+                if (usuario) {
+                    usuario.proximaLimpieza = `${dia} a las ${hora}`;
+                    usuario.doctor = profesional;
+                    usuario.motivoCita = motivo;
 
-            // 4. Creamos el nuevo usuario guardando TAMBIÉN su cita
-            const nuevoUsuario = {
-                email: email,
-                pass: pass,
-                rol: "usuario",
-                nombre: nombre,
-                telefono: tel,
-                proximaLimpieza: `${dia} a las ${hora}`,
-                doctor: profesional,
-                motivoCita: motivo
-            };
+                    localStorage.setItem("usuariosGuardados", JSON.stringify(usuariosDB));
+                    alert("¡Tu nueva cita se ha guardado correctamente!");
 
-            usuariosDB.push(nuevoUsuario); // Lo guardamos en memoria
-            localStorage.setItem("usuariosGuardados", JSON.stringify(usuariosDB));
+                    const hash = "#perfil";
+                    window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
+                    await loadPageConContenido(getTemplateFromHref(hash));
+                }
+            } else {
+                // CASO B: Eres un usuario nuevo. Te registramos y te guardamos la cita.
+                const nombre = document.getElementById("reg-nombre").value;
+                const tel = document.getElementById("reg-tel").value;
+                const pass = document.getElementById("reg-password").value;
 
-            // 5. Lo logueamos automáticamente (Autenticación)
-            sessionStorage.setItem("isLoggedIn", "true");
-            sessionStorage.setItem("userRole", "usuario");
-            sessionStorage.setItem("userEmail", email);
-            sessionStorage.setItem("userName", nombre);
+                const existe = usuariosDB.find(u => u.email === email);
+                if (existe) {
+                    alert("Este correo ya está registrado. Por favor, ve a la página de Login para entrar y pedir tu cita.");
+                    return;
+                }
 
-            // 6. Actualizamos el diseño de la web (Control de acceso/Roles)
-            if (typeof actualizarBotonHeader === "function") {
-                actualizarBotonHeader();
-            }
+                const nuevoUsuario = {
+                    email: email,
+                    pass: pass,
+                    rol: "usuario",
+                    nombre: nombre,
+                    telefono: tel,
+                    proximaLimpieza: `${dia} a las ${hora}`,
+                    doctor: profesional,
+                    motivoCita: motivo
+                };
 
-            alert("¡Registro y cita completados con éxito! Bienvenido a SmileLab.");
+                usuariosDB.push(nuevoUsuario);
+                localStorage.setItem("usuariosGuardados", JSON.stringify(usuariosDB));
 
-            // 7. Redirigimos al área privada (Perfil)
-            const hash = "#perfil";
-            window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
-            if (typeof loadPageConContenido === "function") {
-                await loadPageConContenido(getTemplateFromHref(hash));
+                sessionStorage.setItem("isLoggedIn", "true");
+                sessionStorage.setItem("userRole", "usuario");
+                sessionStorage.setItem("userEmail", email);
+                sessionStorage.setItem("userName", nombre);
+
+                if (typeof actualizarBotonHeader === "function") actualizarBotonHeader();
+
+                alert("¡Registro y cita completados con éxito! Bienvenido a SmileLab.");
+
+                const hash = "#perfil";
+                window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
+                if (typeof loadPageConContenido === "function") {
+                    await loadPageConContenido(getTemplateFromHref(hash));
+                }
             }
         }
     });
@@ -611,7 +664,7 @@ function cargarMisCitas() {
     const rolActual = sessionStorage.getItem("userRole"); // Sacamos el rol: "usuario" o "enfermero"
 
     if (!emailActual) {
-        contenedor.innerHTML = "<p>Debes iniciar sesión para ver las citas.</p>";
+        contenedor.innerHTML = "<p style='text-align:center; width:100%;'>Debes iniciar sesión para ver las citas.</p>";
         return;
     }
 
@@ -635,8 +688,7 @@ function cargarMisCitas() {
         // Fíjate que aquí le mostramos el nombre del paciente y su teléfono, datos útiles para el enfermero
         pacientesConCita.forEach(paciente => {
             contenedor.innerHTML += `
-                <article>
-                    <h3>${paciente.motivoCita}</h3>
+                <article style="border-left: 4px solid #0056b3;"> <h3>${paciente.motivoCita}</h3>
                     <p><strong>Paciente:</strong> ${paciente.nombre} (Tel: ${paciente.telefono || 'No indicado'})</p>
                     <p><strong>Fecha y hora:</strong> ${paciente.proximaLimpieza}</p>
                     <p><strong>Profesional solicitado:</strong> ${paciente.doctor}</p>
