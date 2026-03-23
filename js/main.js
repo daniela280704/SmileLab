@@ -446,36 +446,46 @@ function setupNavigation() {
             const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
             const email = document.getElementById("user-email").value;
 
-            // Datos de la cita (lo rellenan todos)
             const dia = document.getElementById("appointment-day").value;
             const hora = document.getElementById("appointment-time").value;
             const motivo = document.getElementById("appointment-reason").value;
             const profesional = document.getElementById("appointment-professional").value;
 
+            // Creamos un objeto específico para la cita
+            const nuevaCitaObj = {
+                fechaHora: `${dia} a las ${hora}`,
+                doctor: profesional,
+                motivo: motivo
+            };
+
             if (isLoggedIn) {
-                // CASO A: Ya eres un usuario. Solo guardamos tu nueva cita.
+                // CASO A: Ya eres un usuario. Añadimos la cita a tu lista.
                 const usuario = usuariosDB.find(u => u.email === email);
                 if (usuario) {
-                    usuario.proximaLimpieza = `${dia} a las ${hora}`;
+                    if (!usuario.citas) usuario.citas = []; // Si no tiene lista, la creamos
+                    usuario.citas.push(nuevaCitaObj); // Añadimos la cita nueva
+
+                    // Mantenemos esto para que tu pantalla de Perfil no se rompa
+                    usuario.proximaLimpieza = nuevaCitaObj.fechaHora;
                     usuario.doctor = profesional;
                     usuario.motivoCita = motivo;
 
                     localStorage.setItem("usuariosGuardados", JSON.stringify(usuariosDB));
-                    alert("¡Tu nueva cita se ha guardado correctamente!");
+                    alert("¡Tu nueva cita se ha guardado y añadido a tu agenda!");
 
-                    const hash = "#perfil";
+                    const hash = "#citas"; // Redirigimos a la agenda para que vea la lista
                     window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
                     await loadPageConContenido(getTemplateFromHref(hash));
                 }
             } else {
-                // CASO B: Eres un usuario nuevo. Te registramos y te guardamos la cita.
+                // CASO B: Usuario nuevo. Le creamos el perfil con su primera cita en la lista.
                 const nombre = document.getElementById("reg-nombre").value;
                 const tel = document.getElementById("reg-tel").value;
                 const pass = document.getElementById("reg-password").value;
 
                 const existe = usuariosDB.find(u => u.email === email);
                 if (existe) {
-                    alert("Este correo ya está registrado. Por favor, ve a la página de Login para entrar y pedir tu cita.");
+                    alert("Este correo ya está registrado. Por favor inicia sesión.");
                     return;
                 }
 
@@ -485,7 +495,8 @@ function setupNavigation() {
                     rol: "usuario",
                     nombre: nombre,
                     telefono: tel,
-                    proximaLimpieza: `${dia} a las ${hora}`,
+                    citas: [nuevaCitaObj], // Empezamos la lista con esta cita
+                    proximaLimpieza: nuevaCitaObj.fechaHora,
                     doctor: profesional,
                     motivoCita: motivo
                 };
@@ -502,7 +513,7 @@ function setupNavigation() {
 
                 alert("¡Registro y cita completados con éxito! Bienvenido a SmileLab.");
 
-                const hash = "#perfil";
+                const hash = "#citas";
                 window.history.pushState({ template: getTemplateFromHref(hash) }, "", "index.html" + hash);
                 if (typeof loadPageConContenido === "function") {
                     await loadPageConContenido(getTemplateFromHref(hash));
@@ -657,66 +668,76 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function cargarMisCitas() {
     const contenedor = document.getElementById("contenedor-citas");
-
     if (!contenedor) return;
 
     const emailActual = sessionStorage.getItem("userEmail");
-    const rolActual = sessionStorage.getItem("userRole"); // Sacamos el rol: "usuario" o "enfermero"
+    const rolActual = sessionStorage.getItem("userRole");
 
     if (!emailActual) {
         contenedor.innerHTML = "<p style='text-align:center; width:100%;'>Debes iniciar sesión para ver las citas.</p>";
         return;
     }
 
-    // Limpiamos el contenedor antes de inyectar nada
     contenedor.innerHTML = "";
 
-    // ==========================================
-    // VISTA DEL ENFERMERO (Ve todas las citas)
-    // ==========================================
+    // VISTA DEL ENFERMERO
     if (rolActual === "enfermero") {
+        let hayCitas = false;
 
-        // Filtramos la base de datos para quedarnos solo con los usuarios que tienen una cita pedida
-        const pacientesConCita = usuariosDB.filter(u => u.motivoCita && u.motivoCita !== "");
+        usuariosDB.forEach(paciente => {
+            // Adaptamos por si hay citas antiguas sueltas
+            let listaCitas = paciente.citas || [];
+            if (listaCitas.length === 0 && paciente.motivoCita) {
+                listaCitas = [{ motivo: paciente.motivoCita, fechaHora: paciente.proximaLimpieza, doctor: paciente.doctor }];
+            }
 
-        if (pacientesConCita.length === 0) {
-            contenedor.innerHTML = "<p style='text-align:center; width:100%;'>No hay ninguna cita programada en la agenda hoy.</p>";
-            return;
-        }
-
-        // Por cada paciente con cita, dibujamos una tarjeta
-        // Fíjate que aquí le mostramos el nombre del paciente y su teléfono, datos útiles para el enfermero
-        pacientesConCita.forEach(paciente => {
-            contenedor.innerHTML += `
-                <article style="border-left: 4px solid #0056b3;"> <h3>${paciente.motivoCita}</h3>
-                    <p><strong>Paciente:</strong> ${paciente.nombre} (Tel: ${paciente.telefono || 'No indicado'})</p>
-                    <p><strong>Fecha y hora:</strong> ${paciente.proximaLimpieza}</p>
-                    <p><strong>Profesional solicitado:</strong> ${paciente.doctor}</p>
-                    <p><em>Estado: Pendiente de atender</em></p>
-                </article>
-            `;
+            if (listaCitas.length > 0) {
+                hayCitas = true;
+                listaCitas.forEach(cita => {
+                    contenedor.innerHTML += `
+                        <article style="border-left: 4px solid #0056b3;">
+                            <h3>${cita.motivo}</h3>
+                            <p><strong>Paciente:</strong> ${paciente.nombre} (Tel: ${paciente.telefono || 'No indicado'})</p>
+                            <p><strong>Fecha y hora:</strong> ${cita.fechaHora}</p>
+                            <p><strong>Profesional solicitado:</strong> ${cita.doctor}</p>
+                            <p><em>Estado: Pendiente de atender</em></p>
+                        </article>
+                    `;
+                });
+            }
         });
+
+        if (!hayCitas) {
+            contenedor.innerHTML = "<p style='text-align:center; width:100%;'>No hay ninguna cita programada en la agenda hoy.</p>";
+        }
     }
-        // ==========================================
-        // VISTA DEL PACIENTE (Solo ve su propia cita)
-    // ==========================================
+    // VISTA DEL PACIENTE
     else {
         const usuario = usuariosDB.find(u => u.email === emailActual);
 
-        if (usuario && usuario.motivoCita) {
-            contenedor.innerHTML = `
-                <article>
-                    <h3>${usuario.motivoCita}</h3>
-                    <p><strong>Fecha y hora:</strong> ${usuario.proximaLimpieza}</p>
-                    <p><strong>Doctor:</strong> ${usuario.doctor}</p>
-                    <p><em>Estado: Próxima</em></p>
-                    <div class="acciones-cita">
-                        <p style="font-size: 0.85rem; color: #666; margin: 0;">Para modificar o cancelar esta cita, por favor <a href="#contacto">contacta con nosotros</a>.</p>
-                    </div>
-                </article>
-            `;
-        } else {
-            contenedor.innerHTML = `<p style="text-align:center; width:100%;">No tienes ninguna cita programada actualmente.</p>`;
+        if (usuario) {
+            let listaCitas = usuario.citas || [];
+            if (listaCitas.length === 0 && usuario.motivoCita) {
+                listaCitas = [{ motivo: usuario.motivoCita, fechaHora: usuario.proximaLimpieza, doctor: usuario.doctor }];
+            }
+
+            if (listaCitas.length > 0) {
+                listaCitas.forEach(cita => {
+                    contenedor.innerHTML += `
+                        <article>
+                            <h3>${cita.motivo}</h3>
+                            <p><strong>Fecha y hora:</strong> ${cita.fechaHora}</p>
+                            <p><strong>Doctor:</strong> ${cita.doctor}</p>
+                            <p><em>Estado: Próxima</em></p>
+                            <div class="acciones-cita">
+                                <p style="font-size: 0.85rem; color: #666; margin: 0;">Para modificar o cancelar, <a href="#contacto">contáctanos</a>.</p>
+                            </div>
+                        </article>
+                    `;
+                });
+            } else {
+                contenedor.innerHTML = `<p style="text-align:center; width:100%;">No tienes ninguna cita programada actualmente.</p>`;
+            }
         }
     }
 }
