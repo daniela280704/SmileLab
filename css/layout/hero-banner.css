@@ -1,3 +1,6 @@
+﻿/* Estilos de layout estructural para hero-banner */
+
+/* --- ORDENADOR (Desktop) - Estilos Base --- */
 .hero-banner {
     background: linear-gradient(-45deg, var(--azul-claro), var(--azul-medio), var(--azul-oscuro), var(--azul));
     background-size: 400% 400%;
@@ -10,27 +13,22 @@
     justify-content: center;
     align-items: center;
 }
-
 @keyframes heroGradient {
     0% {
         background-position: 0% 50%;
     }
-
     50% {
         background-position: 100% 50%;
     }
-
     100% {
         background-position: 0% 50%;
     }
 }
-
 .hero-banner h1 {
     color: var(--blanco);
     font-size: clamp(1.5rem, 8vw, 3rem);
     margin-bottom: 1.5rem;
 }
-
 .hero-banner .btn-hero-light {
     background: var(--gris-fondo);
     color: var(--negro-smile);
@@ -41,21 +39,16 @@
     cursor: pointer;
     transition: opacity 0.3s;
 }
-
 .hero-banner .btn-hero-light:hover {
     opacity: 0.9;
     background: var(--azul-fondo);
 }
-
-/* --- Responsive Web Design --- */
-
 /* --- TABLET (hasta 1024px) --- */
 @media (max-width: 1024px) {
     .hero-banner {
         padding: 4rem 5%;
     }
 }
-
 /* --- MÓVIL (hasta 768px) --- */
 @media (max-width: 768px) {
     .hero-banner {

@@ -1,3 +1,6 @@
+﻿/* Estilos de layout estructural para header */
+
+/* --- ORDENADOR (Desktop) - Estilos Base --- */
 body>header {
     display: flex;
     justify-content: space-between;
@@ -9,7 +12,6 @@ body>header {
     top: 0;
     z-index: 100;
 }
-
 .logo-container {
     display: flex;
     align-items: center;
@@ -19,60 +21,50 @@ body>header {
     color: var(--negro-smile);
     flex: 1;
 }
-
 .logo-link {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: inherit;
 }
-
 .logo-img {
     display: block;
     height: 40px;
     width: auto;
     object-fit: contain;
 }
-
 .logo-text {
     font-weight: bold;
     font-size: 1.2rem;
     margin-left: 10px;
 }
-
 .logo-fallback {
     display: none;
     font-weight: bold;
     font-size: 1.2rem;
 }
-
 .header-actions {
     flex: 1;
     display: flex;
     justify-content: flex-end;
 }
-
 .header-actions a {
     text-decoration: none;
 }
-
 nav ul {
     display: flex;
     list-style: none;
     gap: 2rem;
 }
-
 nav a {
     text-decoration: none;
     color: var(--negro-smile);
     font-size: 0.9rem;
     transition: 0.3s;
 }
-
 nav a:hover {
     color: var(--azul-medio);
 }
-
 .header-actions button {
     background: var(--negro-smile);
     color: var(--blanco);
@@ -81,28 +73,21 @@ nav a:hover {
     border-radius: 50px;
     cursor: pointer;
 }
-
 .btn-menu-mobile {
     display: none;
 }
-
 .mobile-menu-overlay {
     display: none;
 }
-
-/* --- Responsive Web Design --- */
-
 /* --- TABLET (hasta 1024px) --- */
 @media (max-width: 1024px) {
     body>header {
         padding: 1rem 3%;
     }
-
     nav ul {
         gap: 1rem;
     }
 }
-
 /* --- MÓVIL (hasta 768px) --- */
 @media (max-width: 768px) {
     body>header {
@@ -110,15 +95,12 @@ nav a:hover {
         flex-direction: row;
         justify-content: space-between;
     }
-
     header>nav {
         display: none;
     }
-
     .btn-perfil-desktop {
         display: none;
     }
-
     .btn-menu-mobile {
         display: block;
         background: var(--negro-smile);
@@ -129,14 +111,11 @@ nav a:hover {
         font-weight: bold;
         cursor: pointer;
     }
-
     .logo-container,
     .header-actions {
         flex: none;
         justify-content: unset;
     }
-
-    /* Mobile Menu Overlay */
     .mobile-menu-overlay {
         display: none;
         position: fixed;
@@ -152,7 +131,6 @@ nav a:hover {
         overflow-x: hidden;
         flex-direction: column;
     }
-
     .mobile-nav-container {
         padding: 4rem 10% 4rem;
         background-color: transparent;
@@ -162,41 +140,32 @@ nav a:hover {
         justify-content: center;
         flex: 1;
     }
-
     .mobile-menu-footer {
         background-color: #fafafa;
         overflow-x: hidden;
         width: 100%;
     }
-
     .mobile-menu-footer footer {
         padding: 2rem 5% 1rem;
     }
-
     .mobile-menu-footer .footer-container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-
     body.menu-open {
         overflow: hidden;
-        /* Evitar scroll de fondo */
     }
-
     body.menu-open>header {
         background-color: transparent;
         border-color: transparent;
     }
-
     body.menu-open .logo-container {
         opacity: 0;
         pointer-events: none;
     }
-
     body.menu-open .mobile-menu-overlay {
         display: block;
     }
-
     .mobile-menu-overlay .mobile-nav ul {
         display: flex;
         flex-direction: column;
@@ -205,7 +174,6 @@ nav a:hover {
         padding: 0;
         margin: 0;
     }
-
     .mobile-menu-overlay .mobile-nav a {
         text-decoration: none;
         color: var(--blanco);
@@ -214,17 +182,13 @@ nav a:hover {
         display: block;
         transition: color 0.3s;
     }
-
     .mobile-menu-overlay .mobile-nav a.active {
         color: var(--azul-medio);
     }
-
-    /* Botón invertido cuando el menú está abierto */
     body.menu-open .btn-menu-mobile {
         background-color: var(--blanco);
         color: var(--negro-smile);
         position: relative;
         z-index: 101;
-        /* Asegurar que quede por encima del overlay */
     }
 }

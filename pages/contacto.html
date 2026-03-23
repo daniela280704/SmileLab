@@ -1,7 +1,7 @@
+﻿<!-- Plantilla HTML genérica para la página de contacto -->
 <section class="page-hero">
     <h1>Contacto</h1>
 </section>
-
 <section>
     <h2 class="section-title">Para recibir más información de nuestros tratamientos, contáctanos sin compromiso</h2>
     <div class="contact-cards-container">
@@ -22,35 +22,25 @@
         </article>
     </div>
 </section>
-
 <div xlu-include-file="templates/form.html" data-section-class="contact-form-section" data-title-tag="h3"
      data-title="Solicita tu cita y crea tu cuenta" data-form-action="#perfil" data-form-method="post" data-form-class="combined-form" data-btn-text="Enviar y registrarme">
-
     <label for="reg-nombre">Nombre completo:</label>
     <input type="text" id="reg-nombre" name="reg-nombre" placeholder="Ej: Juan Pérez" required minlength="3">
-
     <label for="user-email">Correo electrónico:</label>
     <input type="email" id="user-email" name="user-email" placeholder="Ej: juan@email.com" required>
-
     <label for="reg-tel">Teléfono (9 dígitos):</label>
     <input type="tel" id="reg-tel" name="reg-tel" placeholder="Ej: 600123456" required pattern="[0-9]{9}" title="Debe contener exactamente 9 números">
-
     <label for="reg-password">Contraseña (mín. 6 caracteres):</label>
     <input type="password" id="reg-password" name="reg-password" placeholder="Para acceder a tu área de paciente" required minlength="6">
-
     <label for="appointment-day">Fecha de la cita:</label>
     <input type="date" id="appointment-day" name="appointment-day" required>
-
     <label for="appointment-time">Hora:</label>
     <input type="time" id="appointment-time" name="appointment-time" required>
-
     <label for="appointment-reason">Motivo de la cita:</label>
     <input type="text" id="appointment-reason" name="appointment-reason" placeholder="Ej: Revisión anual" required minlength="5">
-
     <label for="appointment-professional">Nombre del profesional:</label>
     <input type="text" id="appointment-professional" name="appointment-professional" placeholder="Ej: Dr. García" required>
 </div>
-
 <div xlu-include-file="templates/hero.html" data-custom-class="hero-section" data-title="Encuéntranos aquí"
     data-text="Calle Avenida Marítima, 34,<br>35002 Las Palmas de Gran Canaria, Las Palmas"
     data-button-text="Abrir en Google Maps" data-button-class="btn-primary"

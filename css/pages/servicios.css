@@ -1,10 +1,11 @@
-/* ========== PÁGINA SERVICIOS - Bloques ========== */
+﻿/* Estilos específicos para la vista de servicios */
+
+/* --- ORDENADOR (Desktop) - Estilos Base --- */
 .feature-blocks {
     padding: 0 10% 3rem;
     max-width: 1000px;
     margin: 0 auto;
 }
-
 .feature-block {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -12,34 +13,28 @@
     align-items: center;
     margin-bottom: 3rem;
 }
-
 .accordion-icon {
     display: none;
 }
-
 .feature-block .img-box-gris {
     aspect-ratio: 4/3;
     max-height: 280px;
 }
-
 .feature-block h3 {
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
     color: var(--negro-smile);
 }
-
 .feature-block p {
     color: #555;
     line-height: 1.6;
 }
-
 /* --- TABLET (hasta 1024px) --- */
 @media (max-width: 1024px) {
     .feature-block {
         grid-template-columns: 1fr;
     }
 }
-
 /* --- MÓVIL (hasta 768px) --- */
 @media (max-width: 768px) {
     .feature-block img {
@@ -49,11 +44,9 @@
         height: auto;
         margin-bottom: 1rem;
     }
-
     .feature-block.expanded img {
         display: block;
     }
-
     .feature-block {
         display: flex;
         flex-direction: column;
@@ -62,11 +55,9 @@
         border-radius: 12px;
         align-items: stretch;
     }
-
     .feature-block>div {
         display: contents;
     }
-
     .feature-block h3 {
         order: 1;
         display: flex;
@@ -80,18 +71,15 @@
         width: 100%;
         box-sizing: border-box;
     }
-
     .feature-block p {
         order: 3;
         display: none;
         padding: 0 0 1.5rem;
         margin-bottom: 0;
     }
-
     .feature-block.expanded p {
         display: block;
     }
-
     .accordion-icon {
         display: flex;
         align-items: center;

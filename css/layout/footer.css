@@ -1,92 +1,79 @@
+﻿/* Estilos de layout estructural para footer */
+
+/* --- ORDENADOR (Desktop) - Estilos Base --- */
 footer {
     background: #fafafa;
     padding: 4rem 10% 2rem;
     border-top: 1px solid var(--gris-borde);
 }
-
 .footer-container {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 2rem;
     margin-bottom: 3rem;
 }
-
 .footer-brand h3 {
     color: var(--negro-smile);
     margin-bottom: 0.5rem;
     font-size: 1.1rem;
 }
-
 .footer-brand p {
     color: #777;
     font-size: 0.9rem;
     margin-bottom: 1rem;
     line-height: 1.5;
 }
-
 .footer-brand .social-links {
     display: flex;
     gap: 1rem;
 }
-
 .footer-brand .social-links a {
     text-decoration: none;
     color: #555;
     font-size: 0.9rem;
     transition: color 0.3s;
 }
-
 .footer-brand .social-links a:hover {
     color: var(--azul-medio);
 }
-
 .footer-brand .social-links svg {
     width: 24px;
     height: 24px;
 }
-
 .footer-column h4 {
     color: var(--negro-smile);
     font-size: 0.95rem;
     margin-bottom: 0.5rem;
 }
-
 .footer-column ul {
     list-style: none;
     margin-top: 1rem;
 }
-
 .footer-column li {
     margin-bottom: 0.5rem;
 }
-
 .footer-column a {
     text-decoration: none;
     color: #777;
     font-size: 0.85rem;
     transition: color 0.3s ease;
 }
-
 .footer-column li.contact-item a {
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
 }
-
 .footer-column li.contact-item a .contact-icon {
     flex-shrink: 0;
 }
-
 .footer-column a:hover {
     color: var(--azul-medio);
 }
-
 .pre-footer-products {
     background: #fff;
     padding: 2.5rem 10%;
     border-top: 1px solid #eee;
 }
-
 .product-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -94,13 +81,11 @@ footer {
     max-width: 1000px;
     margin: 0 auto;
 }
-
 .product-card-link {
     text-decoration: none;
     color: inherit;
     display: block;
 }
-
 .product-image-container {
     width: 100%;
     aspect-ratio: 1;
@@ -111,7 +96,6 @@ footer {
     background-color: var(--blanco);
     border-radius: 12px;
 }
-
 article .product-image {
     width: 100%;
     height: 100%;
@@ -119,7 +103,6 @@ article .product-image {
     aspect-ratio: auto;
     margin-bottom: 0;
 }
-
 .hero-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -129,21 +112,18 @@ article .product-image {
     margin: 4rem auto;
     padding: 0 5%;
 }
-
 .hero-content h1 {
     font-size: clamp(1.5rem, 8vw, 2.8rem);
     color: var(--negro-smile);
     margin-bottom: 1.5rem;
     line-height: 1.2;
 }
-
 .hero-content p {
     font-size: clamp(0.9rem, 4vw, 1.1rem);
     color: #555;
     margin-bottom: 2.5rem;
     line-height: 1.6;
 }
-
 .btn-primary {
     background-color: var(--negro-smile);
     color: var(--blanco);
@@ -155,11 +135,9 @@ article .product-image {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .btn-primary:hover {
     background-color: var(--azul-oscuro);
 }
-
 .hero-image img {
     width: 100%;
     height: auto;
@@ -167,79 +145,62 @@ article .product-image {
     box-shadow: var(--shadow);
     object-fit: cover;
 }
-
-/* --- Responsive Web Design --- */
-
 /* --- TABLET (hasta 1024px) --- */
 @media (max-width: 1024px) {
     .pre-footer-products {
         padding: 2.5rem 5%;
     }
-
     .footer-container {
         grid-template-columns: 2fr 1fr 1fr 1fr;
         gap: 1rem;
     }
-
     .product-container {
         grid-template-columns: repeat(3, 1fr);
         gap: 1.5rem;
     }
-
     .hero-section {
         gap: 1.5rem;
     }
 }
-
 /* --- MÓVIL (hasta 768px) --- */
 @media (max-width: 768px) {
     footer {
         padding: 3rem 5% 2rem;
     }
-
     .pre-footer-products {
         padding: 2rem 5%;
     }
-
     .footer-container {
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
     }
-
     .footer-brand {
         grid-column: 1 / -1;
         text-align: center;
     }
-
     .footer-brand .social-links {
         justify-content: center;
     }
-
-
     .product-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
         align-items: start;
     }
-
     .product-card-link:nth-child(1) {
         grid-column: 1;
         grid-row: 1;
     }
-
     .product-card-link:nth-child(2) {
         grid-column: 2;
         grid-row: 1 / span 2;
         align-self: center;
         margin-top: 0;
     }
-
     .product-card-link:nth-child(3) {
         grid-column: 1;
         grid-row: 2;
     }
-
     .hero-section {
         display: flex;
         flex-direction: column-reverse;

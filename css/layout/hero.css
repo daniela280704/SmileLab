@@ -1,3 +1,6 @@
+﻿/* Estilos de layout estructural para hero */
+
+/* --- ORDENADOR (Desktop) - Estilos Base --- */
 main>section:first-of-type:not(.pre-footer-products):not(.hero-section):not(.hero-banner):not(.page-hero):not(.citas-banner):not(.team-hero):not(.perfil-hero) {
     padding: 4rem 10%;
     background: var(--gradient-inicio);
@@ -6,7 +9,6 @@ main>section:first-of-type:not(.pre-footer-products):not(.hero-section):not(.her
     align-items: center;
     min-height: 40vh;
 }
-
 main h1 {
     font-size: 3rem;
     margin-bottom: 1rem;

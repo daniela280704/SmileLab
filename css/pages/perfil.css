@@ -1,4 +1,6 @@
-/* ========== PÁGINA PERFIL ========== */
+﻿/* Estilos específicos para la vista de perfil */
+
+/* --- ORDENADOR (Desktop) - Estilos Base --- */
 .perfil-hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -8,19 +10,14 @@
     margin: 0 auto;
     padding: 4rem 10%;
 }
-
-
-
 .perfil-hero h1 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
 }
-
 .perfil-hero p {
     color: #555;
     margin-bottom: 1rem;
 }
-
 .perfil-hero .btn-outline {
     background: transparent;
     color: var(--negro-smile);
@@ -30,7 +27,6 @@
     cursor: pointer;
     font-weight: 600;
 }
-
 .perfil-hero .btn-logout {
     background: transparent;
     color: #e74c3c;
@@ -42,12 +38,10 @@
     margin-top: 1rem;
     transition: all 0.3s ease;
 }
-
 .perfil-hero .btn-logout:hover {
     background: #e74c3c;
     color: white;
 }
-
 .perfil-hero .hero-image img {
     width: 100%;
     max-width: 300px;
@@ -57,26 +51,22 @@
     display: block;
     object-fit: cover;
 }
-
 .perfil-cta-banner {
     background: var(--gradient-perfil-cta);
     padding: 2rem 10%;
     text-align: center;
 }
-
 .perfil-cta-banner h2 {
     font-size: 1.75rem;
     color: var(--negro-smile);
     margin-bottom: 1.25rem;
 }
-
 .perfil-tabs {
     display: flex;
     gap: 0.5rem;
     justify-content: center;
     flex-wrap: wrap;
 }
-
 .perfil-tabs .tab-active {
     background: var(--negro-smile);
     color: var(--blanco);
@@ -86,7 +76,6 @@
     cursor: pointer;
     font-weight: 600;
 }
-
 .perfil-tabs .tab-inactive {
     background: var(--blanco);
     color: var(--negro-smile);
@@ -96,8 +85,6 @@
     cursor: pointer;
     font-weight: 600;
 }
-
-/* Estilos para el botón de Cerrar sesión */
 .btn-logout {
     background: var(--blanco, #ffffff);
     color: #d9534f;
@@ -110,15 +97,10 @@
     margin-top: 1rem;
     display: inline-block;
 }
-
 .btn-logout:hover {
     background: #d9534f;
     color: var(--blanco, #ffffff);
 }
-
-
-/* --- Responsive Web Design --- */
-
 /* --- MÓVIL (hasta 768px) --- */
 @media (max-width: 768px) {
     .perfil-hero {
@@ -128,7 +110,6 @@
         padding: 2rem 5%;
         gap: 1.5rem;
     }
-
     .perfil-hero .hero-image img {
         width: 150px;
         height: 150px;

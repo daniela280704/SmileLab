@@ -1,36 +1,23 @@
+﻿<!-- Archivo principal de estructura HTML del sitio (index) -->
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmileLab - Salud Bucodental</title>
-
     <link rel="stylesheet" href="css/styles.css?v=2">
-
-    <!-- ✅ Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
-
 <body>
-
 <div xlu-include-file="templates/header.html"></div>
-
 <main id="main-content">
     <div id="page-content">
         <div xlu-include-file="pages/inicio.html"></div>
     </div>
     <div xlu-include-file="templates/products.html"></div>
 </main>
-
 <div xlu-include-file="templates/footer.html"></div>
-
-<!-- ✅ Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<!-- Tu JS -->
 <script src="js/main.js?v=2"></script>
-
 </body>
-
 </html>

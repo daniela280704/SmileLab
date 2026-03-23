@@ -1,3 +1,6 @@
+﻿/* Estilos para el componente productos */
+
+/* --- ORDENADOR (Desktop) - Estilos Base --- */
 .product-card-mini {
     background: #fff;
     border-radius: 16px;
@@ -8,17 +11,14 @@
     flex-direction: column;
     height: 100%;
 }
-
 .product-card-mini:hover {
     transform: translateY(-4px);
 }
-
 .product-card-mini header {
     padding: 1.25rem 1rem 0;
     border: none;
     background: transparent;
 }
-
 .product-card-mini h4 {
     font-size: 1.1rem;
     font-weight: bold;
@@ -26,11 +26,9 @@
     margin: 0;
     text-align: center;
 }
-
 .product-image-container {
     padding: 1rem 1rem 1.25rem;
 }
-
 .product-image-container img {
     width: 100%;
     aspect-ratio: 1;
@@ -39,7 +37,6 @@
     margin: 0;
     display: block;
 }
-
 .product-placeholder-1,
 .product-placeholder-3 {
     min-height: 200px;
@@ -48,7 +45,6 @@
     margin: 0;
     background: transparent;
 }
-
 .product-placeholder-2 {
     min-height: 200px;
     aspect-ratio: 1;
@@ -56,7 +52,6 @@
     margin: 0;
     background-color: transparent;
 }
-
 .product-placeholder-1 img,
 .product-placeholder-2 img,
 .product-placeholder-3 img {
@@ -66,50 +61,39 @@
     border-radius: 12px;
     background: transparent;
 }
-
 .product-img-placeholder {
     width: 100%;
     aspect-ratio: 1;
     border-radius: 12px;
 }
-
-/* --- Responsive Web Design --- */
-
 /* --- TABLET (hasta 1024px) --- */
 @media (max-width: 1024px) {
     .product-card-mini header {
         padding: 1rem 0.75rem 0;
     }
-
     .product-card-mini h4 {
         font-size: 1rem;
     }
-
     .product-image-container {
         padding: 1rem 0.75rem 1rem;
     }
-
     .product-placeholder-1,
     .product-placeholder-2,
     .product-placeholder-3 {
         min-height: 150px;
     }
 }
-
 /* --- MÓVIL (hasta 768px) --- */
 @media (max-width: 768px) {
     .product-card-mini header {
         padding: 0.75rem 0.5rem 0;
     }
-
     .product-card-mini h4 {
         font-size: 0.9rem;
     }
-
     .product-image-container {
         padding: 0.75rem 0.5rem 1rem;
     }
-
     .product-placeholder-1,
     .product-placeholder-2,
     .product-placeholder-3 {
