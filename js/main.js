@@ -62,7 +62,7 @@ function getTemplateFromHref(href) {
     if (!href) return null;
     const hash = href.split("?")[0];
     if (ROUTES[hash]) return ROUTES[hash];
-    const path = hash === "" || hash.endsWith("/") ? "index.html" : hash.replace(/.*\
+    const path = hash === "" || hash.endsWith("/") ? "index.html" : hash.replace(/.*\/|\.html$/g, "");
     return ROUTES[path] || null;
 }
 function actualizarBotonHeader() {
@@ -351,7 +351,7 @@ function setupNavigation() {
             actualizarEnlaceActivoMobile(perfilHref);
             return;
         }
-        const hash = (href === "" || href === "#" || href === "index.html") ? "#inicio" : (href.startsWith("#") ? href : "#" + href.replace(/.*\
+        const hash = (href === "" || href === "#" || href === "index.html") ? "#inicio" : (href.startsWith("#") ? href : "#" + href.replace(/.*\/|\.html$/g, ""));
         const url = hash === "#inicio" ? "index.html" : "index.html" + hash;
         window.history.pushState({ template }, "", url);
         const productsElement = document.querySelector('[xlu-include-file="templates/products.html"]') || document.querySelector('.pre-footer-products');

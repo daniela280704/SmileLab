@@ -39,6 +39,31 @@ SmileLab es una aplicación web diseñada para la gestión de una clínica denta
 | `pages/kit_blanqueamiento.html`| Mockup_Productos | Información detallada del producto: Kit Blanqueamiento.  |
 | `pages/irrigador_bucal.html` | Mockup_Productos | Información detallada del producto: Irrigador Bucal.     |
 
+### Detalles Técnicos por Página (Sprint 2)
+* **`inicio.html`**: 
+  * *Responsive:* Hero banner apilado en móvil y reordenación Flexbox. Adaptable a Tablet (1024px) y Móvil (768px).
+  * *JSON:* Sí, carga título y sección "Sobre nosotros" dinámicamente.
+* **`servicios.html`**:
+  * *Responsive:* CSS Grid (Desktop 3 columnas -> Tablet 2 columnas -> Móvil 1 columna).
+  * *JSON:* Sí, genera tarjetas de servicios iterando la matriz JSON.
+* **`equipo.html`**:
+  * *Responsive:* Flex/Grid colapsable a 1 columna en móvil.
+  * *JSON:* Sí, carga datos y fotos de los especialistas.
+* **`contacto.html`**:
+  * *Responsive:* Layout de 2 columnas colapsa a 1 columna apilada de forma vertical en tablet/móvil.
+  * *JSON:* Sí, carga datos de contacto (tel/email).
+  * *Validaciones de Formulario (HTML5):* `required`, `type="email"`, `type="tel"` con `pattern="[0-9]{9}"`, `minlength="3"`, `type="date"`, `type="time"`.
+* **`login.html`**:
+  * *Responsive:* Contenedor de ancho adaptativo al 95% en terminales móviles.
+  * *JSON:* Sí, valida las credenciales introducidas y asigna roles contra la lista `usuarios` del JSON.
+  * *Validaciones de Formulario (HTML5):* `required`, `type="email"`, `type="password"`.
+  * **Usuarios de Prueba:** 
+    * Paciente: `paciente@web.com` / Contraseña: `123456`
+    * Enfermero: `enfermero@web.com` / Contraseña: `1234567`
+* **Perfil (`perfil.html`), Citas (`citas.html`) y Productos**: 
+  * *Responsive:* Adaptación de Grid y Flexbox al 100% de ancho de pantalla en móvil. 
+  * *JSON:* Perfil y Citas extraen e imprimen datos del estado de la sesión, derivado previamente de JSON.
+
 ---
 
 ## 🧩 Arquitectura de Plantillas (Templates)
@@ -53,6 +78,7 @@ Para cumplir con el principio DRY (*Don't Repeat Yourself*) y optimizar el rendi
 
 ## 🚀 Otros Aspectos de Evaluación a Considerar
 
+* **Ubicación del contenido JSON:** El fichero base (`db.json`) está alojado de manera **local** en la raíz del proyecto para simular la abstracción de una base de datos. Se consume mediante Vanilla JS (API `fetch`), lo cual deja la aplicación totalmente preparada para conectarse en el futuro a un pseudo-servidor (*JSON-Server*) o un backend como *Strapi* simplemente actualizando el endpoint de la ruta de acceso.
 * **Motor de Plantillas con JavaScript (Vanilla JS):** Se ha implementado una función asíncrona (`xLuIncludeFile()`) utilizando la API `Fetch` para cargar los archivos HTML de la carpeta *templates* de forma dinámica. Se ha optimizado el código para inyectar los datos en el DOM de forma segura (usando `insertAdjacentHTML` para evitar errores de modificación de nodos padre) y permite recursividad para plantillas anidadas.
 * **Arquitectura de Hojas de Estilo (CSS):**
   * **Metodología BEM (Block, Element, Modifier):** Se ha utilizado la nomenclatura estructural BEM para organizar las clases CSS, lo que asegura selectores directos, legibles y evita colisiones de estilos entre componentes.
