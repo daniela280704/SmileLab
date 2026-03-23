@@ -635,7 +635,7 @@ function cargarMisCitas() {
         // Fíjate que aquí le mostramos el nombre del paciente y su teléfono, datos útiles para el enfermero
         pacientesConCita.forEach(paciente => {
             contenedor.innerHTML += `
-                <article style="border-left: 4px solid #0056b3;"> 
+                <article>
                     <h3>${paciente.motivoCita}</h3>
                     <p><strong>Paciente:</strong> ${paciente.nombre} (Tel: ${paciente.telefono || 'No indicado'})</p>
                     <p><strong>Fecha y hora:</strong> ${paciente.proximaLimpieza}</p>
