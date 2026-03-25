@@ -1,4 +1,4 @@
-﻿/* Estilos específicos para la vista de contacto */
+/* Estilos específicos para la vista de contacto */
 
 /* --- ORDENADOR (Desktop) - Estilos Base --- */
 .page-hero {
@@ -206,6 +206,9 @@
     }
     .contact-map-panel {
         min-height: 220px;
+    }
+    .contact-form-section h3 {
+        padding: 0 1.5rem;
     }
     .contact-form-section form {
         width: 95%;
