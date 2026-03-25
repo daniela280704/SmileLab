@@ -1,4 +1,4 @@
-﻿/* Estilos de layout estructural para footer */
+/* Estilos de layout estructural para footer */
 
 /* --- ORDENADOR (Desktop) - Estilos Base --- */
 footer {
@@ -68,6 +68,9 @@ footer {
 }
 .footer-column a:hover {
     color: var(--azul-medio);
+}
+.footer-legal, .footer-legal p, .footer-legal .legal-links span {
+    color: var(--negro-smile);
 }
 .pre-footer-products {
     background: #fff;

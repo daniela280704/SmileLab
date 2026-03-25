@@ -1,4 +1,4 @@
-﻿/* Estilos de layout estructural para header */
+/* Estilos de layout estructural para header */
 
 /* --- ORDENADOR (Desktop) - Estilos Base --- */
 body>header {
@@ -153,18 +153,34 @@ nav a:hover {
         gap: 1.5rem;
     }
     body.menu-open {
-        overflow: hidden;
+        overflow: visible !important;
+        background-color: var(--negro-smile);
     }
     body.menu-open>header {
         background-color: transparent;
         border-color: transparent;
+        position: static;
     }
     body.menu-open .logo-container {
         opacity: 0;
         pointer-events: none;
     }
+    body.menu-open > main,
+    body.menu-open > footer {
+        display: none !important;
+    }
     body.menu-open .mobile-menu-overlay {
-        display: block;
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+    body.menu-open .mobile-menu-overlay > * {
+        flex-shrink: 0;
     }
     .mobile-menu-overlay .mobile-nav ul {
         display: flex;
@@ -188,7 +204,9 @@ nav a:hover {
     body.menu-open .btn-menu-mobile {
         background-color: var(--blanco);
         color: var(--negro-smile);
-        position: relative;
+        position: fixed;
+        top: 1rem;
+        right: 5%;
         z-index: 101;
     }
 }
