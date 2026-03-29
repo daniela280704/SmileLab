@@ -1,24 +1,24 @@
-﻿<!-- Plantilla HTML genérica para la página de contacto -->
+<!-- Plantilla HTML genérica para la página de contacto -->
 <section class="page-hero">
-    <h1>Contacto</h1>
+    <h1 id="contact-hero-title"></h1>
 </section>
 <section>
-    <h2 class="section-title">Para recibir más información de nuestros tratamientos, contáctanos sin compromiso</h2>
+    <h2 id="contact-sub-title" class="section-title"></h2>
     <div class="contact-cards-container">
         <article class="contact-card">
             <div class="contact-icon tel" aria-hidden="true">📞</div>
             <strong>Teléfono</strong>
-            <p><a href="tel:+34928256485">928 256 485</a></p>
+            <p><a id="contact-phone" href=""></a></p>
         </article>
         <article class="contact-card">
             <div class="contact-icon whatsapp" aria-hidden="true">💬</div>
             <strong>Whatsapp</strong>
-            <p><a href="https://wa.me/34628478954" target="_blank" rel="noopener noreferrer">628 478 954</a></p>
+            <p><a id="contact-whatsapp" href="" target="_blank" rel="noopener noreferrer"></a></p>
         </article>
         <article class="contact-card">
             <div class="contact-icon email" aria-hidden="true">✉</div>
             <strong>Email</strong>
-            <p><a href="mailto:info@smilelab.com">info@smilelab.com</a></p>
+            <p><a id="contact-email" href=""></a></p>
         </article>
     </div>
 </section>
@@ -41,8 +41,13 @@
     <label for="appointment-professional">Nombre del profesional:</label>
     <input type="text" id="appointment-professional" name="appointment-professional" placeholder="Ej: Dr. García" required>
 </div>
-<div xlu-include-file="templates/hero.html" data-custom-class="hero-section" data-title="Encuéntranos aquí"
-    data-text="Calle Avenida Marítima, 34,<br>35002 Las Palmas de Gran Canaria, Las Palmas"
-    data-button-text="Abrir en Google Maps" data-button-class="btn-primary"
-    data-button-link="https://www.google.com/maps/search/?api=1&query=Avenida+Marítima,+34,+35002+Las+Palmas+de+Gran+Canaria"
-    data-button-target="_blank" data-image-url="img/contacto-hero.jpg" data-image-alt="Mapa de ubicación"></div>
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 id="contact-map-title"></h1>
+    <p id="contact-map-text"></p>
+    <a id="contact-map-button" target="_blank" rel="noopener noreferrer"><button class="btn-primary">Abrir en Google Maps</button></a>
+  </div>
+  <div class="hero-image">
+    <img id="contact-map-image" src="img/contacto-hero.jpg" alt="Mapa de ubicación">
+  </div>
+</div>

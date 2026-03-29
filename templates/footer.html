@@ -1,10 +1,9 @@
-﻿<!-- Componente HTML reutilizable: footer -->
+<!-- Componente HTML reutilizable: footer -->
 <footer>
     <div class="footer-container">
         <div class="footer-brand">
-            <h3>SmileLab</h3>
-            <p>Tu clínica dental de confianza. Combinamos experiencia y tecnología avanzada para cuidar de tu sonrisa
-                diaria.</p>
+            <h3 class="dyn-footer-marca"></h3>
+            <p class="dyn-footer-texto"></p>
             <div class="social-links">
                 <a href="#" aria-label="Instagram">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -30,55 +29,21 @@
                 </a>
             </div>
         </div>
-        <div class="footer-column">
-            <h4>Especialidades</h4>
-            <ul>
-                <li><a href="#servicios">Implantes Dentales</a></li>
-                <li><a href="#servicios">Ortodoncia</a></li>
-                <li><a href="#servicios">Estética Dental</a></li>
-            </ul>
+        <div class="footer-column dyn-footer-col-1">
+        </div>
+        <div class="footer-column dyn-footer-col-2">
         </div>
         <div class="footer-column">
-            <h4>Sobre Nosotros</h4>
-            <ul>
-                <li><a href="#equipo">Nuestro Equipo</a></li>
-                <li><a href="#contacto">Instalaciones</a></li>
-                <li><a href="#contacto">Preguntas Frecuentes</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>Contacto</h4>
-            <ul>
-                <li class="contact-item">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Avenida+Marítima,+34,+35002+Las+Palmas+de+Gran+Canaria"
-                        target="_blank" rel="noopener noreferrer">
-                        <span class="contact-icon">📍</span>
-                        <span class="contact-text">Calle Avenida Marítima, 34,<br>35002 Las Palmas de Gran Canaria, Las Palmas</span>
-                    </a>
-                </li>
-                <li class="contact-item">
-                    <a href="tel:+34928256485">
-                        <span class="contact-icon">📞</span>
-                        <span class="contact-text">928 256 485</span>
-                    </a>
-                </li>
-                <li class="contact-item">
-                    <a href="mailto:info@smilelab.com">
-                        <span class="contact-icon">✉️</span>
-                        <span class="contact-text">info@smilelab.com</span>
-                    </a>
-                </li>
+            <h4 class="dyn-footer-contact-title">Contacto</h4>
+            <ul class="dyn-footer-contact-list">
             </ul>
         </div>
     </div>
     <div class="footer-legal"
         style="text-align: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem;">
-        <p>&copy; 2026 SmileLab. Todos los derechos reservados.</p>
-        <div class="legal-links"
+        <p class="dyn-footer-copyright"></p>
+        <div class="legal-links dyn-footer-legal-links"
             style="margin-top: 0.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-            <span>Aviso Legal</span> |
-            <span>Política de Privacidad</span> |
-            <span>Política de Cookies</span>
         </div>
     </div>
 </footer>

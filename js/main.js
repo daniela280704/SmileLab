@@ -236,21 +236,23 @@ function renderizarContenidoDinamico() {
     if (hash === "#contacto") {
         renderContactoDinamico();
     }
+    if (hash === "#cepillo_electrico" || hash === "#kit_blanqueamiento" || hash === "#irrigador_bucal") {
+        renderDetalleProducto(hash);
+    }
+    renderProductosDinamico();
+    renderFooterDinamico();
 }
 function renderInicioDinamico() {
     if (!contenidoDB.inicio) return;
     const titulo = document.getElementById("home-title");
-    if (titulo) {
-        titulo.textContent = contenidoDB.inicio.titulo || "";
-    }
+    if (titulo) titulo.textContent = contenidoDB.inicio.titulo || "";
+    
     const aboutTitle = document.getElementById("about-title");
-    if (aboutTitle) {
-        aboutTitle.textContent = contenidoDB.inicio.sobreNosotros?.titulo || "";
-    }
+    if (aboutTitle) aboutTitle.textContent = contenidoDB.inicio.sobreNosotros?.titulo || "";
+    
     const aboutText = document.getElementById("about-text");
-    if (aboutText) {
-        aboutText.textContent = contenidoDB.inicio.sobreNosotros?.texto || "";
-    }
+    if (aboutText) aboutText.textContent = contenidoDB.inicio.sobreNosotros?.texto || "";
+    
     const aboutImage = document.getElementById("about-image");
     if (aboutImage) {
         aboutImage.src = contenidoDB.inicio.sobreNosotros?.imagen || "";
@@ -258,26 +260,60 @@ function renderInicioDinamico() {
     }
     const aboutButton = document.getElementById("about-button");
     if (aboutButton) {
-        aboutButton.textContent = contenidoDB.inicio.sobreNosotros?.botonTexto || "";
+        const btn = aboutButton.querySelector("button");
+        if (btn) btn.textContent = contenidoDB.inicio.sobreNosotros?.botonTexto || "";
         aboutButton.href = contenidoDB.inicio.sobreNosotros?.botonLink || "#";
+    }
+
+    const servTitle = document.getElementById("home-services-title");
+    if (servTitle) servTitle.textContent = contenidoDB.inicio.servicios?.titulo || "";
+    
+    const servGrid = document.getElementById("home-services-grid");
+    if (servGrid && contenidoDB.inicio.servicios?.items) {
+        servGrid.innerHTML = "";
+        contenidoDB.inicio.servicios.items.forEach(srv => {
+            servGrid.innerHTML += `
+                <article>
+                    <img src="${srv.imagen}" alt="${srv.alt}" class="thumb-placeholder">
+                    <h3>${srv.titulo}</h3>
+                    <p>${srv.descripcion}</p>
+                </article>
+            `;
+        });
+    }
+
+    const servButton = document.getElementById("home-services-button");
+    if (servButton) {
+        const btn = servButton.querySelector("button");
+        if (btn) btn.textContent = contenidoDB.inicio.servicios?.botonTexto || "";
+        servButton.href = contenidoDB.inicio.servicios?.botonLink || "#";
     }
 }
 function renderEquipoDinamico() {
     if (!contenidoDB.equipo) return;
-    const titulo = document.getElementById("team-title");
-    if (titulo) {
-        titulo.textContent = contenidoDB.equipo.titulo || "";
+    
+    const heroTitle = document.getElementById("team-hero-title");
+    if (heroTitle) heroTitle.textContent = contenidoDB.equipo.titulo || "";
+    const heroText = document.getElementById("team-hero-text");
+    if (heroText) heroText.textContent = contenidoDB.equipo.descripcion || "";
+    const heroImage = document.getElementById("team-hero-image");
+    if (heroImage) {
+        heroImage.src = contenidoDB.equipo.imagen || "";
+        heroImage.alt = contenidoDB.equipo.alt || "";
     }
+
+    const titulo = document.getElementById("team-title");
+    if (titulo) titulo.textContent = contenidoDB.equipo.subtitulo || "";
+    
     const contenedor = document.getElementById("team-members");
     if (!contenedor) return;
     contenedor.innerHTML = "";
     (contenidoDB.equipo.miembros || []).forEach(miembro => {
         contenedor.innerHTML += `
-            <article class="team-card">
-                <img src="${miembro.imagen}" alt="${miembro.alt}">
+            <article>
+                <img src="${miembro.imagen}" alt="${miembro.alt}" class="thumb-placeholder">
                 <h3>${miembro.nombre}</h3>
-                <p><strong>${miembro.cargo}</strong></p>
-                <p>${miembro.descripcion}</p>
+                <p><strong>${miembro.cargo}</strong> ${miembro.descripcion || ""}</p>
             </article>
         `;
     });
@@ -285,39 +321,177 @@ function renderEquipoDinamico() {
 function renderServiciosDinamico() {
     if (!contenidoDB.servicios) return;
     const titulo = document.getElementById("services-title");
-    if (titulo) {
-        titulo.textContent = contenidoDB.servicios.titulo || "";
-    }
+    if (titulo) titulo.textContent = contenidoDB.servicios.titulo || "";
+    
     const contenedor = document.getElementById("services-container");
     if (!contenedor) return;
     contenedor.innerHTML = "";
     (contenidoDB.servicios.items || []).forEach(servicio => {
         contenedor.innerHTML += `
-            <article class="service-card">
-                <img src="${servicio.imagen}" alt="${servicio.alt}">
-                <h3>${servicio.titulo}</h3>
-                <p>${servicio.descripcion}</p>
+            <article class="feature-block">
+                <img src="${servicio.imagen}" alt="${servicio.alt}" class="img-box-gris">
+                <div>
+                    <h3>${servicio.titulo} <span class="accordion-icon">☰</span></h3>
+                    <p>${servicio.descripcion}</p>
+                </div>
             </article>
         `;
     });
 }
 function renderContactoDinamico() {
     if (!contenidoDB.contacto) return;
-    const titulo = document.getElementById("contact-title");
-    if (titulo) {
-        titulo.textContent = contenidoDB.contacto.titulo || "";
-    }
+    
+    const heroTitle = document.getElementById("contact-hero-title");
+    if (heroTitle) heroTitle.textContent = contenidoDB.contacto.titulo || "";
+    
+    const subTitle = document.getElementById("contact-sub-title");
+    if (subTitle) subTitle.textContent = contenidoDB.contacto.subtitulo || "";
+    
     const telefono = document.getElementById("contact-phone");
     if (telefono) {
         telefono.textContent = contenidoDB.contacto.telefono || "";
+        telefono.href = contenidoDB.contacto.linkTfno || "";
     }
     const whatsapp = document.getElementById("contact-whatsapp");
     if (whatsapp) {
         whatsapp.textContent = contenidoDB.contacto.whatsapp || "";
+        whatsapp.href = contenidoDB.contacto.linkWhatsapp || "";
     }
     const email = document.getElementById("contact-email");
     if (email) {
         email.textContent = contenidoDB.contacto.email || "";
+        email.href = contenidoDB.contacto.linkEmail || "";
+    }
+    
+    const mapTitle = document.getElementById("contact-map-title");
+    if (mapTitle && contenidoDB.contacto.mapa) {
+        mapTitle.textContent = contenidoDB.contacto.mapa.titulo || "";
+    }
+    
+    const mapText = document.getElementById("contact-map-text");
+    if (mapText && contenidoDB.contacto.mapa) {
+        mapText.innerHTML = contenidoDB.contacto.mapa.texto || "";
+    }
+    
+    const mapBtn = document.getElementById("contact-map-button");
+    if (mapBtn && contenidoDB.contacto.mapa) {
+        mapBtn.href = contenidoDB.contacto.mapa.linkMaps || "#";
+    }
+    
+    const mapImg = document.getElementById("contact-map-image");
+    if (mapImg && contenidoDB.contacto.mapa) {
+        mapImg.src = contenidoDB.contacto.mapa.imagen || "";
+    }
+}
+function renderDetalleProducto(hash) {
+    if (!contenidoDB.productos) return;
+    const prodId = hash.replace("#", "");
+    const prod = (contenidoDB.productos.items || []).find(p => p.id === prodId);
+    if (!prod) return;
+    
+    const heroSection = document.querySelector("#page-content .hero-section");
+    if (!heroSection) return;
+    
+    const h1 = heroSection.querySelector("h1");
+    if (h1) h1.textContent = prod.nombre || "";
+    
+    const p = heroSection.querySelector("p");
+    if (p) p.textContent = prod.descripcion || "";
+    
+    const img = heroSection.querySelector("img");
+    if (img) {
+        img.src = prod.imagen || "";
+        img.alt = prod.alt || "";
+    }
+    
+    const btn = heroSection.querySelector("button");
+    if (btn) btn.textContent = prod.precio || "Comprar";
+}
+function renderProductosDinamico() {
+    if (!contenidoDB.productos) return;
+    const container = document.getElementById("products-container");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    (contenidoDB.productos.items || []).forEach(prod => {
+        container.innerHTML += `
+            <a href="${prod.href}" class="product-card-link">
+                <article class="product-card-mini">
+                    <header>
+                        <h4>${prod.nombre}</h4>
+                    </header>
+                    <div class="product-image-container ${prod.placeholderClass}">
+                        <img src="${prod.imagen}" alt="${prod.alt}" class="product-image">
+                    </div>
+                </article>
+            </a>
+        `;
+    });
+}
+function renderFooterDinamico() {
+    if (!contenidoDB.footer) return;
+    
+    document.querySelectorAll(".dyn-footer-marca").forEach(el => {
+        el.textContent = contenidoDB.footer.marca || "";
+    });
+    
+    document.querySelectorAll(".dyn-footer-texto").forEach(el => {
+        el.textContent = contenidoDB.footer.texto || "";
+    });
+    
+    if (contenidoDB.footer.columnas && contenidoDB.footer.columnas[0]) {
+        const colData = contenidoDB.footer.columnas[0];
+        document.querySelectorAll(".dyn-footer-col-1").forEach(el => {
+            el.innerHTML = `<h4>${colData.titulo}</h4><ul>` + 
+                colData.enlaces.map(e => `<li><a href="${e.link}">${e.texto}</a></li>`).join("") +
+                `</ul>`;
+        });
+    }
+    
+    if (contenidoDB.footer.columnas && contenidoDB.footer.columnas[1]) {
+        const colData = contenidoDB.footer.columnas[1];
+        document.querySelectorAll(".dyn-footer-col-2").forEach(el => {
+            el.innerHTML = `<h4>${colData.titulo}</h4><ul>` + 
+                colData.enlaces.map(e => `<li><a href="${e.link}">${e.texto}</a></li>`).join("") +
+                `</ul>`;
+        });
+    }
+    
+    if (contenidoDB.footer.contacto) {
+        document.querySelectorAll(".dyn-footer-contact-title").forEach(el => {
+            el.textContent = contenidoDB.footer.contacto.titulo || "Contacto";
+        });
+        
+        const { direccion, linkMaps, telefono, linkTfno, email, linkEmail } = contenidoDB.footer.contacto;
+        const htmlContacto = `
+            <li class="contact-item">
+                <a href="${linkMaps}" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-icon">📍</span><span class="contact-text">${direccion}</span>
+                </a>
+            </li>
+            <li class="contact-item">
+                <a href="${linkTfno}"><span class="contact-icon">📞</span><span class="contact-text">${telefono}</span></a>
+            </li>
+            <li class="contact-item">
+                <a href="${linkEmail}"><span class="contact-icon">✉️</span><span class="contact-text">${email}</span></a>
+            </li>
+        `;
+        document.querySelectorAll(".dyn-footer-contact-list").forEach(el => {
+            el.innerHTML = htmlContacto;
+        });
+    }
+    
+    if (contenidoDB.footer.legal) {
+        document.querySelectorAll(".dyn-footer-copyright").forEach(el => {
+             el.textContent = contenidoDB.footer.legal.copyright || "";
+        });
+        
+        if (contenidoDB.footer.legal.enlaces) {
+            const htmlLegal = contenidoDB.footer.legal.enlaces.map(l => `<span>${l}</span>`).join(" | ");
+            document.querySelectorAll(".dyn-footer-legal-links").forEach(el => {
+                 el.innerHTML = htmlLegal;
+            });
+        }
     }
 }
 function setupNavigation() {
