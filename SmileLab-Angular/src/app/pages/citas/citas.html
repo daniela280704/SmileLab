@@ -1,10 +1,62 @@
 <section class="citas-banner">
-    <h1>Tus citas...</h1>
-    <p>Citas actuales:</p>
+    <h1>📅 Gestiona tus Citas</h1>
+    <p>Solicita una nueva cita o consulta las actuales.</p>
 </section>
-<section class="citas-cards-grid" id="contenedor-citas">
+
+<section style="padding: 2rem 10%; background: #fdfdfd; border-radius: 12px; margin: 2rem auto; max-width: 800px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <h3 style="margin-bottom: 1.5rem; color: #1e3a8a;">Solicitar Nueva Cita</h3>
+    <form [formGroup]="citasForm" (ngSubmit)="enviarCita()" style="display: grid; gap: 1rem;">
+        <div>
+            <label style="display:block; margin-bottom: 0.3rem;">Nombre del Paciente:</label>
+            <input type="text" formControlName="nombre" placeholder="Tu nombre completo" style="width:100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 6px;">
+            @if (citasForm.controls.nombre.invalid && citasForm.controls.nombre.touched) {
+                <small style="color: red;">El nombre debe tener al menos 3 caracteres.</small>
+            }
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+            <div style="flex: 1;">
+                <label style="display:block; margin-bottom: 0.3rem;">Fecha:</label>
+                <input type="date" formControlName="fecha" style="width:100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 6px;">
+                @if (citasForm.controls.fecha.invalid && citasForm.controls.fecha.touched) {
+                    <small style="color: red;">La fecha es obligatoria.</small>
+                }
+            </div>
+            <div style="flex: 1;">
+                <label style="display:block; margin-bottom: 0.3rem;">Hora:</label>
+                <input type="time" formControlName="hora" style="width:100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 6px;">
+                @if (citasForm.controls.hora.invalid && citasForm.controls.hora.touched) {
+                    <small style="color: red;">La hora es obligatoria.</small>
+                }
+            </div>
+        </div>
+
+        <div>
+            <label style="display:block; margin-bottom: 0.3rem;">Servicio:</label>
+            <select formControlName="servicio" style="width:100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 6px;">
+                <option value="">Selecciona un servicio</option>
+                <option value="Limpieza">Limpieza Dental</option>
+                <option value="Ortodoncia">Ortodoncia</option>
+                <option value="Blanqueamiento">Blanqueamiento</option>
+                <option value="Revision">Revisión General</option>
+            </select>
+            @if (citasForm.controls.servicio.invalid && citasForm.controls.servicio.touched) {
+                <small style="color: red;">Selecciona un servicio.</small>
+            }
+        </div>
+
+        <div style="margin-top: 1rem; text-align: right;">
+            <button type="submit" [disabled]="citasForm.invalid" style="padding: 0.8rem 2rem; background: #1e3a8a; color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold;">
+                Agendar Cita
+            </button>
+        </div>
+    </form>
+</section>
+
+<section class="citas-cards-grid" id="contenedor-citas" style="padding: 0 10%;">
+    <h3 style="margin-bottom: 1rem;">Tus Citas Programadas:</h3>
     <!-- Aquí irán luego las citas iteradas con *ngFor de Angular (Fase 2) -->
-    <article style="padding: 2rem; background: #fff; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
-        <p>Aún no hay citas programadas.</p>
+    <article style="padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <p style="color: #64748b;">Aún no hay citas programadas en tu historial.</p>
     </article>
 </section>

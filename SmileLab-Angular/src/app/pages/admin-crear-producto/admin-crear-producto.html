@@ -1,30 +1,48 @@
 <section style="padding: 3rem 10%; max-width: 600px; margin: 0 auto;">
-    <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 2rem;">Panel Administrador: Añadir Producto</h3>
+    <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 2rem; color: #1e3a8a;">Panel Administrador: Añadir Producto</h3>
     
-    <form style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 1rem;">
+    <form [formGroup]="productoForm" (ngSubmit)="enviarProducto()" style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 1rem;">
         
         <div>
             <label style="display:block; margin-bottom:0.5rem;" for="prod-nombre">Nombre del Producto:</label>
-            <input style="width:100%; padding:0.8rem; box-sizing:border-box; border-radius:4px; border:1px solid #ccc;" type="text" id="prod-nombre" name="prod-nombre" placeholder="Ej: Cepillo Eléctrico Plus" required>
+            <input formControlName="nombre" style="width:100%; padding:0.8rem; box-sizing:border-box; border-radius:4px; border:1px solid #ccc;" type="text" id="prod-nombre" placeholder="Ej: Cepillo Eléctrico Plus" required>
+            @if (productoForm.controls.nombre.invalid && productoForm.controls.nombre.touched) {
+                <small style="color: red;">Mínimo 3 caracteres.</small>
+            }
         </div>
         
         <div>
             <label style="display:block; margin-bottom:0.5rem;" for="prod-desc">Descripción:</label>
-            <textarea style="width:100%; padding:0.8rem; box-sizing:border-box; border-radius:4px; border:1px solid #ccc; min-height: 80px;" id="prod-desc" name="prod-desc" placeholder="Descripción breve..." required></textarea>
+            <textarea formControlName="descripcion" style="width:100%; padding:0.8rem; box-sizing:border-box; border-radius:4px; border:1px solid #ccc; min-height: 80px;" id="prod-desc" placeholder="Descripción breve..." required></textarea>
+            @if (productoForm.controls.descripcion.invalid && productoForm.controls.descripcion.touched) {
+                <small style="color: red;">Mínimo 10 caracteres.</small>
+            }
         </div>
 
         <div>
             <label style="display:block; margin-bottom:0.5rem;" for="prod-precio">Precio (€):</label>
-            <input style="width:100%; padding:0.8rem; box-sizing:border-box; border-radius:4px; border:1px solid #ccc;" type="number" id="prod-precio" name="prod-precio" placeholder="Ej: 45.99" required step="0.01">
+            <input formControlName="precio" style="width:100%; padding:0.8rem; box-sizing:border-box; border-radius:4px; border:1px solid #ccc;" type="number" id="prod-precio" placeholder="Ej: 45.99" required step="0.01">
+            @if (productoForm.controls.precio.invalid && productoForm.controls.precio.touched) {
+                <small style="color: red;">El precio es obligatorio y debe ser mayor que 0.</small>
+            }
         </div>
 
         <div style="background: #f8fafc; padding: 1.5rem; border: 2px dashed #94a3b8; border-radius: 8px; text-align: center;">
             <label style="display:block; font-weight:bold; margin-bottom:0.8rem; color: #334155;" for="prod-img">Subir Imagen (Firebase Storage):</label>
-            <input type="file" id="prod-img" name="prod-img" accept="image/*" required>
+            <input type="file" id="prod-img" (change)="onFileSelected($event)" accept="image/*" required>
+            @if (!selectedFile) {
+                <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">Obligatorio: Selecciona una foto para el producto.</p>
+            }
         </div>
         
         <div style="margin-top: 1.5rem; text-align: center;">
-            <button type="submit" style="background:#1e3a8a; color:white; border:none; padding: 0.8rem 2rem; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight:bold;">Guardar Producto en Firebase</button>
+            <button type="submit" [disabled]="productoForm.invalid || !selectedFile || isUploading" style="background:#1e3a8a; color:white; border:none; padding: 0.8rem 2rem; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight:bold;">
+                @if (isUploading) {
+                    Subiendo a Firebase... 🚀
+                } @else {
+                    Guardar Producto en Firebase
+                }
+            </button>
         </div>
     </form>
 </section>

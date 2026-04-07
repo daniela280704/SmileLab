@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Database, ref, push } from '@angular/fire/database';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-contacto',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './contacto.html',
   styleUrl: './contacto.css',
@@ -19,12 +22,34 @@ export class Contacto {
     profesional: new FormControl('', Validators.required),
   });
 
-  enviarDatos() {
+  constructor(private database: Database, private auth: Auth) {}
+
+  async enviarDatos() {
     if (this.registroForm.valid) {
-      alert('¡Formulario válido!\n\nDatos a enviar a Firebase en el Sprint 3:\n' + JSON.stringify(this.registroForm.value, null, 2));
-      // Aquí irá la lógica de subida a Firebase Database
+      try {
+        const { email, password } = this.registroForm.value;
+        
+        // 1. Crear usuario real en Firebase Authentication
+        if (email && password) {
+          await createUserWithEmailAndPassword(this.auth, email, password);
+        }
+
+        // 2. Guardar mensaje/cita en Realtime Database
+        const listRef = ref(this.database, 'mensajes');
+        await push(listRef, this.registroForm.value);
+
+        alert('¡Te hemos registrado con éxito! Tu cita ha sido agendada en Firebase.');
+        this.registroForm.reset();
+      } catch (error: any) {
+        console.error('Error al registrar/enviar:', error);
+        if (error.code === 'auth/email-already-in-use') {
+          alert('Este correo ya está registrado. Por favor, inicia sesión.');
+        } else {
+          alert('Error al conectar con Firebase. Revisa la consola.');
+        }
+      }
     } else {
-      alert('El formulario tiene errores. Revisa los campos marcados en rojo.');
+      alert('El formulario tiene errores. Revisa los campos.');
       this.registroForm.markAllAsTouched();
     }
   }
