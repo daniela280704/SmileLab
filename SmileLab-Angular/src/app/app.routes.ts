@@ -1,22 +1,29 @@
 import { Routes } from '@angular/router';
-import { InicioComponent } from './pages/inicio/inicio.component';
-import { EquipoComponent } from './pages/equipo/equipo.component';
-import { ServiciosComponent } from './pages/servicios/servicios.component';
-import { ContactoComponent } from './pages/contacto/contacto.component';
-import { LoginComponent } from './pages/login/login.component';
+
+import { Inicio } from './pages/inicio/inicio';
+import { Equipo } from './pages/equipo/equipo';
+import { Servicios } from './pages/servicios/servicios';
+import { Contacto } from './pages/contacto/contacto';
+import { Login } from './pages/login/login';
+
 import { PerfilComponent } from './pages/perfil/perfil.component';
-import { CitasComponent } from './pages/citas/citas.component';
-import { AdminCrearProductoComponent } from './pages/admin-crear-producto/admin-crear-producto.component';
+
+import { Citas } from './pages/citas/citas';
+import { AdminCrearProducto } from './pages/admin-crear-producto/admin-crear-producto';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: 'inicio', component: InicioComponent },
-  { path: 'equipo', component: EquipoComponent },
-  { path: 'servicios', component: ServiciosComponent },
-  { path: 'contacto', component: ContactoComponent },
-  { path: 'login', component: LoginComponent },
+
+  { path: 'inicio', component: Inicio },
+  { path: 'equipo', component: Equipo },
+  { path: 'servicios', component: Servicios },
+  { path: 'contacto', component: Contacto },
+  { path: 'login', component: Login },
+
   { path: 'perfil', component: PerfilComponent },
-  { path: 'citas', component: CitasComponent },
-  { path: 'admin-crear-producto', component: AdminCrearProductoComponent },
+
+  { path: 'citas', component: Citas },
+  { path: 'admin-crear-producto', component: AdminCrearProducto },
+
   { path: '**', redirectTo: 'inicio' }
 ];
