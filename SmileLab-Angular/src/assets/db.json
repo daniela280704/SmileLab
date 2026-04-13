@@ -1,0 +1,204 @@
+{
+  "site": {
+    "name": "SmileLab",
+    "year": 2026
+  },
+  "usuarios": [
+    {
+      "email": "paciente@web.com",
+      "pass": "123456",
+      "rol": "usuario",
+      "nombre": "Paciente Demo"
+    },
+    {
+      "email": "enfermero@web.com",
+      "pass": "1234567",
+      "rol": "enfermero",
+      "nombre": "Enfermero Demo"
+    }
+  ],
+  "inicio": {
+    "titulo": "¡Tu mejor sonrisa empieza aquí!",
+    "sobreNosotros": {
+      "titulo": "Sobre nosotros...",
+      "texto": "En SmileLab nos apasiona cuidar de ti y de los tuyos. Contamos con un equipo cercano y tecnología moderna para hacer de cada visita al dentista una experiencia cómoda, segura y sin estrés. Porque tu bienestar es nuestra prioridad.",
+      "botonTexto": "Conocer al equipo",
+      "botonLink": "#equipo",
+      "imagen": "img/sobre-nosotros.jpg",
+      "alt": "SmileLab Decor"
+    },
+    "servicios": {
+      "titulo": "Servicios",
+      "items": [
+        {
+          "titulo": "Implantes Dentales",
+          "descripcion": "Recupera la funcionalidad y estética de tu boca con nuestros implantes de titanio de alta calidad. Resultados naturales y duraderos.",
+          "imagen": "img/implantes-dentales.jpg",
+          "alt": "Implantes Dentales"
+        },
+        {
+          "titulo": "Ortodoncia (Visible o Invisible)",
+          "descripcion": "Corrige la posición de tus dientes y mejora tu mordida. Contamos con ortodoncia tradicional y las últimas opciones de ortodoncia invisible.",
+          "imagen": "img/ortodoncia.jpg",
+          "alt": "Ortodoncia"
+        },
+        {
+          "titulo": "Odontología Conservadora",
+          "descripcion": "Cuidamos de tus dientes naturales. Tratamientos como empastes, endodoncias y limpiezas profundas para mantener tu boca sana por más tiempo.",
+          "imagen": "img/odontologia-conservadora.jpg",
+          "alt": "Odontología Conservadora"
+        }
+      ],
+      "botonTexto": "Ver más",
+      "botonLink": "#servicios"
+    }
+  },
+  "equipo": {
+    "titulo": "Nuestro Equipo:",
+    "subtitulo": "Estos son nuestros profesionales principales",
+    "descripcion": "En SmileLab nos enorgullece contar con un equipo multidisciplinar de odontólogos, cirujanos e higienistas altamente cualificados. Cada sonrisa es única, por eso analizamos tu caso en conjunto para ofrecerte el tratamiento más preciso, seguro y duradero.",
+    "imagen": "img/equipo.jpg",
+    "alt": "Equipo SmileLab",
+    "miembros": [
+      {
+        "nombre": "Dra. Laura Sánchez",
+        "cargo": "Directora Médica y especialista en Ortodoncia Invisible.",
+        "imagen": "img/doc-laura.jpg",
+        "alt": "Dra. Laura Sánchez",
+        "descripcion": "Más de 15 años diseñando sonrisas y asegurando que cada paciente reciba el mejor diagnóstico posible."
+      },
+      {
+        "nombre": "Dr. Marcos Vidal",
+        "cargo": "Cirujano maxilofacial y experto en Implantología Avanzada.",
+        "imagen": "img/doc-marcos.jpg",
+        "alt": "Dr. Marcos Vidal",
+        "descripcion": "Su trato cercano y su experiencia en sedación consciente hacen que los tratamientos complejos sean un paseo."
+      },
+      {
+        "nombre": "Elena Ramírez",
+        "cargo": "Higienista dental y experta en Periodoncia.",
+        "imagen": "img/higienista-elena.jpg",
+        "alt": "Elena Ramírez",
+        "descripcion": "Es la encargada de mantener tus encías sanas y de realizar esos blanqueamientos que devuelven la luz a tu sonrisa."
+      }
+    ]
+  },
+  "servicios": {
+    "titulo": "Soluciones para tu Salud Bucodental",
+    "items": [
+      {
+        "id": "implantes",
+        "titulo": "Implantes Dentales",
+        "imagen": "img/implantes-dentales.jpg",
+        "alt": "Implantes Dentales",
+        "descripcion": "Recupera la funcionalidad y estética de tu boca con nuestros implantes de titanio de alta calidad. Ofrecemos soluciones desde un solo diente hasta rehabilitaciones completas, asegurando resultados naturales y duraderos para que vuelvas a sonreír y comer con total confianza."
+      },
+      {
+        "id": "ortodoncia",
+        "titulo": "Ortodoncia Invisible",
+        "imagen": "img/ortodoncia.jpg",
+        "alt": "Ortodoncia Invisible",
+        "descripcion": "Corrige la alineación de tus dientes de forma cómoda y discreta. Utilizamos alineadores transparentes de última generación que se adaptan a tu estilo de vida. Un tratamiento removible y casi imperceptible para lograr la sonrisa perfecta sin los incómodos brackets metálicos."
+      },
+      {
+        "id": "estetica",
+        "titulo": "Estética Dental Avanzada",
+        "imagen": "img/estetica-dental.jpg",
+        "alt": "Estética Dental Avanzada",
+        "descripcion": "Diseñamos la sonrisa que siempre has querido. Mediante carillas de porcelana, coronas sin metal y tratamientos de blanqueamiento profesional, mejoramos el color, la forma y la armonía de tus dientes, logrando resultados espectaculares y muy naturales en tiempo récord."
+      },
+      {
+        "id": "odontopediatria",
+        "titulo": "Odontopediatría",
+        "imagen": "img/odontopediatria.jpg",
+        "alt": "Odontopediatría",
+        "descripcion": "Cuidamos de las sonrisas más pequeñas de la familia en un entorno amigable y relajado. Nos especializamos en tratamientos preventivos, educación en higiene oral y cuidado dental infantil para garantizar que los niños crezcan con una boca sana y sin miedo al dentista."
+      }
+    ]
+  },
+  "productos": {
+    "items": [
+      {
+        "id": "cepillo_electrico",
+        "nombre": "Cepillo Eléctrico Sónico",
+        "imagen": "img/cepillo-electrico.jpg",
+        "alt": "Cepillo Eléctrico Sónico",
+        "href": "#cepillo_electrico",
+        "placeholderClass": "product-placeholder-1",
+        "descripcion": "Descubre una limpieza superior con nuestro Cepillo Eléctrico Sónico. Su tecnología avanzada elimina más placa cuidando tus encías, para una sonrisa más sana y brillante todos los días.",
+        "precio": "20€"
+      },
+      {
+        "id": "kit_blanqueamiento",
+        "nombre": "Kit de Blanqueamiento en Casa",
+        "imagen": "img/kit-blanqueamiento.jpg",
+        "alt": "Kit de Blanqueamiento en Casa",
+        "href": "#kit_blanqueamiento",
+        "placeholderClass": "product-placeholder-2",
+        "descripcion": "Consigue una sonrisa más blanca desde la comodidad de tu hogar. Nuestro kit profesional incluye gel blanqueador de alta calidad y férulas adaptables para resultados visibles en pocos días y sin sensibilidad.",
+        "precio": "35€"
+      },
+      {
+        "id": "irrigador_bucal",
+        "nombre": "Irrigadores Bucales Portátiles",
+        "imagen": "img/irrigador-bucal.jpg",
+        "alt": "Irrigadores Bucales",
+        "href": "#irrigador_bucal",
+        "placeholderClass": "product-placeholder-3",
+        "descripcion": "Lleva tu higiene dental al siguiente nivel con nuestro irrigador portátil. Ideal para limpiar zonas de difícil acceso, implantes o aparatos de ortodoncia, garantizando un frescor instantáneo en cualquier lugar.",
+        "precio": "28€"
+      }
+    ]
+  },
+  "contacto": {
+    "titulo": "Contacto",
+    "subtitulo": "Para recibir más información de nuestros tratamientos, contáctanos sin compromiso",
+    "telefono": "928 256 485",
+    "linkTfno": "tel:+34928256485",
+    "whatsapp": "628 478 954",
+    "linkWhatsapp": "https://wa.me/34628478954",
+    "email": "info@smilelab.com",
+    "linkEmail": "mailto:info@smilelab.com",
+    "mapa": {
+      "titulo": "Encuéntranos aquí",
+      "texto": "Calle Avenida Marítima, 34,<br>35002 Las Palmas de Gran Canaria, Las Palmas",
+      "linkMaps": "https://www.google.com/maps/search/?api=1&query=Avenida+Marítima,+34,+35002+Las+Palmas+de+Gran+Canaria",
+      "imagen": "img/contacto-hero.jpg"
+    }
+  },
+  "footer": {
+    "marca": "SmileLab",
+    "texto": "Tu clínica dental de confianza. Combinamos experiencia y tecnología avanzada para cuidar de tu sonrisa diaria.",
+    "columnas": [
+      {
+        "titulo": "Especialidades",
+        "enlaces": [
+          { "texto": "Implantes Dentales", "link": "#servicios" },
+          { "texto": "Ortodoncia", "link": "#servicios" },
+          { "texto": "Estética Dental", "link": "#servicios" }
+        ]
+      },
+      {
+        "titulo": "Sobre Nosotros",
+        "enlaces": [
+          { "texto": "Nuestro Equipo", "link": "#equipo" },
+          { "texto": "Instalaciones", "link": "#contacto" },
+          { "texto": "Preguntas Frecuentes", "link": "#contacto" }
+        ]
+      }
+    ],
+    "contacto": {
+      "titulo": "Contacto",
+      "direccion": "Calle Avenida Marítima, 34,<br>35002 Las Palmas de Gran Canaria, Las Palmas",
+      "linkMaps": "https://www.google.com/maps/search/?api=1&query=Avenida+Marítima,+34,+35002+Las+Palmas+de+Gran+Canaria",
+      "telefono": "928 256 485",
+      "linkTfno": "tel:+34928256485",
+      "email": "info@smilelab.com",
+      "linkEmail": "mailto:info@smilelab.com"
+    },
+    "legal": {
+      "copyright": "© 2026 SmileLab. Todos los derechos reservados.",
+      "enlaces": ["Aviso Legal", "Política de Privacidad", "Política de Cookies"]
+    }
+  }
+}
