@@ -1,12 +1,5 @@
-<div style="background: white; padding: 20px; text-align: center; font-family: sans-serif; border-bottom: 2px solid #ccc; margin-bottom: 2rem;">
-  <h2>¡SmileLab Angular Panel!</h2>
-  <nav style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
-    <a routerLink="/contacto" style="text-decoration: none; color: #1e3a8a; font-weight: bold;">Registro / Contacto</a>
-    <a routerLink="/login" style="text-decoration: none; color: #1e3a8a; font-weight: bold;">Login</a>
-    <a routerLink="/citas" style="text-decoration: none; color: #1e3a8a; font-weight: bold;">Mis Citas</a>
-    <a routerLink="/admin/crear-producto" style="text-decoration: none; color: #1e3a8a; font-weight: bold;">Admin</a>
-  </nav>
-</div>
+<app-header></app-header>
 
-<!-- Aquí le indicamos a Angular que muestre los componentes según la ruta -->
 <router-outlet></router-outlet>
+
+<app-footer></app-footer>
