@@ -1,21 +1,22 @@
 import { Routes } from '@angular/router';
-import { Contacto } from './pages/contacto/contacto';
-import { Citas } from './pages/citas/citas';
-import { AdminCrearProducto } from './pages/admin-crear-producto/admin-crear-producto';
-import { Login } from './pages/login/login';
-import { Inicio } from './pages/inicio/inicio';
-import { Servicios } from './pages/servicios/servicios';
-import { Equipo } from './pages/equipo/equipo';
-import { Productos } from './pages/productos/productos';
-
+import { InicioComponent } from './pages/inicio/inicio.component';
+import { EquipoComponent } from './pages/equipo/equipo.component';
+import { ServiciosComponent } from './pages/servicios/servicios.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
+import { LoginComponent } from './pages/login/login.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { CitasComponent } from './pages/citas/citas.component';
+import { AdminCrearProductoComponent } from './pages/admin-crear-producto/admin-crear-producto.component';
 
 export const routes: Routes = [
-  { path: '', component: Inicio },           // ← raíz = inicio
-  { path: 'servicios', component: Servicios },
-  { path: 'equipo', component: Equipo },
-  { path: 'productos', component: Productos },
-  { path: 'contacto', component: Contacto },
-  { path: 'citas', component: Citas },
-  { path: 'admin/crear-producto', component: AdminCrearProducto },
-  { path: 'login', component: Login },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: 'inicio', component: InicioComponent },
+  { path: 'equipo', component: EquipoComponent },
+  { path: 'servicios', component: ServiciosComponent },
+  { path: 'contacto', component: ContactoComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'citas', component: CitasComponent },
+  { path: 'admin-crear-producto', component: AdminCrearProductoComponent },
+  { path: '**', redirectTo: 'inicio' }
 ];
