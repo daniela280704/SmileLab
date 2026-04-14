@@ -1,16 +1,6 @@
-@if (servicios) {
+<!-- Plantilla HTML genérica para la página de servicios -->
 <section class="servicios-page">
-    <h2 class="section-title">{{ servicios.titulo }}</h2>
-    <div class="feature-blocks">
-        @for (item of servicios.items; track item.id) {
-        <div class="feature-block">
-            <img [src]="item.imagen" [alt]="item.alt">
-            <div class="feature-block-content">
-                <h3>{{ item.titulo }}</h3>
-                <p>{{ item.descripcion }}</p>
-            </div>
-        </div>
-        }
+    <h2 id="services-title" class="section-title"></h2>
+    <div id="services-container" class="feature-blocks">
     </div>
 </section>
-}
