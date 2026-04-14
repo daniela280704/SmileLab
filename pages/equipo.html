@@ -1,24 +1,13 @@
-@if (equipo) {
+<!-- Plantilla HTML genérica para la página de equipo -->
 <div class="team-hero hero-section">
   <div class="hero-content">
-    <h1>{{ equipo.titulo }}</h1>
-    <p>{{ equipo.descripcion }}</p>
+    <h1 id="team-hero-title"></h1>
+    <p id="team-hero-text"></p>
   </div>
   <div class="hero-image">
-    <img [src]="equipo.imagen" [alt]="equipo.alt">
+    <img id="team-hero-image" src="" alt="">
   </div>
 </div>
-
-<h2 class="section-title">{{ equipo.subtitulo }}</h2>
-
-<section class="team-grid">
-  @for (miembro of equipo.miembros; track miembro.nombre) {
-  <div class="team-card">
-    <img [src]="miembro.imagen" [alt]="miembro.alt">
-    <h3>{{ miembro.nombre }}</h3>
-    <p class="cargo">{{ miembro.cargo }}</p>
-    <p>{{ miembro.descripcion }}</p>
-  </div>
-  }
+<h2 id="team-title" class="section-title"></h2>
+<section id="team-members" class="team-grid">
 </section>
-}

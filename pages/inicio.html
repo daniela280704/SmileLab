@@ -1,36 +1,23 @@
-@if (inicio) {
+<!-- Plantilla HTML genérica para la página de inicio -->
 <section class="hero-banner">
-    <h1>{{ inicio.titulo }}</h1>
+    <h1 id="home-title"></h1>
 </section>
-
-<div class="hero-section">
+<div id="about-hero" class="hero-section">
     <div class="hero-content">
-        <h2>{{ inicio.sobreNosotros.titulo }}</h2>
-        <p>{{ inicio.sobreNosotros.texto }}</p>
-        <a [href]="inicio.sobreNosotros.botonLink">
-            <button class="btn-primary">{{ inicio.sobreNosotros.botonTexto }}</button>
-        </a>
+        <h1 id="about-title"></h1>
+        <p id="about-text"></p>
+        <a id="about-button"><button class="btn-primary"></button></a>
     </div>
     <div class="hero-image">
-        <img [src]="inicio.sobreNosotros.imagen" [alt]="inicio.sobreNosotros.alt">
+        <img id="about-image" src="" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="img-box-gris" style="display:none; aspect-ratio: 16/10;"></div>
     </div>
 </div>
-
 <section class="servicios-section">
-    <h2>{{ inicio.servicios.titulo }}</h2>
-    <div class="servicios-grid">
-        @for (item of inicio.servicios.items; track item.titulo) {
-        <div class="servicio-card">
-            <img [src]="item.imagen" [alt]="item.alt">
-            <h3>{{ item.titulo }}</h3>
-            <p>{{ item.descripcion }}</p>
-        </div>
-        }
+    <h2 id="home-services-title"></h2>
+    <div id="home-services-grid" class="servicios-grid">
     </div>
     <div class="btn-wrap">
-        <a [href]="inicio.servicios.botonLink">
-            <button class="btn-primary">{{ inicio.servicios.botonTexto }}</button>
-        </a>
+        <a id="home-services-button"><button class="btn-primary"></button></a>
     </div>
 </section>
-}
