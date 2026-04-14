@@ -1,11 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DataService } from '../../core/services/data';
 
 @Component({
   selector: 'app-servicios',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './servicios.html',
-  styleUrl: './servicios.css',
+  styleUrl: './servicios.css'
 })
-export class Servicios {
+export class Servicios implements OnInit {
+  private dataService = inject(DataService);
+  servicios: any = null;
 
+  ngOnInit() {
+    this.dataService.getServicios().subscribe(data => this.servicios = data);
+  }
 }
