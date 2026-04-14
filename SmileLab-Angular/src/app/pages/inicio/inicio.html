@@ -1,4 +1,5 @@
 <div *ngIf="inicio">
+
   <section class="hero-banner">
     <h1>{{ inicio.titulo }}</h1>
   </section>
@@ -8,9 +9,12 @@
       <h2>{{ inicio.sobreNosotros.titulo }}</h2>
       <p>{{ inicio.sobreNosotros.texto }}</p>
       <a [href]="inicio.sobreNosotros.botonLink">
-        <button class="btn-primary">{{ inicio.sobreNosotros.botonTexto }}</button>
+        <button class="btn-primary">
+          {{ inicio.sobreNosotros.botonTexto }}
+        </button>
       </a>
     </div>
+
     <div class="hero-image">
       <img [src]="inicio.sobreNosotros.imagen" [alt]="inicio.sobreNosotros.alt">
     </div>
@@ -18,20 +22,22 @@
 
   <section class="servicios-section">
     <h2>{{ inicio.servicios.titulo }}</h2>
+
     <div class="servicios-grid">
-      @for (item of inicio.servicios.items; track item.titulo) {
-        <div class="servicio-card">
-          <img [src]="item.imagen" [alt]="item.alt">
-          <h3>{{ item.titulo }}</h3>
-          <p>{{ item.descripcion }}</p>
-        </div>
-      }
+      <div class="servicio-card" *ngFor="let item of inicio.servicios.items">
+        <img [src]="item.imagen" [alt]="item.alt">
+        <h3>{{ item.titulo }}</h3>
+        <p>{{ item.descripcion }}</p>
+      </div>
     </div>
+
     <div class="btn-wrap">
       <a [href]="inicio.servicios.botonLink">
-        <button class="btn-primary">{{ inicio.servicios.botonTexto }}</button>
+        <button class="btn-primary">
+          {{ inicio.servicios.botonTexto }}
+        </button>
       </a>
     </div>
   </section>
-</div>
 
+</div>
