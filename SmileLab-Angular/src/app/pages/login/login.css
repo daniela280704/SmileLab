@@ -1,1 +1,71 @@
-/* Estilos específicos para la página de login */
+/* Estilos específicos para la vista de login */
+
+.login-section {
+    max-width: 650px;
+    margin: 6rem auto;
+    padding: 0 5%;
+}
+
+.login-section h2 {
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
+    color: var(--negro-smile);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 3rem;
+    background: var(--blanco);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.input-group {
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid var(--gris-borde);
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+    border-color: var(--azul-medio);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.input-label {
+    display: block;
+    padding: 1rem 1.5rem;
+}
+
+.login-form input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 1rem;
+    color: var(--negro-smile);
+    outline: none;
+}
+
+.login-btn-container {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-btn-container .btn-dark {
+    width: 100%;
+    padding: 1rem;
+}
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    .login-section {
+        margin: 3rem auto;
+    }
+    .login-form {
+        padding: 2rem 1.5rem;
+    }
+}

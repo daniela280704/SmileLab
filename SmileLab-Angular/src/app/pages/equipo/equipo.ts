@@ -2,10 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data';
 
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
 @Component({
   selector: 'app-equipo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './equipo.html',
   styleUrl: './equipo.css'
 })

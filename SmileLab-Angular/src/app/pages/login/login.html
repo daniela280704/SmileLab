@@ -1,31 +1,27 @@
-<section style="padding: 4rem 10%; max-width: 450px; margin: 0 auto;">
-    <div style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border: 1px solid #e5e7eb;">
-        <h2 style="text-align: center; color: #1e3a8a; margin-bottom: 2rem;">Iniciar Sesión</h2>
-        
-        <form [formGroup]="loginForm" (ngSubmit)="ingresar()" style="display: flex; flex-direction: column; gap: 1.2rem;">
-            <div>
-                <label style="display:block; margin-bottom: 0.4rem; font-weight: 500;">Email:</label>
-                <input type="email" formControlName="email" placeholder="tu@email.com" style="width: 100%; padding: 0.8rem; border: 1px solid #d1d5db; border-radius: 6px; outline: none; transition: border-color 0.2s;">
-                @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
-                    <small style="color: #dc2626; margin-top: 0.2rem;">Introduce un email válido.</small>
-                }
-            </div>
-
-            <div>
-                <label style="display:block; margin-bottom: 0.4rem; font-weight: 500;">Contraseña:</label>
-                <input type="password" formControlName="password" placeholder="••••••••" style="width: 100%; padding: 0.8rem; border: 1px solid #d1d5db; border-radius: 6px; outline: none; transition: border-color 0.2s;">
-                @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
-                    <small style="color: #dc2626; margin-top: 0.2rem;">Mínimo 6 caracteres.</small>
-                }
-            </div>
-
-            <button type="submit" [disabled]="loginForm.invalid" style="background-color: #1e3a8a; color: white; padding: 0.9rem; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 1rem; transition: background-color 0.2s;">
-                Acceder a mi Cuenta
-            </button>
-        </form>
-
-        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #6b7280;">
-            ¿No tienes cuenta? <a routerLink="/contacto" style="color: #1e3a8a; font-weight: 600; text-decoration: none;">Regístrate aquí</a>
-        </p>
+<section class="login-section">
+  <h2>Inicia sesión en SmileLab</h2>
+  
+  <form [formGroup]="loginForm" (ngSubmit)="ingresar()" class="login-form">
+    <div class="input-group">
+      <label class="input-label">
+        <input type="email" formControlName="email" placeholder="Correo electrónico">
+      </label>
     </div>
+    
+    <div class="input-group">
+      <label class="input-label">
+        <input type="password" formControlName="password" placeholder="Contraseña">
+      </label>
+    </div>
+
+    <div class="login-btn-container">
+      <button type="submit" class="btn-dark" [disabled]="loginForm.invalid">
+        Ingresar al Portal
+      </button>
+    </div>
+
+    <p style="text-align: center; margin-top: 1rem; color: #666; font-size: 0.9rem;">
+      ¿No tienes cuenta? <a routerLink="/contacto" style="color: var(--azul-medio); font-weight: 600;">Regístrate aquí</a>
+    </p>
+  </form>
 </section>

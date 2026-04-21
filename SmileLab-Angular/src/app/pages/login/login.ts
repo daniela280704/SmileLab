@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 import { DataService } from '../../core/services/data';
 import { take } from 'rxjs/operators';
 
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
