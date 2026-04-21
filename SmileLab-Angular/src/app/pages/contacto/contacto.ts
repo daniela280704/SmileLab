@@ -1,72 +1,120 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject, AfterViewInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Database, ref, push, set } from '@angular/fire/database';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { CommonModule } from '@angular/common';
+import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, User } from '@angular/fire/auth';
 import { DataService } from '../../core/services/data';
 
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+
+declare var flatpickr: any;
 
 @Component({
   selector: 'app-contacto',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive],
+  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './contacto.html',
   styleUrl: './contacto.css',
 })
-export class Contacto {
-  private database = inject(Database);
+export class ContactoComponent implements OnInit, AfterViewInit {
   private auth = inject(Auth);
   private dataService = inject(DataService);
-
+  private router = inject(Router);
+  
+  usuarioLogueado: User | null = null;
   registroForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     telefono: new FormControl('', [Validators.required, Validators.pattern('[0-9]{9}')]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    fechaCita: new FormControl('', Validators.required),
-    horaCita: new FormControl('', Validators.required),
+    fechaCita: new FormControl('', [Validators.required]),
+    horaCita: new FormControl('', [Validators.required]),
     motivoCita: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    profesional: new FormControl('', Validators.required),
+    profesional: new FormControl('', [Validators.required]),
   });
 
-  async enviarDatos() {
-    if (this.registroForm.valid) {
-      try {
-        const { email, password, nombre, telefono } = this.registroForm.value;
-
-        // 1. Crear usuario real en Firebase Authentication
-        let userCredential;
-        if (email && password) {
-          userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-
-          // 2. Guardar perfil del usuario en la base de datos
-          const userRef = ref(this.database, `usuarios/${userCredential.user.uid}`);
-          await set(userRef, {
-            nombre,
-            email,
-            telefono,
-            rol: 'usuario', // Rol por defecto
-            fechaRegistro: new Date().toISOString()
-          });
-        }
-
-        // 3. Guardar mensaje/cita en Realtime Database
-        const listRef = ref(this.database, 'mensajes');
-        await push(listRef, this.registroForm.value);
-
-        alert('¡Te hemos registrado con éxito! Tu perfil ha sido creado y tu cita agendada.');
-        this.registroForm.reset();
-      } catch (error: any) {
-        console.error('Error al registrar/enviar:', error);
-        if (error.code === 'auth/email-already-in-use') {
-          alert('Este correo ya está registrado. Por favor, inicia sesión.');
-        } else {
-          alert('Error al conectar con Firebase. Revisa la consola.');
-        }
+  ngOnInit(): void {
+    onAuthStateChanged(this.auth, (user) => {
+      this.usuarioLogueado = user;
+      if (user) {
+        this.registroForm.patchValue({ email: user.email });
+        this.registroForm.get('nombre')?.clearValidators();
+        this.registroForm.get('password')?.clearValidators();
+        this.registroForm.get('telefono')?.clearValidators();
+      } else {
+        this.registroForm.get('nombre')?.setValidators([Validators.required, Validators.minLength(3)]);
+        this.registroForm.get('password')?.setValidators([Validators.required, Validators.minLength(6)]);
+        this.registroForm.get('telefono')?.setValidators([Validators.required, Validators.pattern('[0-9]{9}')]);
       }
-    } else {
-      alert('El formulario tiene errores. Revisa los campos.');
-      this.registroForm.markAllAsTouched();
+      this.registroForm.get('nombre')?.updateValueAndValidity();
+      this.registroForm.get('password')?.updateValueAndValidity();
+      this.registroForm.get('telefono')?.updateValueAndValidity();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (typeof flatpickr !== 'undefined') {
+      flatpickr('#appointment-day', {
+        dateFormat: 'Y-m-d',
+        minDate: 'today'
+      });
+      flatpickr('#appointment-time', {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: 'H:i',
+        time_24hr: true
+      });
     }
+  }
+
+  async enviarDatos() {
+    if (this.registroForm.invalid) {
+      alert('Por favor, rellena todos los campos obligatorios.');
+      return;
+    }
+
+    const values = this.registroForm.value;
+    
+    try {
+      if (!this.usuarioLogueado) {
+        // Registro + Cita
+        const userCredential = await createUserWithEmailAndPassword(
+          this.auth,
+          values.email!,
+          values.password!
+        );
+        
+        await this.dataService.setUsuarioProfile(userCredential.user.uid, {
+          nombre: values.nombre,
+          email: values.email,
+          telefono: values.telefono,
+          rol: 'usuario'
+        }).toPromise();
+
+        await this.guardarCita(userCredential.user.uid);
+        alert('¡Bienvenido! Registro completado y cita agendada.');
+      } else {
+        // Solo Cita
+        await this.guardarCita(this.usuarioLogueado.uid);
+        alert('¡Tu cita ha sido confirmada!');
+      }
+      
+      this.registroForm.reset();
+      this.router.navigate(['/citas']);
+    } catch (error: any) {
+      alert('Error: ' + error.message);
+    }
+  }
+
+  private async guardarCita(uid: string) {
+    const values = this.registroForm.value;
+    await this.dataService.addCita({
+      usuarioId: uid,
+      fechaCita: values.fechaCita,
+      horaCita: values.horaCita,
+      motivoCita: values.motivoCita,
+      profesional: values.profesional,
+      estado: 'pendiente',
+      fechaCreacion: new Date().toISOString()
+    }).toPromise();
   }
 }

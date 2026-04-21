@@ -8,12 +8,12 @@
     <article class="contact-card">
       <div class="contact-icon tel">📞</div>
       <strong>Teléfono</strong>
-      <p><a href="tel:912345678">912 345 678</a></p>
+      <p><a href="tel:928256485">928 256 485</a></p>
     </article>
     <article class="contact-card">
       <div class="contact-icon whatsapp">💬</div>
       <strong>Whatsapp</strong>
-      <p><a href="https://wa.me/34600000000" target="_blank">600 000 000</a></p>
+      <p><a href="https://wa.me/34628478954" target="_blank">628 478 954</a></p>
     </article>
     <article class="contact-card">
       <div class="contact-icon email">✉</div>
@@ -24,37 +24,41 @@
 </section>
 
 <section class="contact-form-section">
-  <h3>Solicita tu cita y crea tu cuenta</h3>
+  <h3>{{ usuarioLogueado ? 'Solicita una nueva cita' : 'Solicita tu cita y crea tu cuenta' }}</h3>
   <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="combined-form">
     <div class="form-grid">
-      <div class="form-group">
-        <label for="reg-nombre">Nombre completo:</label>
-        <input type="text" id="reg-nombre" formControlName="nombre" placeholder="Ej: Juan Pérez">
-      </div>
       
-      <div class="form-group">
+      <!-- Campos que se ocultan si ya está logueado -->
+      @if (!usuarioLogueado) {
+        <div class="form-group">
+          <label for="reg-nombre">Nombre completo:</label>
+          <input type="text" id="reg-nombre" formControlName="nombre" placeholder="Ej: Juan Pérez">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-tel">Teléfono (9 dígitos):</label>
+          <input type="tel" id="reg-tel" formControlName="telefono" placeholder="Ej: 600123456">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Contraseña:</label>
+          <input type="password" id="reg-password" formControlName="password" placeholder="Mínimo 6 caracteres">
+        </div>
+      }
+      
+      <div class="form-group" [class.full-width]="usuarioLogueado">
         <label for="user-email">Correo electrónico:</label>
-        <input type="email" id="user-email" formControlName="email" placeholder="Ej: juan@email.com">
-      </div>
-
-      <div class="form-group">
-        <label for="reg-tel">Teléfono (9 dígitos):</label>
-        <input type="tel" id="reg-tel" formControlName="telefono" placeholder="Ej: 600123456">
-      </div>
-
-      <div class="form-group">
-        <label for="reg-password">Contraseña:</label>
-        <input type="password" id="reg-password" formControlName="password" placeholder="Mínimo 6 caracteres">
+        <input type="email" id="user-email" formControlName="email" placeholder="Ej: juan@email.com" [readOnly]="usuarioLogueado">
       </div>
 
       <div class="form-group">
         <label for="appointment-day">Fecha de la cita:</label>
-        <input type="date" id="appointment-day" formControlName="fechaCita">
+        <input type="text" id="appointment-day" formControlName="fechaCita" placeholder="Selecciona fecha">
       </div>
 
       <div class="form-group">
         <label for="appointment-time">Hora:</label>
-        <input type="time" id="appointment-time" formControlName="horaCita">
+        <input type="text" id="appointment-time" formControlName="horaCita" placeholder="Selecciona hora">
       </div>
 
       <div class="form-group full-width">
@@ -69,7 +73,7 @@
     </div>
 
     <button type="submit" class="btn-primary" style="width: 100%; margin-top: 2rem;" [disabled]="registroForm.invalid">
-      Enviar y registrarme
+      {{ usuarioLogueado ? 'Confirmar cita' : 'Enviar y registrarme' }}
     </button>
   </form>
 </section>
@@ -77,8 +81,8 @@
 <div class="hero-section">
   <div class="hero-content">
     <h1>¿Dónde estamos?</h1>
-    <p>Visítanos en nuestra clínica del centro. Contamos con parking gratuito para pacientes y acceso adaptado.</p>
-    <a href="https://maps.google.com" target="_blank">
+    <p>Calle Avenida Marítima, 34, 35002 Las Palmas de Gran Canaria, Las Palmas. Contamos con parking gratuito para pacientes.</p>
+    <a href="https://www.google.com/maps/search/?api=1&query=Avenida+Marítima,+34,+35002+Las+Palmas+de+Gran+Canaria" target="_blank">
       <button class="btn-primary">Abrir en Google Maps</button>
     </a>
   </div>

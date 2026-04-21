@@ -11,7 +11,7 @@ import { DataService } from '../../core/services/data';
   templateUrl: './citas.html',
   styleUrl: './citas.css',
 })
-export class Citas implements OnInit {
+export class CitasComponent implements OnInit {
   private auth = inject(Auth);
   private dataService = inject(DataService);
 
@@ -29,12 +29,10 @@ export class Citas implements OnInit {
     onAuthStateChanged(this.auth, (user) => {
       this.usuarioLogueado = user;
       if (user) {
-        // Cargar las citas del usuario desde Firebase
         this.dataService.getCitasByUsuario(user.uid).subscribe(citas => {
           this.misCitas = citas;
         });
 
-        // Autocompletar el nombre si está disponible en el Auth
         if (user.displayName) {
           this.citasForm.patchValue({ nombre: user.displayName });
         }

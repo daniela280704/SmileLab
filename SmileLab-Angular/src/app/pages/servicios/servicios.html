@@ -1,22 +1,17 @@
-@if (servicios) {
-  <section class="servicios-page">
-    <h2 class="section-title">{{ servicios.titulo }}</h2>
-    
-    <div class="feature-blocks">
-      @for (item of servicios.items; track item.id; let i = $index) {
-        <div class="feature-block">
-          <div class="feature-content" [style.order]="i % 2 === 0 ? 1 : 2">
-            <h3>{{ item.titulo }}</h3>
-            <p>{{ item.descripcion }}</p>
-            <a routerLink="/contacto" class="btn-link">Saber más &rarr;</a>
-          </div>
-          <div class="feature-image" [style.order]="i % 2 === 0 ? 2 : 1">
-            <div class="thumb-placeholder">
-              <img [src]="item.imagen" [alt]="item.alt">
-            </div>
-          </div>
+<section class="servicios-page" *ngIf="servicios">
+  <h2 class="section-title">{{ servicios.titulo }}</h2>
+  <div class="feature-blocks">
+    @for (item of servicios.items; track item.id; let i = $index) {
+      <article class="feature-block" [class.expanded]="itemExpandido === i">
+        <img [src]="item.imagen" [alt]="item.alt" class="img-box-gris">
+        <div>
+          <h3 (click)="toggleExpand(i)">
+            {{ item.titulo }}
+            <span class="accordion-icon">{{ itemExpandido === i ? '✕' : '☰' }}</span>
+          </h3>
+          <p>{{ item.descripcion }}</p>
         </div>
-      }
-    </div>
-  </section>
-}
+      </article>
+    }
+  </div>
+</section>

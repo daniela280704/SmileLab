@@ -2,20 +2,27 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data';
 
-import { RouterLink, RouterLinkActive } from '@angular/router';
-
 @Component({
   selector: 'app-servicios',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule],
   templateUrl: './servicios.html',
   styleUrl: './servicios.css'
 })
-export class Servicios implements OnInit {
+export class ServiciosComponent implements OnInit {
   private dataService = inject(DataService);
   servicios: any = null;
+  itemExpandido: number | null = null;
 
   ngOnInit() {
     this.dataService.getServicios().subscribe(data => this.servicios = data);
+  }
+
+  toggleExpand(index: number) {
+    if (this.itemExpandido === index) {
+      this.itemExpandido = null;
+    } else {
+      this.itemExpandido = index;
+    }
   }
 }

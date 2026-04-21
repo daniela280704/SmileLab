@@ -1,7 +1,7 @@
 <section class="login-section">
-  <h2>Inicia sesión en SmileLab</h2>
+  <h3>¡Bienvenido de nuevo!</h3>
   
-  <form [formGroup]="loginForm" (ngSubmit)="ingresar()" class="login-form">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
     <div class="input-group">
       <label class="input-label">
         <input type="email" formControlName="email" placeholder="Correo electrónico">

@@ -1,0 +1,16 @@
+<section class="pre-footer-products">
+  <div class="product-container">
+    @for (prod of productos; track prod.id) {
+      <a [routerLink]="['/productos']" class="product-card-link">
+        <article class="product-card-mini">
+          <header>
+            <h4>{{ prod.nombre }}</h4>
+          </header>
+          <div class="product-image-container">
+            <img [src]="prod.imagen" [alt]="prod.alt" class="product-image">
+          </div>
+        </article>
+      </a>
+    }
+  </div>
+</section>

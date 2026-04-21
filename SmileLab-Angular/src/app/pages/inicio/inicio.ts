@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data';
-
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -11,7 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './inicio.html',
   styleUrl: './inicio.css'
 })
-export class Inicio implements OnInit {
+export class InicioComponent implements OnInit {
   private dataService = inject(DataService);
   inicio: any = null;
 

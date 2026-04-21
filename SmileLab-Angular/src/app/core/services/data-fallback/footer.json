@@ -1,0 +1,35 @@
+{
+  "marca": "SmileLab",
+  "texto": "Tu clínica dental de confianza. Combinamos experiencia y tecnología avanzada para cuidar de tu sonrisa diaria.",
+  "columnas": [
+    {
+      "titulo": "Especialidades",
+      "enlaces": [
+        { "texto": "Implantes Dentales", "link": "/servicios" },
+        { "texto": "Ortodoncia", "link": "/servicios" },
+        { "texto": "Estética Dental", "link": "/servicios" }
+      ]
+    },
+    {
+      "titulo": "Sobre Nosotros",
+      "enlaces": [
+        { "texto": "Nuestro Equipo", "link": "/equipo" },
+        { "texto": "Instalaciones", "link": "/contacto" },
+        { "texto": "Preguntas Frecuentes", "link": "/contacto" }
+      ]
+    }
+  ],
+  "contacto": {
+    "titulo": "Contacto",
+    "direccion": "Calle Avenida Marítima, 34, 35002 Las Palmas de Gran Canaria, Las Palmas",
+    "linkMaps": "https://www.google.com/maps/search/?api=1&query=Avenida+Marítima,+34,+35002+Las+Palmas+de+Gran+Canaria",
+    "telefono": "928 256 485",
+    "linkTfno": "tel:+34928256485",
+    "email": "info@smilelab.com",
+    "linkEmail": "mailto:info@smilelab.com"
+  },
+  "legal": {
+    "copyright": "© 2026 SmileLab. Todos los derechos reservados.",
+    "enlaces": ["Aviso Legal", "Política de Privacidad", "Política de Cookies"]
+  }
+}

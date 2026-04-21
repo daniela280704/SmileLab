@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Database, ref as dbRef, push } from '@angular/fire/database';
-import { Storage, ref as storageRef, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { CommonModule } from '@angular/common';
+import { DataService } from '../../core/services/data';
 
 @Component({
   selector: 'app-admin-crear-producto',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './admin-crear-producto.html',
   styleUrl: './admin-crear-producto.css',
 })
 export class AdminCrearProducto {
+  private dataService = inject(DataService);
+
   productoForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
     descripcion: new FormControl('', [Validators.required, Validators.minLength(10)]),
@@ -18,66 +20,67 @@ export class AdminCrearProducto {
   });
 
   selectedFile: File | null = null;
-  base64Image: string | null = null; // Usado solo para previsualización en el HTML
+  previewUrl: string | null = null;
   isUploading = false;
-
-  constructor(private database: Database, private storage: Storage) {}
+  uploadProgress = 0;
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith('image/')) {
       this.selectedFile = file;
-
-      // Mantener Base64 solo para previsualización visual antes de enviar
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.base64Image = e.target.result;
-      };
+      reader.onload = (e: any) => this.previewUrl = e.target.result;
       reader.readAsDataURL(file);
+    } else {
+      alert('Por favor, selecciona una imagen válida.');
+      event.target.value = '';
     }
   }
 
-  async enviarProducto() {
+  enviarProducto() {
     if (this.productoForm.invalid || !this.selectedFile) {
-      alert('Por favor, rellena todos los campos y selecciona una imagen.');
+      alert('Formulario incompleto.');
       return;
     }
 
     this.isUploading = true;
+    this.uploadProgress = 20;
 
-    try {
-      // 1. Subir el archivo físico a Firebase Storage
-      const filePath = `productos/${Date.now()}_${this.selectedFile.name}`;
-      const fileRef = storageRef(this.storage, filePath);
+    const rawValues = this.productoForm.value;
+    
+    // Mapeamos el objeto para que coincida exactamente con lo que espera el catálogo de SmileLab
+    const productoParaFirebase = {
+      nombre: rawValues.nombre,
+      descripcion: rawValues.descripcion,
+      precio: `${rawValues.precio}€`, // Añadimos el símbolo de euro como en el JSON original
+      alt: `Imagen de ${rawValues.nombre}`, // Generamos el texto ALT automáticamente
+      href: `#${rawValues.nombre?.toLowerCase().replace(/ /g, '_')}`, // Generamos un ID amigable
+      placeholderClass: 'product-placeholder-new'
+    };
 
-      // Subida efectiva del archivo
-      const uploadResult = await uploadBytes(fileRef, this.selectedFile);
+    this.dataService.addProductoConImagen(productoParaFirebase, this.selectedFile)
+      .subscribe({
+        next: () => {
+          this.uploadProgress = 100;
+          setTimeout(() => {
+            alert('¡Conectado! Producto publicado con éxito en la nube.');
+            this.resetForm();
+          }, 500);
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Error de conexión con Firebase Storage. Verifica las reglas de seguridad.');
+          this.isUploading = false;
+        },
+        complete: () => this.isUploading = false
+      });
+  }
 
-      // 2. Obtener la URL de descarga (el simple texto que pide el Sprint)
-      const downloadURL = await getDownloadURL(fileRef);
-
-      // 3. Guardar en Realtime Database usando la URL de Storage
-      const productData = {
-        ...this.productoForm.value,
-        imagen: downloadURL, // Ahora es una URL real, no un Base64 gigante
-        fechaCreacion: new Date().toISOString()
-      };
-
-      const listRef = dbRef(this.database, 'productos');
-      await push(listRef, productData);
-
-      alert('¡Producto creado con éxito! Imagen subida a Storage y datos guardados en la DB.');
-
-      // Limpiar formulario
-      this.productoForm.reset();
-      this.selectedFile = null;
-      this.base64Image = null;
-
-    } catch (error) {
-      console.error('Error al procesar el producto:', error);
-      alert('Hubo un error al subir la imagen o los datos. Revisa la consola.');
-    } finally {
-      this.isUploading = false;
-    }
+  private resetForm() {
+    this.productoForm.reset();
+    this.selectedFile = null;
+    this.previewUrl = null;
+    this.isUploading = false;
+    this.uploadProgress = 0;
   }
 }

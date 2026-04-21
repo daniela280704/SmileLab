@@ -4,17 +4,17 @@ import { RouterLink } from '@angular/router';
 import { DataService } from '../../core/services/data';
 
 @Component({
-  selector: 'app-footer',
+  selector: 'app-products-grid',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.css'
+  templateUrl: './products-grid.html',
+  styleUrl: './products-grid.css'
 })
-export class FooterComponent implements OnInit {
+export class ProductsGridComponent implements OnInit {
   private dataService = inject(DataService);
-  footer: any = null;
+  productos: any[] = [];
 
   ngOnInit() {
-    this.dataService.getFooter().subscribe(data => this.footer = data);
+    this.dataService.getProductos().subscribe(data => this.productos = data);
   }
 }

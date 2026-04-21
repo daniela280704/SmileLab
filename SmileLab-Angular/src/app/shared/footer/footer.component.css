@@ -1,4 +1,4 @@
-/* Estilos de layout estructural para footer */
+/* Estilos exactos del footer del proyecto original */
 
 footer {
     background: #fafafa;
@@ -17,6 +17,7 @@ footer {
     color: var(--negro-smile);
     margin-bottom: 0.5rem;
     font-size: 1.1rem;
+    font-weight: 800;
 }
 
 .footer-brand p {
@@ -26,62 +27,102 @@ footer {
     line-height: 1.5;
 }
 
-.social-links {
+.footer-brand .social-links {
     display: flex;
     gap: 1rem;
 }
 
-.social-links a {
+.footer-brand .social-links a {
+    text-decoration: none;
     color: #555;
     transition: color 0.3s;
 }
 
-.social-links a:hover {
+.footer-brand .social-links a:hover {
     color: var(--azul-medio);
 }
 
 .footer-column h4 {
     color: var(--negro-smile);
     font-size: 0.95rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
 }
 
 .footer-column ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    list-style: none;
+    margin-top: 1rem;
+    padding: 0;
+}
+
+.footer-column li {
+    margin-bottom: 0.5rem;
 }
 
 .footer-column a {
+    text-decoration: none;
     color: #777;
     font-size: 0.85rem;
+    transition: color 0.3s ease;
 }
 
 .footer-column a:hover {
     color: var(--azul-medio);
 }
 
-.footer-legal {
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
+.contact-list a {
     display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.contact-icon {
+    flex-shrink: 0;
+}
+
+.footer-legal {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    font-size: 0.9rem;
+    color: var(--negro-smile);
+}
+
+.legal-links {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
     color: #777;
 }
 
-/* --- MÓVIL (hasta 768px) --- */
-@media (max-width: 768px) {
+/* --- RESPONSIVE --- */
+
+@media (max-width: 1024px) {
+    footer {
+        padding: 4rem 5% 2rem;
+    }
     .footer-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 3rem 5% 2rem;
+    }
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
         gap: 2rem;
     }
-    
     .footer-brand {
+        grid-column: 1 / -1;
         text-align: center;
     }
-    
-    .social-links {
+    .footer-brand .social-links {
         justify-content: center;
     }
 }
