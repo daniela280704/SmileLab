@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../../core/services/data';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { DataService } from '../../core/services/data';
 
 @Component({
   selector: 'app-productos',
@@ -10,7 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './productos.html',
   styleUrl: './productos.css'
 })
-export class ProductosComponent implements OnInit {
+export class Productos implements OnInit {
   private dataService = inject(DataService);
   productos: any[] = [];
 

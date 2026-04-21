@@ -1,0 +1,35 @@
+@if (producto) {
+  <div class="producto-detalle-container">
+  
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="nav-back">
+        <a routerLink="/productos">← Volver a la tienda</a>
+      </div>
+      <h1>{{ producto.nombre }}</h1>
+      <p class="descripcion">{{ producto.descripcion }}</p>
+      
+      <div class="cta-area">
+        <span class="precio">{{ producto.precio }}</span>
+        <button class="btn-primary">Añadir al carrito</button>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img [src]="producto.imagen" [alt]="producto.alt">
+    </div>
+  </div>
+
+  <section class="info-adicional">
+    <h2>¿Por qué elegir {{ producto.nombre }}?</h2>
+    <p>Nuestros productos están avalados por el equipo de profesionales de SmileLab. 
+       Garantizamos la máxima calidad y resultados para tu salud bucodental.</p>
+  </section>
+
+</div>
+} @else {
+  <div class="not-found">
+    <p>Cargando producto o no encontrado...</p>
+    <a routerLink="/productos">Volver a la tienda</a>
+  </div>
+}

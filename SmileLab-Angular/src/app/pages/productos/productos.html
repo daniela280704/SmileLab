@@ -3,16 +3,16 @@
   
   <div class="product-container">
     @for (producto of productos; track producto.id) {
-      <div class="product-card">
+      <div class="product-card" [routerLink]="['/productos', producto.id]" style="cursor: pointer;">
         <div class="product-image-box">
-          <img [src]="producto.imagen" [alt]="producto.nombre">
+          <img [src]="producto.imagen" [alt]="producto.alt">
         </div>
-        <div class="product-content">
+        <div class="product-info">
           <h3>{{ producto.nombre }}</h3>
           <p>{{ producto.descripcion }}</p>
           <div class="product-footer">
-            <span class="price">{{ producto.precio }}€</span>
-            <button class="btn-buy">Comprar</button>
+            <span class="product-price">{{ producto.precio }}</span>
+            <button class="btn-detail">Ver detalle</button>
           </div>
         </div>
       </div>

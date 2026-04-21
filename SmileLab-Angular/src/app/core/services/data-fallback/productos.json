@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "cepillo_electrico",
+      "nombre": "Cepillo Eléctrico Sónico",
+      "imagen": "img/cepillo-electrico.jpg",
+      "alt": "Cepillo Eléctrico Sónico",
+      "href": "#cepillo_electrico",
+      "placeholderClass": "product-placeholder-1",
+      "descripcion": "Descubre una limpieza superior con nuestro Cepillo Eléctrico Sónico. Su tecnología avanzada elimina más placa cuidando tus encías, para una sonrisa más sana y brillante todos los días.",
+      "precio": "20€"
+    },
+    {
+      "id": "kit_blanqueamiento",
+      "nombre": "Kit de Blanqueamiento en Casa",
+      "imagen": "img/kit-blanqueamiento.jpg",
+      "alt": "Kit de Blanqueamiento en Casa",
+      "href": "#kit_blanqueamiento",
+      "placeholderClass": "product-placeholder-2",
+      "descripcion": "Consigue una sonrisa más blanca desde la comodidad de tu hogar. Nuestro kit profesional incluye gel blanqueador de alta calidad y férulas adaptables para resultados visibles en pocos días y sin sensibilidad.",
+      "precio": "35€"
+    },
+    {
+      "id": "irrigador_bucal",
+      "nombre": "Irrigadores Bucales Portátiles",
+      "imagen": "img/irrigador-bucal.jpg",
+      "alt": "Irrigadores Bucales",
+      "href": "#irrigador_bucal",
+      "placeholderClass": "product-placeholder-3",
+      "descripcion": "Lleva tu higiene dental al siguiente nivel con nuestro irrigador portátil. Ideal para limpiar zonas de difícil acceso, implantes o aparatos de ortodoncia, garantizando un frescor instantáneo en cualquier lugar.",
+      "precio": "28€"
+    }
+  ]
+}

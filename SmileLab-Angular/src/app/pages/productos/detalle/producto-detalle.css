@@ -1,0 +1,98 @@
+.producto-detalle-container {
+  padding: 2rem 0;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 4rem 10%;
+  background-color: #f8f9fa;
+  min-height: 400px;
+}
+
+.hero-content {
+  flex: 1;
+}
+
+.nav-back {
+  margin-bottom: 1.5rem;
+}
+
+.nav-back a {
+  text-decoration: none;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.descripcion {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.cta-area {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.precio {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.info-adicional {
+  padding: 4rem 10%;
+  text-align: center;
+}
+
+.info-adicional h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-adicional p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column-reverse;
+    padding: 2rem 5%;
+    text-align: center;
+  }
+  
+  .hero-image {
+    width: 100%;
+  }
+
+  .cta-area {
+    justify-content: center;
+  }
+}

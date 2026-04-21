@@ -2,26 +2,31 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
 
-import { InicioComponent } from './pages/inicio/inicio';
-import { EquipoComponent } from './pages/equipo/equipo';
-import { ServiciosComponent } from './pages/servicios/servicios';
-import { ProductosComponent } from './pages/productos/productos';
-import { ContactoComponent } from './pages/contacto/contacto';
-import { LoginComponent } from './pages/login/login';
+import { Inicio } from './pages/inicio/inicio';
+import { Equipo } from './pages/equipo/equipo';
+import { Servicios } from './pages/servicios/servicios';
+import { Productos } from './pages/productos/productos';
+import { Contacto } from './pages/contacto/contacto';
+import { Login } from './pages/login/login';
 import { PerfilComponent } from './pages/perfil/perfil.component';
-import { CitasComponent } from './pages/citas/citas';
+import { Citas } from './pages/citas/citas';
 import { AdminCrearProducto } from './pages/admin-crear-producto/admin-crear-producto';
+
+import { ProductoDetalle } from './pages/productos/detalle/producto-detalle';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: 'inicio', component: InicioComponent },
-  { path: 'equipo', component: EquipoComponent },
-  { path: 'servicios', component: ServiciosComponent },
-  { path: 'productos', component: ProductosComponent },
-  { path: 'contacto', component: ContactoComponent },
-  { path: 'login', component: LoginComponent },
+
+  { path: 'inicio', component: Inicio },
+  { path: 'equipo', component: Equipo },
+  { path: 'servicios', component: Servicios },
+  { path: 'productos', component: Productos },
+  { path: 'productos/:id', component: ProductoDetalle },
+  { path: 'contacto', component: Contacto },
+  { path: 'login', component: Login },
   { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
-  { path: 'citas', component: CitasComponent, canActivate: [authGuard] },
+  { path: 'citas', component: Citas, canActivate: [authGuard] },
   { path: 'admin-crear-producto', component: AdminCrearProducto, canActivate: [adminGuard] },
+
   { path: '**', redirectTo: 'inicio' }
 ];

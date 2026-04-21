@@ -1,19 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { Database, ref, onValue, push, set } from '@angular/fire/database';
-import { Storage, ref as sRef, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 import { Observable, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 // Datos de respaldo (fallback) cuando Firebase no tiene contenido estático
 import inicioData from './data-fallback/inicio.json';
 import equipoData from './data-fallback/equipo.json';
 import serviciosData from './data-fallback/servicios.json';
-import footerData from './data-fallback/footer.json';
+import productosData from './data-fallback/productos.json';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
   private db = inject(Database);
-  private storage = inject(Storage);
 
   // ─── CONTENIDO ESTÁTICO (desde Firebase con fallback a JSON local) ──────────
 
@@ -50,47 +48,31 @@ export class DataService {
     });
   }
 
-  getFooter(): Observable<any> {
-    return new Observable(subscriber => {
-      const dbRef = ref(this.db, 'footer');
-      const unsubscribe = onValue(dbRef, (snapshot) => {
-        const data = snapshot.val();
-        subscriber.next(data ?? footerData);
-      }, () => subscriber.next(footerData));
-      return () => unsubscribe();
-    });
-  }
-
   // ─── CONTENIDO DINÁMICO (solo desde Firebase Realtime Database) ─────────────
 
   getProductos(): Observable<any[]> {
     return new Observable(subscriber => {
-      const productosRef = ref(this.db, 'productos/items');
+      const productosRef = ref(this.db, 'productos');
       const unsubscribe = onValue(productosRef, (snapshot) => {
         const data = snapshot.val();
-        const lista = data
-          ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val }))
-          : [];
-        subscriber.next(lista);
-      }, () => subscriber.next([]));
+        // Intentar manejar tanto si es un objeto con IDs como claves, como si es el formato de db.json
+        let lista: any[] = [];
+        if (data) {
+          if (data.items && Array.isArray(data.items)) {
+            lista = data.items;
+          } else {
+            lista = Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val }));
+          }
+        }
+        subscriber.next(lista.length > 0 ? lista : productosData.items);
+      }, () => subscriber.next(productosData.items));
       return () => unsubscribe();
     });
   }
 
-  addProductoConImagen(producto: any, imagen: File): Observable<any> {
-    const filePath = `productos/${Date.now()}_${imagen.name}`;
-    const fileRef = sRef(this.storage, filePath);
-
-    // 1. Subir imagen a Storage
-    return from(uploadBytes(fileRef, imagen)).pipe(
-      // 2. Obtener URL de descarga
-      switchMap(() => from(getDownloadURL(fileRef))),
-      // 3. Guardar datos en Realtime Database
-      switchMap((url) => {
-        const finalProduct = { ...producto, imagen: url, fechaCreacion: new Date().toISOString() };
-        const productosRef = ref(this.db, 'productos/items');
-        return from(push(productosRef, finalProduct));
-      })
+  getProductoById(id: string): Observable<any> {
+    return this.getProductos().pipe(
+      map(productos => productos.find(p => p.id === id))
     );
   }
 
