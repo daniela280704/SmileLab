@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class DataService {
   private http = inject(HttpClient);
-  private apiUrl = 'assets/db.json';
+  private apiUrl = 'db.json';
 
   getInicio(): Observable<any> {
     return this.http.get<any>(this.apiUrl).pipe(map(data => data.inicio));
