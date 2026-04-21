@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { DataService } from '../../core/services/data';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -11,21 +13,32 @@ import { Router } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
+  private auth = inject(Auth);
+  private router = inject(Router);
+  private dataService = inject(DataService);
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
-
-  constructor(private auth: Auth, private router: Router) {}
 
   async ingresar() {
     if (this.loginForm.valid) {
       try {
         const { email, password } = this.loginForm.value;
         if (email && password) {
-          await signInWithEmailAndPassword(this.auth, email, password);
-          alert('¡Bienvenido de nuevo!');
-          this.router.navigate(['/citas']);
+          const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+          
+          // Obtener perfil para redirigir según el rol
+          this.dataService.getUsuarioProfile(userCredential.user.uid).pipe(take(1)).subscribe(profile => {
+            alert(`¡Bienvenido, ${profile?.nombre || 'Usuario'}!`);
+            
+            if (profile?.rol === 'admin') {
+              this.router.navigate(['/admin-crear-producto']);
+            } else {
+              this.router.navigate(['/citas']);
+            }
+          });
         }
       } catch (error: any) {
         console.error('Error al iniciar sesión:', error);

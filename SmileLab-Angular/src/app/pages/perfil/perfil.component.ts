@@ -21,7 +21,7 @@ export class PerfilComponent implements OnInit {
     onAuthStateChanged(this.auth, (user) => {
       this.usuario = user;
       if (user) {
-        this.dataService.getUsuarioProfile(user.uid).subscribe(data => {
+        this.dataService.getUsuarioProfile(user.uid).subscribe((data: any) => {
           this.perfil = data;
         });
       }

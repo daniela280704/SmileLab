@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 import { Inicio } from './pages/inicio/inicio';
 import { Equipo } from './pages/equipo/equipo';
@@ -19,9 +21,9 @@ export const routes: Routes = [
   { path: 'productos', component: Productos },
   { path: 'contacto', component: Contacto },
   { path: 'login', component: Login },
-  { path: 'perfil', component: PerfilComponent },
-  { path: 'citas', component: Citas },
-  { path: 'admin-crear-producto', component: AdminCrearProducto },
+  { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
+  { path: 'citas', component: Citas, canActivate: [authGuard] },
+  { path: 'admin-crear-producto', component: AdminCrearProducto, canActivate: [adminGuard] },
 
   { path: '**', redirectTo: 'inicio' }
 ];
