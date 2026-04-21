@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import inicioData from './data-fallback/inicio.json';
 import equipoData from './data-fallback/equipo.json';
 import serviciosData from './data-fallback/servicios.json';
+import productosData from './data-fallback/productos.json';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -54,13 +55,25 @@ export class DataService {
       const productosRef = ref(this.db, 'productos');
       const unsubscribe = onValue(productosRef, (snapshot) => {
         const data = snapshot.val();
-        const lista = data
-          ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val }))
-          : [];
-        subscriber.next(lista);
-      }, () => subscriber.next([]));
+        // Intentar manejar tanto si es un objeto con IDs como claves, como si es el formato de db.json
+        let lista: any[] = [];
+        if (data) {
+          if (data.items && Array.isArray(data.items)) {
+            lista = data.items;
+          } else {
+            lista = Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val }));
+          }
+        }
+        subscriber.next(lista.length > 0 ? lista : productosData.items);
+      }, () => subscriber.next(productosData.items));
       return () => unsubscribe();
     });
+  }
+
+  getProductoById(id: string): Observable<any> {
+    return this.getProductos().pipe(
+      map(productos => productos.find(p => p.id === id))
+    );
   }
 
   // ─── GESTIÓN DE USUARIOS Y ROLES ──────────────────────────────────────────

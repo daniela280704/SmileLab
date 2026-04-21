@@ -2,12 +2,15 @@
   <h2 class="section-title">Nuestra Tienda</h2>
   <div class="product-container">
     @for (producto of productos; track producto.id) {
-      <div class="product-card">
+      <div class="product-card" [routerLink]="['/productos', producto.id]" style="cursor: pointer;">
         <img [src]="producto.imagen" [alt]="producto.alt">
         <div class="product-info">
           <h3>{{ producto.nombre }}</h3>
           <p>{{ producto.descripcion }}</p>
-          <span class="product-price">{{ producto.precio }}</span>
+          <div class="product-footer">
+            <span class="product-price">{{ producto.precio }}</span>
+            <button class="btn-detail">Ver detalle</button>
+          </div>
         </div>
       </div>
     }

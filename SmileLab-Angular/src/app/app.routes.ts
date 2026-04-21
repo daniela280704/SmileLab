@@ -12,6 +12,8 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { Citas } from './pages/citas/citas';
 import { AdminCrearProducto } from './pages/admin-crear-producto/admin-crear-producto';
 
+import { ProductoDetalle } from './pages/productos/detalle/producto-detalle';
+
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
 
@@ -19,6 +21,7 @@ export const routes: Routes = [
   { path: 'equipo', component: Equipo },
   { path: 'servicios', component: Servicios },
   { path: 'productos', component: Productos },
+  { path: 'productos/:id', component: ProductoDetalle },
   { path: 'contacto', component: Contacto },
   { path: 'login', component: Login },
   { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
