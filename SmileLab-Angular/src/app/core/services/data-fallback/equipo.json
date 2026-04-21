@@ -1,0 +1,30 @@
+{
+  "titulo": "Nuestro Equipo:",
+  "subtitulo": "Estos son nuestros profesionales principales",
+  "descripcion": "En SmileLab nos enorgullece contar con un equipo multidisciplinar de odontólogos, cirujanos e higienistas altamente cualificados. Cada sonrisa es única, por eso analizamos tu caso en conjunto para ofrecerte el tratamiento más preciso, seguro y duradero.",
+  "imagen": "img/equipo.jpg",
+  "alt": "Equipo SmileLab",
+  "miembros": [
+    {
+      "nombre": "Dra. Laura Sánchez",
+      "cargo": "Directora Médica y especialista en Ortodoncia Invisible.",
+      "imagen": "img/doc-laura.jpg",
+      "alt": "Dra. Laura Sánchez",
+      "descripcion": "Más de 15 años diseñando sonrisas y asegurando que cada paciente reciba el mejor diagnóstico posible."
+    },
+    {
+      "nombre": "Dr. Marcos Vidal",
+      "cargo": "Cirujano maxilofacial y experto en Implantología Avanzada.",
+      "imagen": "img/doc-marcos.jpg",
+      "alt": "Dr. Marcos Vidal",
+      "descripcion": "Su trato cercano y su experiencia en sedación consciente hacen que los tratamientos complejos sean un paseo."
+    },
+    {
+      "nombre": "Elena Ramírez",
+      "cargo": "Higienista dental y experta en Periodoncia.",
+      "imagen": "img/higienista-elena.jpg",
+      "alt": "Elena Ramírez",
+      "descripcion": "Es la encargada de mantener tus encías sanas y de realizar esos blanqueamientos que devuelven la luz a tu sonrisa."
+    }
+  ]
+}

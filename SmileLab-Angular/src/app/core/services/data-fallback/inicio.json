@@ -1,0 +1,36 @@
+{
+  "titulo": "¡Tu mejor sonrisa empieza aquí!",
+  "sobreNosotros": {
+    "titulo": "Sobre nosotros...",
+    "texto": "En SmileLab nos apasiona cuidar de ti y de los tuyos. Contamos con un equipo cercano y tecnología moderna para hacer de cada visita al dentista una experiencia cómoda, segura y sin estrés. Porque tu bienestar es nuestra prioridad.",
+    "botonTexto": "Conocer al equipo",
+    "botonLink": "/equipo",
+    "imagen": "img/sobre-nosotros.jpg",
+    "alt": "SmileLab Decor"
+  },
+  "servicios": {
+    "titulo": "Servicios",
+    "items": [
+      {
+        "titulo": "Implantes Dentales",
+        "descripcion": "Recupera la funcionalidad y estética de tu boca con nuestros implantes de titanio de alta calidad. Resultados naturales y duraderos.",
+        "imagen": "img/implantes-dentales.jpg",
+        "alt": "Implantes Dentales"
+      },
+      {
+        "titulo": "Ortodoncia (Visible o Invisible)",
+        "descripcion": "Corrige la posición de tus dientes y mejora tu mordida. Contamos con ortodoncia tradicional y las últimas opciones de ortodoncia invisible.",
+        "imagen": "img/ortodoncia.jpg",
+        "alt": "Ortodoncia"
+      },
+      {
+        "titulo": "Odontología Conservadora",
+        "descripcion": "Cuidamos de tus dientes naturales. Tratamientos como empastes, endodoncias y limpiezas profundas para mantener tu boca sana por más tiempo.",
+        "imagen": "img/odontologia-conservadora.jpg",
+        "alt": "Odontología Conservadora"
+      }
+    ],
+    "botonTexto": "Ver más",
+    "botonLink": "/servicios"
+  }
+}

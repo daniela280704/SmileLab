@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
+import { DataService } from '../../core/services/data';
 
 @Component({
   selector: 'app-citas',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './citas.html',
   styleUrl: './citas.css',
 })
-export class Citas {
+export class Citas implements OnInit {
+  private auth = inject(Auth);
+  private dataService = inject(DataService);
+
+  usuarioLogueado: User | null = null;
+  misCitas: any[] = [];
+
   citasForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
     fecha: new FormControl('', Validators.required),
@@ -17,18 +25,46 @@ export class Citas {
     servicio: new FormControl('', Validators.required),
   });
 
-  constructor(private firestore: Firestore) {}
+  ngOnInit(): void {
+    onAuthStateChanged(this.auth, (user) => {
+      this.usuarioLogueado = user;
+      if (user) {
+        // Cargar las citas del usuario desde Firebase
+        this.dataService.getCitasByUsuario(user.uid).subscribe(citas => {
+          this.misCitas = citas;
+        });
+
+        // Autocompletar el nombre si está disponible en el Auth
+        if (user.displayName) {
+          this.citasForm.patchValue({ nombre: user.displayName });
+        }
+      }
+    });
+  }
 
   async enviarCita() {
-    if (this.citasForm.valid) {
+    if (this.citasForm.valid && this.usuarioLogueado) {
       try {
-        const colRef = collection(this.firestore, 'citas');
-        await addDoc(colRef, this.citasForm.value);
-        alert('¡Cita solicitada con éxito!');
-        this.citasForm.reset();
+        const nuevaCita = {
+          ...this.citasForm.value,
+          usuarioId: this.usuarioLogueado.uid,
+          fechaRegistro: new Date().toISOString(),
+          estado: 'pendiente'
+        };
+
+        this.dataService.addCita(nuevaCita).subscribe({
+          next: () => {
+            alert('¡Cita solicitada con éxito!');
+            this.citasForm.reset();
+          },
+          error: (err) => {
+            console.error('Error enviando cita:', err);
+            alert('Hubo un error al programar la cita.');
+          }
+        });
       } catch (error) {
         console.error('Error enviando cita:', error);
-        alert('Hubo un error al programar la cita. Revisa la consola.');
+        alert('Hubo un error inesperado.');
       }
     } else {
       alert('Por favor, rellena todos los campos correctamente.');

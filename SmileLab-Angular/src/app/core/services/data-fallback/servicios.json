@@ -1,0 +1,33 @@
+{
+  "titulo": "Soluciones para tu Salud Bucodental",
+  "items": [
+    {
+      "id": "implantes",
+      "titulo": "Implantes Dentales",
+      "imagen": "img/implantes-dentales.jpg",
+      "alt": "Implantes Dentales",
+      "descripcion": "Recupera la funcionalidad y estética de tu boca con nuestros implantes de titanio de alta calidad. Ofrecemos soluciones desde un solo diente hasta rehabilitaciones completas, asegurando resultados naturales y duraderos para que vuelvas a sonreír y comer con total confianza."
+    },
+    {
+      "id": "ortodoncia",
+      "titulo": "Ortodoncia Invisible",
+      "imagen": "img/ortodoncia.jpg",
+      "alt": "Ortodoncia Invisible",
+      "descripcion": "Corrige la alineación de tus dientes de forma cómoda y discreta. Utilizamos alineadores transparentes de última generación que se adaptan a tu estilo de vida. Un tratamiento removible y casi imperceptible para lograr la sonrisa perfecta sin los incómodos brackets metálicos."
+    },
+    {
+      "id": "estetica",
+      "titulo": "Estética Dental Avanzada",
+      "imagen": "img/estetica-dental.jpg",
+      "alt": "Estética Dental Avanzada",
+      "descripcion": "Diseñamos la sonrisa que siempre has querido. Mediante carillas de porcelana, coronas sin metal y tratamientos de blanqueamiento profesional, mejoramos el color, la forma y la armonía de tus dientes, logrando resultados espectaculares y muy naturales en tiempo récord."
+    },
+    {
+      "id": "odontopediatria",
+      "titulo": "Odontopediatría",
+      "imagen": "img/odontopediatria.jpg",
+      "alt": "Odontopediatría",
+      "descripcion": "Cuidamos de las sonrisas más pequeñas de la familia en un entorno amigable y relajado. Nos especializamos en tratamientos preventivos, educación en higiene oral y cuidado dental infantil para garantizar que los niños crezcan con una boca sana y sin miedo al dentista."
+    }
+  ]
+}

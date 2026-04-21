@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Database, ref, push } from '@angular/fire/database';
+import { Database, ref, push, set } from '@angular/fire/database';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { DataService } from '../../core/services/data';
 
 @Component({
   selector: 'app-contacto',
@@ -11,6 +12,10 @@ import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
   styleUrl: './contacto.css',
 })
 export class Contacto {
+  private database = inject(Database);
+  private auth = inject(Auth);
+  private dataService = inject(DataService);
+
   registroForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -22,23 +27,32 @@ export class Contacto {
     profesional: new FormControl('', Validators.required),
   });
 
-  constructor(private database: Database, private auth: Auth) {}
-
   async enviarDatos() {
     if (this.registroForm.valid) {
       try {
-        const { email, password } = this.registroForm.value;
-        
+        const { email, password, nombre, telefono } = this.registroForm.value;
+
         // 1. Crear usuario real en Firebase Authentication
+        let userCredential;
         if (email && password) {
-          await createUserWithEmailAndPassword(this.auth, email, password);
+          userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+
+          // 2. Guardar perfil del usuario en la base de datos
+          const userRef = ref(this.database, `usuarios/${userCredential.user.uid}`);
+          await set(userRef, {
+            nombre,
+            email,
+            telefono,
+            rol: 'usuario', // Rol por defecto
+            fechaRegistro: new Date().toISOString()
+          });
         }
 
-        // 2. Guardar mensaje/cita en Realtime Database
+        // 3. Guardar mensaje/cita en Realtime Database
         const listRef = ref(this.database, 'mensajes');
         await push(listRef, this.registroForm.value);
 
-        alert('¡Te hemos registrado con éxito! Tu cita ha sido agendada en Firebase.');
+        alert('¡Te hemos registrado con éxito! Tu perfil ha sido creado y tu cita agendada.');
         this.registroForm.reset();
       } catch (error: any) {
         console.error('Error al registrar/enviar:', error);
