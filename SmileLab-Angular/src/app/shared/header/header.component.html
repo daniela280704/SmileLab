@@ -1,5 +1,5 @@
 <header>
-  <!-- Logo -->
+  <!-- Logo (Lado Izquierdo) -->
   <div class="logo-container">
     <a routerLink="/inicio" class="logo-link" (click)="cerrarMenu()">
       <img src="img/logo2.jpeg" alt="SmileLab" class="logo-img" onerror="this.style.display='none'">
@@ -7,8 +7,8 @@
     </a>
   </div>
 
-  <!-- Navegación desktop -->
-  <nav>
+  <!-- Navegación (Centro) -->
+  <nav class="desktop-nav">
     <ul>
       <li><a routerLink="/inicio" routerLinkActive="active">Inicio</a></li>
       <li><a routerLink="/equipo" routerLinkActive="active">Equipo</a></li>
@@ -25,7 +25,7 @@
     </ul>
   </nav>
 
-  <!-- Acciones desktop -->
+  <!-- Acciones (Lado Derecho) -->
   <div class="header-actions">
     @if (usuarioLogueado) {
       <button class="btn-dark btn-perfil-desktop" (click)="cerrarSesion()">Cerrar Sesión</button>
@@ -33,32 +33,29 @@
       <a routerLink="/login"><button class="btn-dark btn-perfil-desktop">Iniciar Sesión</button></a>
     }
     <button class="btn-menu-mobile" (click)="toggleMenu()">
-      {{ menuAbierto ? 'Cerrar' : 'Menú' }}
+      {{ menuAbierto ? '✕' : '☰ Menú' }}
     </button>
   </div>
-
-  <!-- Menú móvil overlay -->
-  <div class="mobile-menu-overlay" [class.activo]="menuAbierto">
-    <div class="mobile-nav-container">
-      <nav class="mobile-nav">
-        <ul>
-          <li><a routerLink="/inicio" routerLinkActive="active" (click)="cerrarMenu()">Inicio</a></li>
-          <li><a routerLink="/equipo" routerLinkActive="active" (click)="cerrarMenu()">Equipo</a></li>
-          <li><a routerLink="/servicios" routerLinkActive="active" (click)="cerrarMenu()">Servicios</a></li>
-          <li><a routerLink="/contacto" routerLinkActive="active" (click)="cerrarMenu()">Contacto</a></li>
-          <li><a routerLink="/productos" routerLinkActive="active" (click)="cerrarMenu()">Productos</a></li>
-          @if (usuarioLogueado) {
-            <li><a routerLink="/citas" routerLinkActive="active" (click)="cerrarMenu()">Mis Citas</a></li>
-            <li><a routerLink="/perfil" routerLinkActive="active" (click)="cerrarMenu()">Perfil</a></li>
-            @if (userProfile?.rol === 'admin') {
-              <li><a routerLink="/admin-crear-producto" routerLinkActive="active" (click)="cerrarMenu()">Admin</a></li>
-            }
-            <li><a href="#" (click)="cerrarSesion()">Cerrar Sesión</a></li>
-          } @else {
-            <li><a routerLink="/login" routerLinkActive="active" (click)="cerrarMenu()">Iniciar Sesión</a></li>
-          }
-        </ul>
-      </nav>
-    </div>
-  </div>
 </header>
+
+<!-- Menú móvil overlay (FUERA DEL HEADER para no romper el flexbox) -->
+<div class="mobile-menu-overlay" [class.activo]="menuAbierto">
+  <div class="mobile-nav-container">
+    <nav class="mobile-nav">
+      <ul>
+        <li><a routerLink="/inicio" routerLinkActive="active" (click)="cerrarMenu()">Inicio</a></li>
+        <li><a routerLink="/equipo" routerLinkActive="active" (click)="cerrarMenu()">Equipo</a></li>
+        <li><a routerLink="/servicios" routerLinkActive="active" (click)="cerrarMenu()">Servicios</a></li>
+        <li><a routerLink="/contacto" routerLinkActive="active" (click)="cerrarMenu()">Contacto</a></li>
+        <li><a routerLink="/productos" routerLinkActive="active" (click)="cerrarMenu()">Productos</a></li>
+        @if (usuarioLogueado) {
+          <li><a routerLink="/citas" routerLinkActive="active" (click)="cerrarMenu()">Mis Citas</a></li>
+          <li><a routerLink="/perfil" routerLinkActive="active" (click)="cerrarMenu()">Perfil</a></li>
+          <li><a href="#" (click)="cerrarSesion()">Cerrar Sesión</a></li>
+        } @else {
+          <li><a routerLink="/login" routerLinkActive="active" (click)="cerrarMenu()">Iniciar Sesión</a></li>
+        }
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+/* Estilos específicos para la vista de servicios */
+
+.feature-blocks {
+    padding: 0 5% 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.feature-block {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 6rem;
+}
+
+.feature-content h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--negro-smile);
+}
+
+.feature-content p {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+}
+
+.btn-link {
+    color: var(--azul-medio);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-link:hover {
+    border-bottom-color: var(--azul-medio);
+    padding-left: 5px;
+}
+
+/* --- TABLET (hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .feature-block {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 4rem;
+    }
+    
+    .feature-content, .feature-image {
+        order: unset !important;
+    }
+}
+
+/* --- MÓVIL (hasta 768px) --- */
+@media (max-width: 768px) {
+    .feature-content h3 {
+        font-size: 1.5rem;
+    }
+}

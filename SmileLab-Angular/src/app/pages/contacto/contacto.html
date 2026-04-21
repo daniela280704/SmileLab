@@ -1,95 +1,88 @@
-<!-- Plantilla HTML genérica para la página de contacto -->
-<section class="page-hero">
-    <h1 id="contact-hero-title">Contacto</h1>
+<section class="page-hero" style="background-image: url('img/contacto-hero.jpg');">
+  <h1>Contacto y Citas</h1>
 </section>
+
 <section>
-    <h2 id="contact-sub-title" class="section-title">Nuestros Datos</h2>
-    <div class="contact-cards-container">
-        <article class="contact-card">
-            <div class="contact-icon tel" aria-hidden="true">📞</div>
-            <strong>Teléfono</strong>
-            <p><a id="contact-phone" href=""></a></p>
-        </article>
-        <article class="contact-card">
-            <div class="contact-icon whatsapp" aria-hidden="true">💬</div>
-            <strong>Whatsapp</strong>
-            <p><a id="contact-whatsapp" href="" target="_blank" rel="noopener noreferrer"></a></p>
-        </article>
-        <article class="contact-card">
-            <div class="contact-icon email" aria-hidden="true">✉</div>
-            <strong>Email</strong>
-            <p><a id="contact-email" href=""></a></p>
-        </article>
-    </div>
-</section>
-
-<!-- Formulario con Formularios Reactivos de Angular -->
-<section class="contact-form-section">
-    <h3>Solicita tu cita y crea tu cuenta</h3>
-    <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="combined-form">
-        <label for="nombre">Nombre completo:</label>
-        <input type="text" formControlName="nombre" placeholder="Ej: Juan Pérez">
-        @if (registroForm.controls.nombre.invalid && registroForm.controls.nombre.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">El nombre debe tener al menos 3 caracteres</p>
-        }
-
-        <label for="email">Correo electrónico:</label>
-        <input type="email" formControlName="email" placeholder="Ej: juan@email.com">
-        @if (registroForm.controls.email.invalid && registroForm.controls.email.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">Introduce un email válido</p>
-        }
-
-        <label for="telefono">Teléfono (9 dígitos):</label>
-        <input type="tel" formControlName="telefono" placeholder="Ej: 600123456">
-        @if (registroForm.controls.telefono.invalid && registroForm.controls.telefono.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">Debe contener exactamente 9 números</p>
-        }
-
-        <label for="password">Contraseña (mín. 6 caracteres):</label>
-        <input type="password" formControlName="password" placeholder="Para acceder a tu área de paciente">
-        @if (registroForm.controls.password.invalid && registroForm.controls.password.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">La contraseña es obligatoria (mínimo 6)</p>
-        }
-
-        <label for="fechaCita">Fecha de la cita:</label>
-        <input type="date" formControlName="fechaCita">
-        @if (registroForm.controls.fechaCita.invalid && registroForm.controls.fechaCita.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">La fecha es obligatoria</p>
-        }
-
-        <label for="horaCita">Hora:</label>
-        <input type="time" formControlName="horaCita">
-        @if (registroForm.controls.horaCita.invalid && registroForm.controls.horaCita.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">La hora es obligatoria</p>
-        }
-
-        <label for="motivoCita">Motivo de la cita:</label>
-        <input type="text" formControlName="motivoCita" placeholder="Ej: Revisión anual">
-        @if (registroForm.controls.motivoCita.invalid && registroForm.controls.motivoCita.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">Motivo muy corto (mín. 5 letras)</p>
-        }
-
-        <label for="profesional">Nombre del profesional:</label>
-        <input type="text" formControlName="profesional" placeholder="Ej: Dr. García">
-        @if (registroForm.controls.profesional.invalid && registroForm.controls.profesional.touched) {
-            <p style="color: red; font-size: 0.8rem; margin-top:-0.3rem">Por favor indica un profesional</p>
-        }
-        
-        <div style="margin-top: 1.5rem">
-            <button type="submit" class="btn-primary" style="padding: 0.7rem 1.5rem; background-color: #1e3a8a; color: white; border-radius: 50px; border:none; cursor:pointer;" [disabled]="registroForm.invalid">
-                Enviar y registrarme
-            </button>
-        </div>
-    </form>
-</section>
-
-<div class="hero-section contact-map-section">
-  <div class="hero-content contact-map-info">
-    <h1 id="contact-map-title" style="padding:0">Nuestra Ubicación</h1>
-    <p id="contact-map-text">Ven a visitarnos a nuestra clínica dental, solicita tu cita ahora y descubre lo que podemos hacer por ti.</p>
-    <a id="contact-map-button" target="_blank" rel="noopener noreferrer"><button class="btn-primary" style="margin-top:1rem; padding: 0.7rem 1.5rem; background-color: #1e3a8a; color: white; border-radius: 50px; border:none; cursor:pointer;">Abrir en Google Maps</button></a>
+  <h2 class="section-title">Estamos para ayudarte</h2>
+  <div class="contact-cards-container">
+    <article class="contact-card">
+      <div class="contact-icon tel">📞</div>
+      <strong>Teléfono</strong>
+      <p><a href="tel:912345678">912 345 678</a></p>
+    </article>
+    <article class="contact-card">
+      <div class="contact-icon whatsapp">💬</div>
+      <strong>Whatsapp</strong>
+      <p><a href="https://wa.me/34600000000" target="_blank">600 000 000</a></p>
+    </article>
+    <article class="contact-card">
+      <div class="contact-icon email">✉</div>
+      <strong>Email</strong>
+      <p><a href="mailto:info@smilelab.com">info@smilelab.com</a></p>
+    </article>
   </div>
-  <div class="hero-image contact-map-panel">
-    <div class="map-pin-icon" style="font-size: 4rem;">📍</div>
+</section>
+
+<section class="contact-form-section">
+  <h3>Solicita tu cita y crea tu cuenta</h3>
+  <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="combined-form">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="reg-nombre">Nombre completo:</label>
+        <input type="text" id="reg-nombre" formControlName="nombre" placeholder="Ej: Juan Pérez">
+      </div>
+      
+      <div class="form-group">
+        <label for="user-email">Correo electrónico:</label>
+        <input type="email" id="user-email" formControlName="email" placeholder="Ej: juan@email.com">
+      </div>
+
+      <div class="form-group">
+        <label for="reg-tel">Teléfono (9 dígitos):</label>
+        <input type="tel" id="reg-tel" formControlName="telefono" placeholder="Ej: 600123456">
+      </div>
+
+      <div class="form-group">
+        <label for="reg-password">Contraseña:</label>
+        <input type="password" id="reg-password" formControlName="password" placeholder="Mínimo 6 caracteres">
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-day">Fecha de la cita:</label>
+        <input type="date" id="appointment-day" formControlName="fechaCita">
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-time">Hora:</label>
+        <input type="time" id="appointment-time" formControlName="horaCita">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="appointment-reason">Motivo de la cita:</label>
+        <input type="text" id="appointment-reason" formControlName="motivoCita" placeholder="Ej: Revisión anual">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="appointment-professional">Nombre del profesional:</label>
+        <input type="text" id="appointment-professional" formControlName="profesional" placeholder="Ej: Dr. García">
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 2rem;" [disabled]="registroForm.invalid">
+      Enviar y registrarme
+    </button>
+  </form>
+</section>
+
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>¿Dónde estamos?</h1>
+    <p>Visítanos en nuestra clínica del centro. Contamos con parking gratuito para pacientes y acceso adaptado.</p>
+    <a href="https://maps.google.com" target="_blank">
+      <button class="btn-primary">Abrir en Google Maps</button>
+    </a>
+  </div>
+  <div class="hero-image">
+    <img src="img/contacto-hero.jpg" alt="Mapa de ubicación">
   </div>
 </div>

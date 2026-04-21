@@ -1,7 +1,9 @@
 <section class="productos-page">
   <h2 class="section-title">Nuestra Tienda</h2>
+  
   <div class="product-container">
     @for (producto of productos; track producto.id) {
+<<<<<<< HEAD
       <div class="product-card" [routerLink]="['/productos', producto.id]" style="cursor: pointer;">
         <img [src]="producto.imagen" [alt]="producto.alt">
         <div class="product-info">
@@ -10,6 +12,18 @@
           <div class="product-footer">
             <span class="product-price">{{ producto.precio }}</span>
             <button class="btn-detail">Ver detalle</button>
+=======
+      <div class="product-card">
+        <div class="product-image-box">
+          <img [src]="producto.imagen" [alt]="producto.nombre">
+        </div>
+        <div class="product-content">
+          <h3>{{ producto.nombre }}</h3>
+          <p>{{ producto.descripcion }}</p>
+          <div class="product-footer">
+            <span class="price">{{ producto.precio }}€</span>
+            <button class="btn-buy">Comprar</button>
+>>>>>>> df2e572caa5c1b684272348d4959c6dd89c8013c
           </div>
         </div>
       </div>

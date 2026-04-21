@@ -4,10 +4,12 @@ import { Database, ref, push, set } from '@angular/fire/database';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { DataService } from '../../core/services/data';
 
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
 @Component({
   selector: 'app-contacto',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive],
   templateUrl: './contacto.html',
   styleUrl: './contacto.css',
 })

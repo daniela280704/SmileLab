@@ -1,24 +1,27 @@
 @if (equipo) {
-  <div class="team-hero hero-section">
+  <div class="team-hero">
     <div class="hero-content">
       <h1>{{ equipo.titulo }}</h1>
-      <p>{{ equipo.descripcion }}</p>
+      <p>{{ equipo.subtitulo }}</p>
+      <p style="margin-top: 1rem;">{{ equipo.descripcion }}</p>
     </div>
     <div class="hero-image">
       <img [src]="equipo.imagen" [alt]="equipo.alt">
     </div>
   </div>
 
-  <h2 class="section-title">{{ equipo.subtitulo }}</h2>
+  <h2 class="section-title">Nuestros Especialistas</h2>
 
   <section class="team-grid">
     @for (miembro of equipo.miembros; track miembro.nombre) {
-      <div class="team-card">
-        <img [src]="miembro.imagen" [alt]="miembro.alt">
+      <article>
+        <div class="thumb-placeholder">
+          <img [src]="miembro.imagen" [alt]="miembro.alt" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
         <h3>{{ miembro.nombre }}</h3>
-        <p class="cargo">{{ miembro.cargo }}</p>
+        <p><strong>{{ miembro.cargo }}</strong></p>
         <p>{{ miembro.descripcion }}</p>
-      </div>
+      </article>
     }
   </section>
 }

@@ -1,43 +1,39 @@
-<div *ngIf="inicio">
-
+@if (inicio) {
   <section class="hero-banner">
     <h1>{{ inicio.titulo }}</h1>
   </section>
 
   <div class="hero-section">
     <div class="hero-content">
-      <h2>{{ inicio.sobreNosotros.titulo }}</h2>
+      <h1>{{ inicio.sobreNosotros.titulo }}</h1>
       <p>{{ inicio.sobreNosotros.texto }}</p>
-      <a [href]="inicio.sobreNosotros.botonLink">
-        <button class="btn-primary">
-          {{ inicio.sobreNosotros.botonTexto }}
-        </button>
+      <a [routerLink]="inicio.sobreNosotros.botonLink">
+        <button class="btn-primary">{{ inicio.sobreNosotros.botonTexto }}</button>
       </a>
     </div>
-
     <div class="hero-image">
-      <img [src]="inicio.sobreNosotros.imagen" [alt]="inicio.sobreNosotros.alt">
+      <img [src]="inicio.sobreNosotros.imagen" [alt]="inicio.sobreNosotros.alt" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="img-box-gris" style="display:none; aspect-ratio: 16/10;"></div>
     </div>
   </div>
 
   <section class="servicios-section">
     <h2>{{ inicio.servicios.titulo }}</h2>
-
     <div class="servicios-grid">
-      <div class="servicio-card" *ngFor="let item of inicio.servicios.items">
-        <img [src]="item.imagen" [alt]="item.alt">
-        <h3>{{ item.titulo }}</h3>
-        <p>{{ item.descripcion }}</p>
-      </div>
+      @for (item of inicio.servicios.items; track item.titulo) {
+        <article>
+          <div class="thumb-placeholder">
+            <img [src]="item.imagen" [alt]="item.alt" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <h3>{{ item.titulo }}</h3>
+          <p>{{ item.descripcion }}</p>
+        </article>
+      }
     </div>
-
     <div class="btn-wrap">
-      <a [href]="inicio.servicios.botonLink">
-        <button class="btn-primary">
-          {{ inicio.servicios.botonTexto }}
-        </button>
+      <a [routerLink]="inicio.servicios.botonLink">
+        <button class="btn-primary">{{ inicio.servicios.botonTexto }}</button>
       </a>
     </div>
   </section>
-
-</div>
+}
