@@ -1,26 +1,32 @@
 @if (equipo) {
-  <div class="team-hero">
+  <!-- Hero Equipo -->
+  <section class="team-hero">
     <div class="hero-content">
-      <h1>{{ equipo.titulo }}</h1>
-      <p>{{ equipo.subtitulo }}</p>
-      <p style="margin-top: 1rem;">{{ equipo.descripcion }}</p>
+      <h1 class="team-main-title">{{ equipo.titulo }}</h1>
+      <p class="team-description">{{ equipo.descripcion }}</p>
     </div>
-    <div class="hero-image">
-      <img [src]="equipo.imagen" [alt]="equipo.alt">
+    <div class="hero-image-container">
+      <img [src]="equipo.imagen" [alt]="equipo.alt" class="team-hero-img" onerror="this.src='img/equipo.jpg'">
     </div>
+  </section>
+
+  <!-- Título Sección Profesionales -->
+  <div class="section-title-container">
+    <h2 class="professional-title">{{ equipo.subtitulo }}</h2>
   </div>
 
-  <h2 class="section-title">Nuestros Especialistas</h2>
-
+  <!-- Grid de Miembros -->
   <section class="team-grid">
     @for (miembro of equipo.miembros; track miembro.nombre) {
-      <article>
-        <div class="thumb-placeholder">
-          <img [src]="miembro.imagen" [alt]="miembro.alt" style="width: 100%; height: 100%; object-fit: cover;">
+      <article class="member-card">
+        <div class="member-image-box">
+          <img [src]="miembro.imagen" [alt]="miembro.alt" onerror="this.src='img/default-user.png'">
         </div>
-        <h3>{{ miembro.nombre }}</h3>
-        <p><strong>{{ miembro.cargo }}</strong></p>
-        <p>{{ miembro.descripcion }}</p>
+        <div class="member-info">
+          <h3 class="member-name">{{ miembro.nombre }}</h3>
+          <p class="member-role">{{ miembro.cargo }}</p>
+          <p class="member-desc">{{ miembro.descripcion }}</p>
+        </div>
       </article>
     }
   </section>

@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
+import { Auth, authState, signOut } from '@angular/fire/auth';
 import { DataService } from '../../core/services/data';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,32 +11,20 @@ import { Subscription } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  usuarioLogueado: User | null = null;
-  userProfile: any = null;
-  menuAbierto = false;
-  private unsubscribeAuth!: () => void;
+export class HeaderComponent implements OnInit {
+  private auth = inject(Auth);
   private dataService = inject(DataService);
+  private router = inject(Router);
 
-  constructor(private auth: Auth, private router: Router) {}
+  usuarioLogueado$ = authState(this.auth);
+  userProfile$ = this.dataService.userProfile$;
+  menuAbierto = false;
 
-  ngOnInit(): void {
-    this.unsubscribeAuth = onAuthStateChanged(this.auth, (user) => {
-      this.usuarioLogueado = user;
-      if (user) {
-        this.dataService.getUsuarioProfile(user.uid).subscribe((profile: any) => {
-          this.userProfile = profile;
-        });
-      } else {
-        this.userProfile = null;
-      }
-    });
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    if (this.unsubscribeAuth) {
-      this.unsubscribeAuth();
-    }
+  irAPerfil(): void {
+    this.router.navigate(['/perfil']);
+    this.cerrarMenu();
   }
 
   async cerrarSesion(): Promise<void> {

@@ -1,89 +1,148 @@
-/* Estilos específicos para la vista de equipo */
+/* Estilos Premium para la página de Equipo */
 
 .team-hero {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 3rem;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
     align-items: center;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 10%;
+    margin: 4rem auto 6rem;
+    padding: 0 5%;
 }
 
-.team-hero .hero-content h1 {
-    font-size: clamp(2rem, 6vw, 2.5rem);
-    margin-bottom: 1.5rem;
+.team-main-title {
+    font-size: 3rem;
+    font-weight: 800;
     color: var(--negro-smile);
+    margin-bottom: 2rem;
+    letter-spacing: -0.5px;
 }
 
-.team-hero .hero-content p {
-    color: #555;
-    font-size: 1.05rem;
-    line-height: 1.6;
+.team-description {
+    font-size: 1.1rem;
+    color: var(--gris-texto);
+    line-height: 1.7;
+    max-width: 500px;
 }
 
-.team-hero .hero-image img {
+.hero-image-container {
     width: 100%;
-    border-radius: 12px;
+}
+
+.team-hero-img {
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
     box-shadow: var(--shadow);
     object-fit: cover;
 }
 
+/* Sección Profesionales */
+
+.section-title-container {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.professional-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--negro-smile);
+    letter-spacing: -0.3px;
+}
+
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2.5rem;
-    padding: 3rem 10% 5rem;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 6rem;
+    padding: 0 5%;
 }
 
-.team-grid article {
+.member-card {
     background: var(--blanco);
-    padding: 2rem;
-    border-radius: 16px;
+    border-radius: 24px;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(226, 232, 240, 0.5);
+    display: flex;
+    flex-direction: column;
 }
 
-.team-grid article:hover {
-    transform: translateY(-5px);
+.member-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-hover);
 }
 
-.team-grid article h3 {
-    margin: 1.5rem 0 0.5rem;
-    color: var(--negro-smile);
-    font-size: 1.2rem;
+.member-image-box {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--azul-hielo);
 }
 
-.team-grid article p {
-    color: #666;
-    font-size: 0.95rem;
+.member-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
 }
 
-.team-grid article strong {
+.member-card:hover .member-image-box img {
+    transform: scale(1.05);
+}
+
+.member-info {
+    padding: 2rem;
+    text-align: left;
+}
+
+.member-name {
+    font-size: 1.25rem;
+    font-weight: 800;
     color: var(--azul-medio);
-    display: block;
     margin-bottom: 0.5rem;
 }
 
-/* --- TABLET (hasta 1024px) --- */
+.member-role {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--negro-smile);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.member-desc {
+    font-size: 0.95rem;
+    color: var(--gris-texto);
+    line-height: 1.6;
+}
+
+/* --- RESPONSIVE --- */
+
 @media (max-width: 1024px) {
     .team-hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 3rem 5%;
-    }
-    
-    .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 3rem 5% 5rem;
+        gap: 3rem;
     }
 }
 
-/* --- MÓVIL (hasta 768px) --- */
 @media (max-width: 768px) {
-    .team-grid {
-        grid-template-columns: 1fr;
+    .team-hero {
+        display: flex;
+        flex-direction: column-reverse;
+        text-align: center;
+        margin: 2rem auto 4rem;
+    }
+    .team-description {
+        margin-inline: auto;
+    }
+    .professional-title {
+        font-size: 1.8rem;
+        padding: 0 5%;
+    }
+    .member-info {
+        text-align: center;
     }
 }

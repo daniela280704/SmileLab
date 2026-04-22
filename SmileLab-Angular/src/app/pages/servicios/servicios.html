@@ -1,15 +1,19 @@
 <section class="servicios-page" *ngIf="servicios">
-  <h2 class="section-title">{{ servicios.titulo }}</h2>
-  <div class="feature-blocks">
-    @for (item of servicios.items; track item.id; let i = $index) {
-      <article class="feature-block" [class.expanded]="itemExpandido === i">
-        <img [src]="item.imagen" [alt]="item.alt" class="img-box-gris">
-        <div>
-          <h3 (click)="toggleExpand(i)">
-            {{ item.titulo }}
-            <span class="accordion-icon">{{ itemExpandido === i ? '✕' : '☰' }}</span>
-          </h3>
-          <p>{{ item.descripcion }}</p>
+  <!-- Título Principal -->
+  <div class="servicios-header">
+    <h2 class="section-title-premium">{{ servicios.titulo }}</h2>
+  </div>
+
+  <!-- Bloques de Servicios -->
+  <div class="service-cards-container">
+    @for (item of servicios.items; track item.id) {
+      <article class="service-premium-card">
+        <div class="card-image">
+          <img [src]="item.imagen" [alt]="item.alt" onerror="this.src='img/logo.jpeg'">
+        </div>
+        <div class="card-content">
+          <h3 class="service-name">{{ item.titulo }}</h3>
+          <p class="service-desc">{{ item.descripcion }}</p>
         </div>
       </article>
     }

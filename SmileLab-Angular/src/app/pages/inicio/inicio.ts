@@ -6,7 +6,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css'
 })

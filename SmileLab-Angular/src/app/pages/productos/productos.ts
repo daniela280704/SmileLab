@@ -1,16 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { DataService } from '../../core/services/data';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink],
   templateUrl: './productos.html',
   styleUrl: './productos.css'
 })
-export class Productos implements OnInit {
+export class ProductosComponent implements OnInit {
   private dataService = inject(DataService);
   productos: any[] = [];
 

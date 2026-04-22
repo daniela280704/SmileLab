@@ -1,0 +1,163 @@
+/* Estilos Perfil con Paridad Exacta Final */
+
+.perfil-premium-wrapper {
+    padding: 6rem 10% 2rem; /* Menos padding inferior para que el banner esté más cerca */
+    background: white;
+}
+
+.perfil-main-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.perfil-greeting {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--negro-smile);
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.perfil-data-list p {
+    font-size: 1.1rem;
+    color: #475569;
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+}
+
+.perfil-data-list strong {
+    color: var(--negro-smile);
+    font-weight: 800;
+}
+
+.logout-btn-box {
+    margin-top: 2rem;
+}
+
+.btn-logout-premium {
+    background: white;
+    color: #ff5a5f;
+    border: 1.8px solid #ff5a5f;
+    padding: 0.6rem 2.2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: none;
+}
+
+.btn-logout-premium:hover {
+    background: #fff5f5;
+    transform: translateY(-2px);
+}
+
+.perfil-image-column {
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-giant-circle {
+    width: 380px;
+    height: 380px;
+    background: #e2e8f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.02);
+}
+
+.avatar-giant-circle svg {
+    width: 80%;
+    height: 80%;
+}
+
+/* Banner de Cita - Ajustado */
+
+.cita-appointment-banner {
+    background-color: #eff6ff;
+    padding: 4.5rem 5% 5rem;
+    text-align: center;
+}
+
+.banner-title {
+    font-size: 2.2rem; /* Reducido para mejor paridad */
+    font-weight: 800;
+    color: var(--negro-smile);
+    margin-bottom: 2rem;
+    letter-spacing: -0.5px;
+}
+
+.banner-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.btn-dark-action {
+    background: #1e3a5f;
+    color: white;
+    padding: 0.8rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+.btn-light-action {
+    background: white;
+    color: #1e3a5f;
+    padding: 0.8rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    border: 2px solid #1e3a5f;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+.btn-dark-action:hover, .btn-light-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 58, 95, 0.1);
+}
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 1024px) {
+    .perfil-main-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .perfil-image-column {
+        justify-content: center;
+        order: -1;
+    }
+    .avatar-giant-circle {
+        width: 250px;
+        height: 250px;
+    }
+    .perfil-greeting {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .perfil-premium-wrapper {
+        padding: 4rem 5% 2rem;
+    }
+    .banner-title {
+        font-size: 1.8rem;
+    }
+    .btn-dark-action, .btn-light-action {
+        width: 100%;
+        max-width: 200px;
+    }
+}

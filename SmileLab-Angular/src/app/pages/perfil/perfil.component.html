@@ -1,48 +1,42 @@
-<section style="padding: 4rem 10%; max-width: 800px; margin: 0 auto;">
-  <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border: 1px solid #e5e7eb;">
-    <h2 style="color: #1e3a8a; margin-bottom: 2rem; border-bottom: 2px solid #eff6ff; padding-bottom: 1rem;">Mi Perfil</h2>
-
-    @if (perfil) {
-      <div style="display: grid; gap: 1.5rem;">
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <label style="font-weight: 600; color: #64748b; font-size: 0.85rem; text-transform: uppercase;">Nombre Completo</label>
-          <p style="font-size: 1.1rem; color: #1e3a5f; margin: 0;">{{ perfil.nombre }}</p>
+<section class="perfil-premium-wrapper">
+  <div class="perfil-main-container">
+    @if (perfil$ | async; as perfil) {
+      <div class="perfil-text-column">
+        <h1 class="perfil-greeting">¡Hola, {{ (perfil.nombre || 'Usuario').split(' ')[0] }}!</h1>
+        <div class="perfil-data-list">
+          <p><strong>Paciente:</strong> {{ perfil.nombre }}</p>
+          <p><strong>Email:</strong> {{ perfil.email }}</p>
+          <p><strong>Teléfono:</strong> {{ perfil.telefono || 'No especificado' }}</p>
+          <p><strong>Próxima limpieza:</strong> 2026-03-25 a las 12:00</p>
+          <p><strong>Doctor habitual:</strong> Dr. García</p>
         </div>
-
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <label style="font-weight: 600; color: #64748b; font-size: 0.85rem; text-transform: uppercase;">Correo Electrónico</label>
-          <p style="font-size: 1.1rem; color: #1e3a5f; margin: 0;">{{ perfil.email }}</p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <label style="font-weight: 600; color: #64748b; font-size: 0.85rem; text-transform: uppercase;">Teléfono</label>
-          <p style="font-size: 1.1rem; color: #1e3a5f; margin: 0;">{{ perfil.telefono }}</p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <label style="font-weight: 600; color: #64748b; font-size: 0.85rem; text-transform: uppercase;">Rol en el Sistema</label>
-          <span [style.background-color]="perfil.rol === 'admin' ? '#dcfce7' : '#eff6ff'"
-                [style.color]="perfil.rol === 'admin' ? '#166534' : '#1e40af'"
-                style="padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; align-self: flex-start; text-transform: capitalize;">
-            {{ perfil.rol }}
-          </span>
-        </div>
-
-        <div style="margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid #f1f5f9; display: flex; gap: 1rem;">
-          @if (perfil.rol === 'admin') {
-            <a routerLink="/admin-crear-producto" style="background: #1e3a8a; color: white; padding: 0.8rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
-              Panel de Administración
-            </a>
-          }
-          <a routerLink="/citas" style="background: #eff6ff; color: #1e40af; padding: 0.8rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
-            Mis Citas
-          </a>
+        <div class="logout-btn-box">
+          <button class="btn-logout-premium" (click)="logout()">Cerrar sesión</button>
         </div>
       </div>
     } @else {
-      <div style="text-align: center; padding: 2rem;">
-        <p style="color: #64748b;">Cargando información de tu perfil...</p>
+      <div class="perfil-text-column">
+        <h1 class="perfil-greeting">Cargando perfil...</h1>
+        <p>Estamos recuperando tus datos de paciente.</p>
       </div>
     }
+    <div class="perfil-image-column">
+      <div class="avatar-giant-circle">
+        <svg viewBox="0 0 24 24" fill="#cbd5e1">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Banner Inferior de Cita -->
+<section class="cita-appointment-banner">
+  <div class="banner-inner-content">
+    <h2 class="banner-title">Pide tu cita aquí</h2>
+    <div class="banner-actions">
+      <button class="btn-dark-action" routerLink="/contacto">Cita</button>
+      <button class="btn-light-action" routerLink="/citas">Agenda</button>
+    </div>
   </div>
 </section>

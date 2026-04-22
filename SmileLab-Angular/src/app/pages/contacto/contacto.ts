@@ -11,7 +11,7 @@ declare var flatpickr: any;
 @Component({
   selector: 'app-contacto',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './contacto.html',
   styleUrl: './contacto.css',
 })
@@ -109,9 +109,10 @@ export class ContactoComponent implements OnInit, AfterViewInit {
     const values = this.registroForm.value;
     await this.dataService.addCita({
       usuarioId: uid,
-      fechaCita: values.fechaCita,
-      horaCita: values.horaCita,
-      motivoCita: values.motivoCita,
+      nombre: values.nombre || this.usuarioLogueado?.displayName || 'Paciente',
+      fecha: values.fechaCita,
+      hora: values.horaCita,
+      servicio: values.motivoCita,
       profesional: values.profesional,
       estado: 'pendiente',
       fechaCreacion: new Date().toISOString()

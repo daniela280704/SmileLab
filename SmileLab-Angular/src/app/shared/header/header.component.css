@@ -58,18 +58,18 @@ header {
 .desktop-nav a {
     text-decoration: none;
     color: var(--negro-smile);
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.5rem 0.8rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
     white-space: nowrap;
+    opacity: 0.8;
 }
 
 .desktop-nav a:hover, 
 .desktop-nav a.active {
     color: var(--azul-medio);
-    background: var(--azul-hielo);
+    opacity: 1;
 }
 
 /* 3. Acciones (Derecha) */
@@ -151,11 +151,12 @@ header {
     
     .btn-menu-mobile {
         display: block;
-        background: var(--azul-medio);
+        background: var(--negro-smile); /* Cambiado a azul oscuro según la imagen */
         color: white;
-        padding: 0.6rem 1rem;
-        border-radius: 10px;
+        padding: 0.5rem 1.2rem;
+        border-radius: 50px; /* Más redondeado */
         font-weight: 700;
+        font-size: 0.9rem;
         z-index: 10001;
     }
 }
@@ -164,4 +165,20 @@ header {
     .logo-text {
         display: none; /* Ocultar texto en móviles muy pequeños para dar espacio */
     }
+}
+
+.btn-perfil-mobile-nav {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-perfil-mobile-nav:hover {
+    color: var(--azul-claro);
 }

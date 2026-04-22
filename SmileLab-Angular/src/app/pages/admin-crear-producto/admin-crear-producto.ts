@@ -67,7 +67,7 @@ export class AdminCrearProducto {
             this.resetForm();
           }, 500);
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error(err);
           alert('Error de conexión con Firebase Storage. Verifica las reglas de seguridad.');
           this.isUploading = false;

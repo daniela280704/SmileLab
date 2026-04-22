@@ -20,7 +20,7 @@ export class ProductoDetalle implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
-        this.dataService.getProductoById(id).subscribe(data => {
+        this.dataService.getProductoById(id).subscribe((data: any) => {
           this.producto = data;
         });
       }
