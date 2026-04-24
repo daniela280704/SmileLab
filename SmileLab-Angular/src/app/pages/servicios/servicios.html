@@ -6,15 +6,32 @@
 
   <!-- Bloques de Servicios -->
   <div class="service-cards-container">
-    @for (item of servicios.items; track item.id) {
-      <article class="service-premium-card">
-        <div class="card-image">
-          <img [src]="item.imagen" [alt]="item.alt" onerror="this.src='img/logo.jpeg'">
+    @for (item of servicios.items; track item.titulo; let i = $index) {
+      <article class="service-premium-card" [class.is-expanded]="itemExpandido === i">
+        
+        <!-- Cabecera de la tarjeta (Visible siempre o como toggle en móvil) -->
+        <div class="card-mobile-header" (click)="toggleExpand(i)">
+          <h3 class="service-name-mobile">{{ item.titulo }}</h3>
+          <button class="toggle-btn">
+            @if (itemExpandido === i) {
+              <span class="close-icon">✕</span>
+            } @else {
+              <span class="burger-icon">☰</span>
+            }
+          </button>
         </div>
-        <div class="card-content">
-          <h3 class="service-name">{{ item.titulo }}</h3>
-          <p class="service-desc">{{ item.descripcion }}</p>
+
+        <!-- Contenido expandible -->
+        <div class="expandable-content">
+          <div class="card-image">
+            <img [src]="item.imagen" [alt]="item.alt" onerror="this.src='img/logo.jpeg'">
+          </div>
+          <div class="card-content">
+            <h3 class="service-name-desktop">{{ item.titulo }}</h3>
+            <p class="service-desc">{{ item.descripcion }}</p>
+          </div>
         </div>
+
       </article>
     }
   </div>

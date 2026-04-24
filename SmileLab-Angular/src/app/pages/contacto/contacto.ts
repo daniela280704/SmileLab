@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, User } from '@angular/fire/auth';
 import { DataService } from '../../core/services/data';
+import { first } from 'rxjs';
 
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 
@@ -19,6 +20,8 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   private auth = inject(Auth);
   private dataService = inject(DataService);
   private router = inject(Router);
+  
+  profesionales: any[] = [];
   
   usuarioLogueado: User | null = null;
   registroForm = new FormGroup({
@@ -37,6 +40,13 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   isLoading = false;
 
   ngOnInit(): void {
+    // Cargar profesionales desde el servicio de equipo
+    this.dataService.getEquipo().pipe(first()).subscribe(data => {
+      if (data && data.miembros) {
+        this.profesionales = data.miembros;
+      }
+    });
+
     onAuthStateChanged(this.auth, (user) => {
       this.usuarioLogueado = user;
       if (user) {

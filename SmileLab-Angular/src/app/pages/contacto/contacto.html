@@ -94,7 +94,12 @@
 
       <div class="form-group full-width">
         <label>Nombre del profesional:</label>
-        <input type="text" formControlName="profesional" placeholder="Ej: Dr. García">
+        <select formControlName="profesional" class="premium-select">
+          <option value="" disabled selected>Selecciona un profesional</option>
+          @for (p of profesionales; track p.nombre) {
+            <option [value]="p.nombre">{{ p.nombre }}</option>
+          }
+        </select>
       </div>
     </div>
 

@@ -68,18 +68,16 @@
     justify-content: center;
 }
 
-.service-name {
+.card-mobile-header {
+    display: none; /* Oculto en desktop */
+}
+
+.service-name-desktop {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--negro-smile);
     margin-bottom: 1.5rem;
     letter-spacing: -0.3px;
-}
-
-.service-desc {
-    font-size: 1.05rem;
-    color: var(--gris-texto);
-    line-height: 1.7;
 }
 
 /* --- RESPONSIVE --- */
@@ -88,7 +86,7 @@
     .card-content {
         padding: 2.5rem;
     }
-    .service-name {
+    .service-name-desktop {
         font-size: 1.5rem;
     }
 }
@@ -96,15 +94,77 @@
 @media (max-width: 768px) {
     .section-title-premium {
         font-size: 2rem;
+        margin-bottom: 3rem;
     }
+
+    .service-cards-container {
+        gap: 1.5rem;
+    }
+
+    /* Ocultamos el título de desktop en el móvil para usar el del header */
+    .service-name-desktop {
+        display: none;
+    }
+
+    .card-mobile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .service-name-mobile {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--negro-smile);
+        margin: 0;
+    }
+
+    .toggle-btn {
+        background: black;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+
     .service-premium-card {
         grid-template-columns: 1fr;
+        flex-direction: column;
+        height: auto;
     }
+
+    /* Lógica de expansión */
+    .expandable-content {
+        display: none; /* Cerrado por defecto */
+        width: 100%;
+    }
+
+    .service-premium-card.is-expanded .expandable-content {
+        display: block;
+    }
+
+    .service-premium-card.is-expanded .card-mobile-header {
+        border-bottom: 1px solid #f1f5f9;
+    }
+
     .card-image {
         aspect-ratio: 16/10;
+        border-radius: 0;
     }
+
     .card-content {
-        padding: 2rem;
+        padding: 2rem 1.5rem;
         text-align: center;
+    }
+
+    .service-desc {
+        font-size: 1rem;
     }
 }

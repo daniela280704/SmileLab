@@ -1,28 +1,28 @@
 /* Estilos Premium para la página de Equipo */
 
 .team-hero {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 4rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    max-width: 1200px;
+    text-align: center;
+    max-width: 1000px;
     margin: 4rem auto 6rem;
     padding: 0 5%;
 }
 
 .team-main-title {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--negro-smile);
-    margin-bottom: 2rem;
-    letter-spacing: -0.5px;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #1e3a5f;
+    margin-bottom: 1.5rem;
 }
 
 .team-description {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--gris-texto);
-    line-height: 1.7;
-    max-width: 500px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-bottom: 3rem;
 }
 
 .hero-image-container {
@@ -32,8 +32,8 @@
 .team-hero-img {
     width: 100%;
     height: auto;
-    border-radius: 24px;
-    box-shadow: var(--shadow);
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
     object-fit: cover;
 }
 
@@ -45,104 +45,135 @@
 }
 
 .professional-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--negro-smile);
-    letter-spacing: -0.3px;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #1e3a5f;
 }
 
 .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
-    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
     margin: 0 auto 6rem;
     padding: 0 5%;
 }
 
 .member-card {
     background: var(--blanco);
-    border-radius: 24px;
-    box-shadow: var(--shadow);
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(226, 232, 240, 0.5);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    border: 1px solid #f1f5f9;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
 .member-card:hover {
-    transform: translateY(-12px);
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+/* Zig-Zag */
+.member-card:nth-child(even) {
+    direction: rtl;
+}
+
+.member-card:nth-child(even) .member-info {
+    direction: ltr; /* Restaurar dirección del texto */
 }
 
 .member-image-box {
     width: 100%;
     aspect-ratio: 1;
-    overflow: hidden;
-    background: var(--azul-hielo);
 }
 
 .member-image-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
-}
-
-.member-card:hover .member-image-box img {
-    transform: scale(1.05);
 }
 
 .member-info {
-    padding: 2rem;
-    text-align: left;
+    padding: 3rem;
 }
 
 .member-name {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--azul-medio);
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #1e3a5f;
     margin-bottom: 0.5rem;
 }
 
 .member-role {
     font-size: 1rem;
     font-weight: 700;
-    color: var(--negro-smile);
-    margin-bottom: 1rem;
-    line-height: 1.4;
+    color: var(--gris-texto);
+    margin-bottom: 1.5rem;
 }
 
 .member-desc {
-    font-size: 0.95rem;
-    color: var(--gris-texto);
-    line-height: 1.6;
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.7;
 }
 
 /* --- RESPONSIVE --- */
 
-@media (max-width: 1024px) {
-    .team-hero {
-        gap: 3rem;
-    }
-}
-
 @media (max-width: 768px) {
     .team-hero {
-        display: flex;
-        flex-direction: column-reverse;
-        text-align: center;
-        margin: 2rem auto 4rem;
+        margin: 3rem auto 4rem;
     }
+
+    .team-main-title {
+        font-size: 2.4rem;
+        margin-bottom: 1.5rem;
+    }
+
     .team-description {
-        margin-inline: auto;
+        font-size: 1.05rem;
+        margin-bottom: 2.5rem;
+        padding: 0 2%;
     }
+
     .professional-title {
-        font-size: 1.8rem;
+        font-size: 2rem;
         padding: 0 5%;
     }
+
+    .member-card {
+        grid-template-columns: 1fr;
+        direction: ltr !important;
+        border-radius: 20px;
+    }
+
+    .member-card:nth-child(even) .member-info {
+        direction: ltr;
+    }
+
     .member-info {
+        padding: 2rem 1.5rem;
         text-align: center;
+    }
+
+    .member-image-box {
+        aspect-ratio: 1; /* Formato cuadrado para el profesional */
+    }
+
+    .member-name {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .member-role {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .member-desc {
+        font-size: 0.95rem;
+        line-height: 1.6;
     }
 }

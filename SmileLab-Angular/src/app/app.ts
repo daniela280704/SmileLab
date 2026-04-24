@@ -23,9 +23,9 @@ export class App {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       const url = event.urlAfterRedirects;
-      // No mostrar en login ni en la página principal de la tienda (/productos)
+      // No mostrar en login, perfil ni en la página principal de la tienda (/productos)
       // Pero SÍ mostrar en el detalle de producto (/productos/id)
-      this.mostrarProductos = !url.includes('login') && url !== '/productos';
+      this.mostrarProductos = !url.includes('login') && !url.includes('perfil') && url !== '/productos';
     });
   }
 }

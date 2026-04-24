@@ -132,59 +132,68 @@
 
 @media (max-width: 1100px) {
     .servicios-grid {
-        grid-template-columns: repeat(3, 1fr); /* Forzar 3 columnas en tablet grande */
+        grid-template-columns: repeat(3, 1fr); 
         gap: 1.5rem;
     }
 }
 
-@media (max-width: 1024px) {
-    .servicios-section {
-        padding: 4rem 5% 5rem;
-    }
-    .about-us-section {
-        padding: 1rem 0;
-    }
+@media (max-width: 900px) {
     .servicios-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(3, 1fr); /* Seguimos con 3 columnas en tablet mediana */
+        gap: 1rem;
+    }
+    
+    .about-title {
+        font-size: 2.2rem;
     }
 }
 
 @media (max-width: 768px) {
     .main-hero-banner {
-        padding: 5rem 5%;
+        padding: 6rem 5% 5rem;
+        background: var(--gradient-hero-home); /* Coherencia con desktop */
     }
     .main-hero-banner h1 {
-        font-size: 2.5rem;
+        font-size: 2.4rem;
+        line-height: 1.2;
     }
+
+    .about-us-section {
+        padding: 0;
+    }
+
     .about-title {
+        text-align: left; /* Como en la imagen */
         font-size: 2.2rem;
-        text-align: left; /* Alineado a la izquierda según la imagen */
-        margin-top: 1.5rem;
+        margin-top: 2rem;
+        padding: 0 5%;
     }
-    .about-us-section .hero-section {
-        margin: 2rem auto;
-        gap: 1.5rem;
-        text-align: left; /* Todo el contenido a la izquierda */
+
+    .about-us-section p {
+        padding: 0 5%;
+        text-align: left;
     }
+
+    .btn-group {
+        padding: 0 5%;
+        margin-bottom: 3rem;
+    }
+
+    .hero-image {
+        margin-top: 0;
+    }
+
+    .servicios-section {
+        padding: 3rem 5%;
+    }
+
     .section-title-alt {
-        font-size: 2rem;
-        margin: 1rem 0 2.5rem;
+        font-size: 2.2rem;
+        margin: 1rem 0 3rem;
     }
+
     .servicios-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
-    }
-    .servicio-card {
-        max-width: 450px;
-        margin: 0 auto;
-    }
-}
-
-@media (max-width: 480px) {
-    .main-hero-banner h1 {
-        font-size: 2.2rem;
-    }
-    .about-title {
-        font-size: 2rem;
     }
 }

@@ -12,12 +12,12 @@ header {
     z-index: 1000;
     width: 100%;
     box-sizing: border-box;
-    height: 80px; /* Altura fija para consistencia */
+    height: 80px; 
 }
 
 /* 1. Contenedor Logo */
 .logo-container {
-    flex: 1 1 0; /* Toma espacio a la izquierda */
+    flex: 1; /* Ocupa el mismo espacio que el contenedor derecho */
     display: flex;
     align-items: center;
 }
@@ -38,11 +38,12 @@ header {
     font-weight: 800;
     font-size: 1.3rem;
     color: var(--negro-smile);
+    white-space: nowrap;
 }
 
 /* 2. Navegación Desktop (Centro) */
 .desktop-nav {
-    flex: 2 1 0; /* Toma el doble de espacio y se centra */
+    flex: 0 0 auto; /* No crece para mantenerse centrado */
     display: flex;
     justify-content: center;
 }
@@ -74,7 +75,7 @@ header {
 
 /* 3. Acciones (Derecha) */
 .header-actions {
-    flex: 1 1 0; /* Toma espacio a la derecha */
+    flex: 1; 
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -140,7 +141,39 @@ header {
 
 /* --- RESPONSIVE --- */
 
-@media (max-width: 1024px) {
+@media (max-width: 1050px) {
+    .desktop-nav ul {
+        gap: 0.1rem; /* Mínimo espacio entre links */
+    }
+    
+    .desktop-nav a {
+        padding: 0.5rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .header-actions {
+        gap: 0.5rem;
+    }
+
+    .btn-dark {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 850px) {
+    .logo-container {
+        flex: 0 0 auto; /* Ya no empuja al centro */
+    }
+    .header-actions {
+        flex: 0 0 auto; /* Ya no empuja al centro */
+    }
+    header {
+        justify-content: space-between; /* El menú se reparte el espacio real */
+    }
+}
+
+@media (max-width: 768px) {
     .desktop-nav {
         display: none;
     }
@@ -148,22 +181,21 @@ header {
     .btn-perfil-desktop {
         display: none;
     }
+
+    .logo-text {
+        font-size: 1.15rem;
+        opacity: 1;
+    }
     
     .btn-menu-mobile {
         display: block;
-        background: var(--negro-smile); /* Cambiado a azul oscuro según la imagen */
+        background: var(--negro-smile); 
         color: white;
-        padding: 0.5rem 1.2rem;
-        border-radius: 50px; /* Más redondeado */
+        padding: 0.6rem 1.5rem;
+        border-radius: 50px; /* Coherencia con el resto de botones pill-shaped */
         font-weight: 700;
         font-size: 0.9rem;
         z-index: 10001;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-text {
-        display: none; /* Ocultar texto en móviles muy pequeños para dar espacio */
     }
 }
 
