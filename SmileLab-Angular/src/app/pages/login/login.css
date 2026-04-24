@@ -63,6 +63,28 @@
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
 }
 
+.login-error-message {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid #fee2e2;
+    text-align: center;
+}
+
+.login-success-message, .login-success-banner {
+    background-color: #f0fdf4;
+    color: #15803d;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid #dcfce7;
+    text-align: center;
+}
+
 .login-action-container {
     margin-top: 1.5rem;
 }

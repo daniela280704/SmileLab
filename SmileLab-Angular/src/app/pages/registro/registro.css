@@ -1,0 +1,24 @@
+/* Reutilizamos los estilos de login para mantener coherencia */
+@import '../login/login.css';
+
+.admin-code-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.admin-code-section label {
+    color: var(--azul-medio);
+    font-size: 0.85rem;
+}
+
+.login-error-banner {
+    background-color: #fef2f2;
+    color: #dc2626;
+    padding: 0.75rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    border: 1px solid #fee2e2;
+    text-align: center;
+}

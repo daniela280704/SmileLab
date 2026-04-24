@@ -18,7 +18,6 @@ export const adminGuard: CanActivateFn = () => {
           if (profile?.rol === 'admin') {
             resolve(true);
           } else {
-            alert('Acceso denegado: Se requieren permisos de administrador.');
             router.navigate(['/perfil']);
             resolve(false);
           }

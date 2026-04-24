@@ -32,6 +32,10 @@ export class ContactoComponent implements OnInit, AfterViewInit {
     profesional: new FormControl('', [Validators.required]),
   });
 
+  errorMsg: string | null = null;
+  successMsg: string | null = null;
+  isLoading = false;
+
   ngOnInit(): void {
     onAuthStateChanged(this.auth, (user) => {
       this.usuarioLogueado = user;
@@ -67,11 +71,15 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   }
 
   async enviarDatos() {
+    this.errorMsg = null;
+    this.successMsg = null;
+
     if (this.registroForm.invalid) {
-      alert('Por favor, rellena todos los campos obligatorios.');
+      this.errorMsg = 'Por favor, rellena todos los campos obligatorios.';
       return;
     }
 
+    this.isLoading = true;
     const values = this.registroForm.value;
     
     try {
@@ -91,17 +99,23 @@ export class ContactoComponent implements OnInit, AfterViewInit {
         }).toPromise();
 
         await this.guardarCita(userCredential.user.uid);
-        alert('¡Bienvenido! Registro completado y cita agendada.');
+        this.successMsg = '¡Bienvenido! Registro completado y cita agendada.';
       } else {
         // Solo Cita
         await this.guardarCita(this.usuarioLogueado.uid);
-        alert('¡Tu cita ha sido confirmada!');
+        this.successMsg = '¡Tu cita ha sido confirmada!';
       }
       
       this.registroForm.reset();
-      this.router.navigate(['/citas']);
+      
+      setTimeout(() => {
+        this.router.navigate(['/citas']);
+      }, 2000);
+
     } catch (error: any) {
-      alert('Error: ' + error.message);
+      this.errorMsg = 'Error: ' + error.message;
+    } finally {
+      this.isLoading = false;
     }
   }
 

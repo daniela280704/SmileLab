@@ -1,0 +1,58 @@
+<section class="login-page-container">
+  <div class="login-header">
+    <h2 class="login-main-title">Crea tu cuenta</h2>
+    <p class="login-subtitle">Únete a la familia SmileLab</p>
+  </div>
+  
+  <div class="login-card-wrapper">
+    <form [formGroup]="registroForm" (ngSubmit)="onRegistro()" class="premium-login-form">
+      
+      @if (errorMsg) {
+        <div class="login-error-banner">
+          {{ errorMsg }}
+        </div>
+      }
+
+      @if (successMsg) {
+        <div class="login-success-banner">
+          {{ successMsg }}
+        </div>
+      }
+
+      <div class="login-input-group">
+        <label>Nombre completo:</label>
+        <input type="text" formControlName="nombre" placeholder="Tu nombre">
+      </div>
+
+      <div class="login-input-group">
+        <label>Correo electrónico:</label>
+        <input type="email" formControlName="email" placeholder="tu@email.com">
+      </div>
+
+      <div class="login-input-group">
+        <label>Teléfono:</label>
+        <input type="tel" formControlName="telefono" placeholder="Ej: 600123456">
+      </div>
+      
+      <div class="login-input-group">
+        <label>Contraseña:</label>
+        <input type="password" formControlName="password" placeholder="Mínimo 6 caracteres">
+      </div>
+
+      <div class="login-input-group admin-code-section">
+        <label>Código de Administrador (Opcional):</label>
+        <input type="text" formControlName="adminCode" placeholder="Solo para trabajadores">
+      </div>
+
+      <div class="login-action-container">
+        <button type="submit" class="btn-login-submit" [disabled]="registroForm.invalid || isLoading">
+          {{ isLoading ? 'Creando cuenta...' : 'Registrarse →' }}
+        </button>
+      </div>
+
+      <div class="login-footer-links">
+        <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
+      </div>
+    </form>
+  </div>
+</section>

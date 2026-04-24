@@ -4,7 +4,7 @@
   </div>
   
   <div class="login-card-wrapper">
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="premium-login-form">
+    <form [formGroup]="loginForm" class="premium-login-form">
       <div class="login-input-group">
         <label>Correo electrónico:</label>
         <input type="email" formControlName="email" placeholder="tu@email.com">
@@ -14,15 +14,21 @@
         <label>Contraseña:</label>
         <input type="password" formControlName="password" placeholder="Tu contraseña">
       </div>
+      
+      @if (errorMessage) {
+        <div class="login-error-message">
+          {{ errorMessage }}
+        </div>
+      }
 
       <div class="login-action-container">
-        <button type="submit" class="btn-login-submit" [disabled]="loginForm.invalid">
+        <button type="button" (click)="onLogin()" class="btn-login-submit">
           Iniciar sesión →
         </button>
       </div>
 
       <div class="login-footer-links">
-        <p>¿No tienes cuenta? <a routerLink="/contacto">Regístrate aquí</a></p>
+        <p>¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
       </div>
     </form>
   </div>

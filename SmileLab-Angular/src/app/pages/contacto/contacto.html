@@ -39,6 +39,19 @@
     <h3>{{ usuarioLogueado ? 'Solicita una nueva cita' : 'Solicita tu cita y crea tu cuenta' }}</h3>
   </div>
   <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="premium-form-card">
+    
+    @if (errorMsg) {
+      <div class="login-error-message" style="margin-bottom: 2rem;">
+        {{ errorMsg }}
+      </div>
+    }
+
+    @if (successMsg) {
+      <div class="login-success-message" style="margin-bottom: 2rem;">
+        {{ successMsg }}
+      </div>
+    }
+
     <div class="form-grid">
       @if (!usuarioLogueado) {
         <div class="form-group">
