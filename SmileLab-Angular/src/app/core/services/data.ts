@@ -1,6 +1,5 @@
 import { Injectable, inject, NgZone } from '@angular/core';
 import { Database, ref, onValue, push, set } from '@angular/fire/database';
-import { Storage, ref as sRef, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -10,11 +9,11 @@ import inicioData from './data-fallback/inicio.json';
 import equipoData from './data-fallback/equipo.json';
 import serviciosData from './data-fallback/servicios.json';
 import footerData from './data-fallback/footer.json';
+import productosData from './data-fallback/productos.json';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
   private db = inject(Database);
-  private storage = inject(Storage);
   private auth = inject(Auth);
   private zone = inject(NgZone);
 
@@ -90,30 +89,62 @@ export class DataService {
       onValue(productosRef, (snapshot) => {
         this.zone.run(() => {
           const data = snapshot.val();
-          const lista = data ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val })) : [];
-          subscriber.next(lista);
+          const firebaseList = data ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val })) : [];
+          
+          // Combinar con los locales, priorizando Firebase si hay choque de IDs
+          const combined = [...firebaseList];
+          productosData.items.forEach((localProd: any) => {
+            if (!combined.some(p => p.id === localProd.id)) {
+              combined.push(localProd);
+            }
+          });
+
+          subscriber.next(combined);
         });
-      }, () => this.zone.run(() => subscriber.next([])));
+      }, () => this.zone.run(() => subscriber.next(productosData.items)));
     });
   }
 
   getProductoById(id: string): Observable<any> {
     return new Observable(subscriber => {
       const pRef = ref(this.db, `productos/items/${id}`);
-      onValue(pRef, (snapshot) => this.zone.run(() => subscriber.next(snapshot.val())));
+      onValue(pRef, (snapshot) => {
+        this.zone.run(() => {
+          let data = snapshot.val();
+          if (!data) {
+            // Buscar en fallback local
+            data = productosData.items.find((p: any) => p.id === id);
+          }
+          subscriber.next(data);
+        });
+      });
     });
   }
 
   addProductoConImagen(producto: any, imagen: File): Observable<any> {
-    const filePath = `productos/${Date.now()}_${imagen.name}`;
-    const fileRef = sRef(this.storage, filePath);
-    return from(uploadBytes(fileRef, imagen)).pipe(
-      switchMap(() => from(getDownloadURL(fileRef))),
-      switchMap((url) => {
-        const finalProduct = { ...producto, imagen: url, fechaCreacion: new Date().toISOString() };
-        return from(push(ref(this.db, 'productos/items'), finalProduct));
-      })
-    );
+    return new Observable(subscriber => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        const finalProduct = { 
+          ...producto, 
+          imagen: base64String, 
+          fechaCreacion: new Date().toISOString() 
+        };
+        push(ref(this.db, 'productos/items'), finalProduct)
+          .then(() => {
+            this.zone.run(() => {
+              subscriber.next(null);
+              subscriber.complete();
+            });
+          })
+          .catch(err => {
+            this.zone.run(() => subscriber.error(err));
+          });
+      };
+      reader.onerror = (err) => this.zone.run(() => subscriber.error(err));
+      reader.readAsDataURL(imagen);
+    });
   }
 
   setUsuarioProfile(uid: string, profile: any): Observable<void> {
@@ -130,8 +161,27 @@ export class DataService {
     });
   }
 
-  getCitasByUsuario(uid: string): Observable<any[]> {
-    return this.userCitas$ as Observable<any[]>;
+  getAllCitas(): Observable<any[]> {
+    return new Observable(subscriber => {
+      const citasRef = ref(this.db, 'citas');
+      onValue(citasRef, (snapshot) => {
+        this.zone.run(() => {
+          const allData = snapshot.val();
+          if (!allData) {
+            subscriber.next([]);
+            return;
+          }
+          
+          const lista: any[] = [];
+          Object.entries(allData).forEach(([userId, userCitas]: [string, any]) => {
+            Object.entries(userCitas).forEach(([citaId, cita]: [string, any]) => {
+              lista.push({ id: citaId, userId, ...cita });
+            });
+          });
+          subscriber.next(lista);
+        });
+      }, (error) => this.zone.run(() => subscriber.error(error)));
+    });
   }
 
   addCita(cita: any): Observable<any> {

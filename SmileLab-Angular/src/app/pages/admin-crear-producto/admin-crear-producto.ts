@@ -23,8 +23,12 @@ export class AdminCrearProducto {
   previewUrl: string | null = null;
   isUploading = false;
   uploadProgress = 0;
+  errorMsg: string | null = null;
+  successMsg: string | null = null;
+  showModal = false;
 
   onFileSelected(event: any) {
+    this.errorMsg = null;
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
       this.selectedFile = file;
@@ -32,14 +36,17 @@ export class AdminCrearProducto {
       reader.onload = (e: any) => this.previewUrl = e.target.result;
       reader.readAsDataURL(file);
     } else {
-      alert('Por favor, selecciona una imagen válida.');
+      this.errorMsg = 'Por favor, selecciona una imagen válida.';
       event.target.value = '';
     }
   }
 
   enviarProducto() {
+    this.errorMsg = null;
+    this.successMsg = null;
+
     if (this.productoForm.invalid || !this.selectedFile) {
-      alert('Formulario incompleto.');
+      this.errorMsg = 'Formulario incompleto. Asegúrate de rellenar todos los campos y seleccionar una imagen.';
       return;
     }
 
@@ -62,14 +69,12 @@ export class AdminCrearProducto {
       .subscribe({
         next: () => {
           this.uploadProgress = 100;
-          setTimeout(() => {
-            alert('¡Conectado! Producto publicado con éxito en la nube.');
-            this.resetForm();
-          }, 500);
+          this.showModal = true;
+          this.resetForm();
         },
         error: (err: any) => {
           console.error(err);
-          alert('Error de conexión con Firebase Storage. Verifica las reglas de seguridad.');
+          this.errorMsg = 'Error al publicar el producto. Verifica la conexión con la base de datos.';
           this.isUploading = false;
         },
         complete: () => this.isUploading = false

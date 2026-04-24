@@ -7,6 +7,12 @@
   <div class="admin-container">
     <form [formGroup]="productoForm" (ngSubmit)="enviarProducto()" class="admin-form">
       
+      @if (errorMsg) {
+        <div class="login-error-message" style="margin-bottom: 2rem; width: 100%;">
+          {{ errorMsg }}
+        </div>
+      }
+
       <div class="form-section main-info">
         <div class="input-group">
           <label for="prod-nombre">Nombre del Producto</label>
@@ -47,7 +53,7 @@
 
         <button type="submit" [disabled]="productoForm.invalid || !selectedFile || isUploading" class="btn-submit">
           @if (isUploading) {
-            <span class="loader"></span> Subiendo a Storage...
+            <span class="loader"></span> Guardando producto...
           } @else {
             Publicar Producto
           }
@@ -62,3 +68,15 @@
     </form>
   </div>
 </section>
+
+<!-- Modal de Éxito -->
+@if (showModal) {
+  <div class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-icon">✅</div>
+      <h3>¡Producto Creado!</h3>
+      <p>El producto se ha publicado correctamente en la tienda.</p>
+      <button class="btn-modal-close" (click)="showModal = false">Entendido</button>
+    </div>
+  </div>
+}

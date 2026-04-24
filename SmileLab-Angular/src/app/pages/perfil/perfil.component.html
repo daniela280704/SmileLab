@@ -1,42 +1,51 @@
-<section class="perfil-premium-wrapper">
-  <div class="perfil-main-container">
-    @if (perfil$ | async; as perfil) {
+@if (perfil$ | async; as perfil) {
+  <section class="perfil-premium-wrapper">
+    <div class="perfil-main-container">
       <div class="perfil-text-column">
         <h1 class="perfil-greeting">¡Hola, {{ (perfil.nombre || 'Usuario').split(' ')[0] }}!</h1>
         <div class="perfil-data-list">
-          <p><strong>Paciente:</strong> {{ perfil.nombre }}</p>
+          <p><strong>{{ perfil.rol === 'admin' ? 'Administrador:' : 'Paciente:' }}</strong> {{ perfil.nombre }}</p>
           <p><strong>Email:</strong> {{ perfil.email }}</p>
           <p><strong>Teléfono:</strong> {{ perfil.telefono || 'No especificado' }}</p>
-          <p><strong>Próxima limpieza:</strong> 2026-03-25 a las 12:00</p>
-          <p><strong>Doctor habitual:</strong> Dr. García</p>
+          @if (perfil.rol !== 'admin') {
+            <p><strong>Próxima limpieza:</strong> 2026-03-25 a las 12:00</p>
+            <p><strong>Doctor habitual:</strong> Dr. García</p>
+          }
         </div>
         <div class="logout-btn-box">
           <button class="btn-logout-premium" (click)="logout()">Cerrar sesión</button>
         </div>
       </div>
-    } @else {
+      <div class="perfil-image-column">
+        <div class="avatar-giant-circle">
+          <svg viewBox="0 0 24 24" fill="#cbd5e1">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner Inferior de Cita / Gestión (Fuera del contenedor principal para ser full-width) -->
+  <section class="cita-appointment-banner">
+    <div class="banner-inner-content">
+      <h2 class="banner-title">{{ perfil.rol === 'admin' ? 'Consulta tus citas' : 'Pide tu cita aquí' }}</h2>
+      <div class="banner-actions">
+        @if (perfil.rol !== 'admin') {
+          <button class="btn-dark-action" routerLink="/contacto">Cita</button>
+        }
+        <button class="btn-light-action" routerLink="/citas">Agenda</button>
+      </div>
+    </div>
+  </section>
+
+} @else {
+  <section class="perfil-premium-wrapper">
+    <div class="perfil-main-container">
       <div class="perfil-text-column">
         <h1 class="perfil-greeting">Cargando perfil...</h1>
         <p>Estamos recuperando tus datos de paciente.</p>
       </div>
-    }
-    <div class="perfil-image-column">
-      <div class="avatar-giant-circle">
-        <svg viewBox="0 0 24 24" fill="#cbd5e1">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/>
-        </svg>
-      </div>
     </div>
-  </div>
-</section>
-
-<!-- Banner Inferior de Cita -->
-<section class="cita-appointment-banner">
-  <div class="banner-inner-content">
-    <h2 class="banner-title">Pide tu cita aquí</h2>
-    <div class="banner-actions">
-      <button class="btn-dark-action" routerLink="/contacto">Cita</button>
-      <button class="btn-light-action" routerLink="/citas">Agenda</button>
-    </div>
-  </div>
-</section>
+  </section>
+}

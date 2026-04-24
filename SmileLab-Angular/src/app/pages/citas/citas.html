@@ -1,35 +1,38 @@
 <section class="citas-hero-banner">
   <div class="citas-hero-content">
-    <h1>Tus citas...</h1>
-    <p class="citas-subtitle">Citas actuales:</p>
+    <h1>{{ perfil?.rol === 'admin' ? 'Tu Agenda' : 'Tus citas...' }}</h1>
+    <p class="citas-subtitle">{{ perfil?.rol === 'admin' ? 'Pacientes programados para hoy:' : 'Citas actuales:' }}</p>
   </div>
 </section>
 
 <section class="citas-list-section">
   <div class="citas-list-container">
-    @if (perfil$ | async; as perfil) {
-      @for (cita of (citas$ | async) ?? []; track cita.id) {
-        <article class="appointment-premium-card">
-          <h3 class="appointment-title">{{ cita.servicio || cita.motivoCita || 'Cita Programada' }}</h3>
-          <div class="card-details">
-            <p><strong>Nombre del Paciente:</strong> {{ perfil.nombre || 'Usuario' }}</p>
-            <p><strong>Fecha y hora:</strong> {{ (cita.fecha || cita.fechaCita) | date:'yyyy-MM-dd' }} a las {{ cita.hora || cita.horaCita }}</p>
-            <p><strong>Doctor:</strong> {{ cita.profesional || 'Dr. García' }}</p>
-            <p><strong>Estado:</strong> <em>{{ cita.estado === 'pendiente' ? 'Próxima' : cita.estado }}</em></p>
-          </div>
-          <div class="card-footer">
-            <p>Para modificar o cancelar, <a routerLink="/contacto">contáctanos</a>.</p>
-          </div>
-        </article>
-      } @empty {
-        <div class="no-citas-placeholder">
-          <p>No tienes citas programadas actualmente.</p>
-        </div>
-      }
-    } @else {
+    @if (citas === null) {
       <div class="no-citas-placeholder">
-        <p>Cargando información del paciente...</p>
+        <p>Cargando agenda...</p>
+      </div>
+    } @else {
+      <div class="appointments-grid">
+        @for (cita of citas; track cita.id) {
+          <article class="appointment-premium-card">
+            <h3 class="appointment-title">{{ cita.servicio || cita.motivoCita || 'Cita Programada' }}</h3>
+            <div class="card-details">
+              <p><strong>Paciente:</strong> {{ perfil?.rol === 'admin' ? (cita.nombre || 'Paciente Anónimo') : (perfil?.nombre || 'Cargando...') }}</p>
+              <p><strong>Fecha y hora:</strong> {{ (cita.fecha || cita.fechaCita) | date:'yyyy-MM-dd' }} a las {{ cita.hora || cita.horaCita }}</p>
+              <p><strong>Doctor/a:</strong> {{ cita.profesional || 'Dr. García' }}</p>
+              <p><strong>Estado:</strong> <em>{{ cita.estado === 'pendiente' ? 'Próxima' : cita.estado }}</em></p>
+            </div>
+            <div class="card-footer">
+              <p>Para modificar o cancelar, <a routerLink="/contacto">contáctanos</a>.</p>
+            </div>
+          </article>
+        } @empty {
+          <div class="no-citas-placeholder">
+            <p>{{ perfil?.rol === 'admin' ? 'No tienes pacientes programados todavía.' : 'No tienes citas programadas actualmente.' }}</p>
+          </div>
+        }
       </div>
     }
   </div>
 </section>
+

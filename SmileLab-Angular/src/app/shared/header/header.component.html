@@ -14,6 +14,10 @@
       <li><a routerLink="/equipo" routerLinkActive="active">Equipo</a></li>
       <li><a routerLink="/servicios" routerLinkActive="active">Servicios</a></li>
       <li><a routerLink="/contacto" routerLinkActive="active">Contacto</a></li>
+      <li><a routerLink="/productos" routerLinkActive="active">Tienda</a></li>
+      @if ((userProfile$ | async)?.rol === 'admin') {
+        <li><a routerLink="/admin-crear-producto" routerLinkActive="active">Panel Admin</a></li>
+      }
     </ul>
   </nav>
 
@@ -43,6 +47,10 @@
         <li><a routerLink="/equipo" routerLinkActive="active" (click)="cerrarMenu()">Equipo</a></li>
         <li><a routerLink="/servicios" routerLinkActive="active" (click)="cerrarMenu()">Servicios</a></li>
         <li><a routerLink="/contacto" routerLinkActive="active" (click)="cerrarMenu()">Contacto</a></li>
+        <li><a routerLink="/productos" routerLinkActive="active" (click)="cerrarMenu()">Tienda</a></li>
+        @if ((userProfile$ | async)?.rol === 'admin') {
+          <li><a routerLink="/admin-crear-producto" routerLinkActive="active" (click)="cerrarMenu()">Panel Admin</a></li>
+        }
         @if (usuarioLogueado$ | async; as user) {
           <li><button class="btn-perfil-mobile-nav" (click)="irAPerfil()">{{ (userProfile$ | async)?.nombre?.split(' ')[0] || 'Paciente' }}</button></li>
         } @else {

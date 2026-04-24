@@ -1,54 +1,53 @@
 /* Estilos Perfil con Paridad Exacta Final */
 
 .perfil-premium-wrapper {
-    padding: 6rem 10% 2rem; /* Menos padding inferior para que el banner esté más cerca */
+    padding: 8rem 10% 4rem;
     background: white;
 }
 
 .perfil-main-container {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 4rem;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .perfil-greeting {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 800;
-    color: var(--negro-smile);
-    margin-bottom: 1rem;
-    letter-spacing: -1px;
+    color: #1e3a5f;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1.5px;
 }
 
 .perfil-data-list p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #475569;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
     line-height: 1.4;
 }
 
 .perfil-data-list strong {
-    color: var(--negro-smile);
+    color: #1e3a5f;
     font-weight: 800;
 }
 
 .logout-btn-box {
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 .btn-logout-premium {
     background: white;
     color: #ff5a5f;
-    border: 1.8px solid #ff5a5f;
-    padding: 0.6rem 2.2rem;
+    border: 2px solid #ff5a5f;
+    padding: 0.8rem 2.5rem;
     border-radius: 50px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: none;
 }
 
 .btn-logout-premium:hover {
@@ -58,19 +57,18 @@
 
 .perfil-image-column {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .avatar-giant-circle {
-    width: 380px;
-    height: 380px;
+    width: 420px;
+    height: 420px;
     background: #e2e8f0;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.02);
 }
 
 .avatar-giant-circle svg {
@@ -78,86 +76,97 @@
     height: 80%;
 }
 
-/* Banner de Cita - Ajustado */
+/* Banner de Cita - Ajustado para full-width */
 
 .cita-appointment-banner {
-    background-color: #eff6ff;
-    padding: 4.5rem 5% 5rem;
+    background-color: #d1e9ff; /* Azul suave similar a la imagen */
+    padding: 8rem 5%;
     text-align: center;
+    width: 100%;
 }
 
 .banner-title {
-    font-size: 2.2rem; /* Reducido para mejor paridad */
+    font-size: 3.2rem; 
     font-weight: 800;
-    color: var(--negro-smile);
-    margin-bottom: 2rem;
-    letter-spacing: -0.5px;
+    color: #1e3a5f;
+    margin-bottom: 3rem;
+    letter-spacing: -1.5px;
 }
 
 .banner-actions {
     display: flex;
     justify-content: center;
-    gap: 1.2rem;
+    gap: 1.5rem;
 }
 
 .btn-dark-action {
     background: #1e3a5f;
     color: white;
-    padding: 0.8rem 2.5rem;
+    padding: 1.1rem 3.5rem;
     border-radius: 10px;
-    font-weight: 700;
+    font-weight: 800;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 140px;
+    min-width: 180px;
+    font-size: 1.1rem;
 }
 
 .btn-light-action {
     background: white;
     color: #1e3a5f;
-    padding: 0.8rem 2.5rem;
+    padding: 1.1rem 3.5rem;
     border-radius: 10px;
-    font-weight: 700;
+    font-weight: 800;
     border: 2px solid #1e3a5f;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 140px;
+    min-width: 180px;
+    font-size: 1.1rem;
 }
 
 .btn-dark-action:hover, .btn-light-action:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(30, 58, 95, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
 }
 
 /* --- RESPONSIVE --- */
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
+    .avatar-giant-circle {
+        width: 320px;
+        height: 320px;
+    }
+    .perfil-greeting {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 900px) {
     .perfil-main-container {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 3rem;
     }
     .perfil-image-column {
         justify-content: center;
         order: -1;
     }
-    .avatar-giant-circle {
-        width: 250px;
-        height: 250px;
-    }
-    .perfil-greeting {
-        font-size: 2.5rem;
+    .logout-btn-box {
+        margin-bottom: 2rem;
     }
 }
 
-@media (max-width: 768px) {
-    .perfil-premium-wrapper {
-        padding: 4rem 5% 2rem;
-    }
+@media (max-width: 600px) {
     .banner-title {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
+    }
+    .banner-actions {
+        flex-direction: column;
+        align-items: center;
     }
     .btn-dark-action, .btn-light-action {
         width: 100%;
-        max-width: 200px;
+        max-width: 250px;
     }
 }

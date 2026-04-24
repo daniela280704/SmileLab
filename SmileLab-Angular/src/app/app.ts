@@ -22,7 +22,10 @@ export class App {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.mostrarProductos = !event.urlAfterRedirects.includes('login');
+      const url = event.urlAfterRedirects;
+      // No mostrar en login ni en la página principal de la tienda (/productos)
+      // Pero SÍ mostrar en el detalle de producto (/productos/id)
+      this.mostrarProductos = !url.includes('login') && url !== '/productos';
     });
   }
 }

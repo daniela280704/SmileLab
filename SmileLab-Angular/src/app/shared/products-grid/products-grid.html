@@ -1,7 +1,7 @@
 <section class="pre-footer-products">
   <div class="product-container">
     @for (prod of productos; track prod.id) {
-      <a [routerLink]="['/productos']" class="product-card-link">
+      <a [routerLink]="['/productos', prod.id]" class="product-card-link">
         <article class="product-card-mini">
           <header>
             <h4>{{ prod.nombre }}</h4>

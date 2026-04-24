@@ -1,7 +1,7 @@
 /* Estilos Premium para la página de Citas - Ajuste de Paridad Exacta */
 
 .citas-hero-banner {
-    background-color: #eff6ff;
+    background: linear-gradient(to right, #93c5fd, #bfdbfe); /* Degradado azul suave como en la imagen */
     padding: 7rem 10% 5rem;
     text-align: left;
 }
@@ -9,25 +9,32 @@
 .citas-hero-content h1 {
     font-size: 3.5rem;
     font-weight: 800;
-    color: var(--negro-smile);
+    color: #1e3a5f;
     margin-bottom: 0.5rem;
     letter-spacing: -1.5px;
 }
 
 .citas-subtitle {
-    font-size: 1.15rem;
-    color: #64748b;
+    font-size: 1.2rem;
+    color: #475569;
     font-weight: 600;
 }
 
 .citas-list-section {
-    padding: 3rem 10% 6rem;
+    padding: 5rem 10% 6rem;
     background: white;
 }
 
 .citas-list-container {
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.appointments-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
 }
 
 .appointment-premium-card {
@@ -37,61 +44,64 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(226, 232, 240, 0.6);
     width: 100%;
-    max-width: 450px; /* Ancho específico para coincidir con la imagen */
-    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .appointment-title {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 800;
-    color: var(--negro-smile);
-    margin-bottom: 0.8rem;
+    color: #1e3a5f;
+    margin-bottom: 1rem;
 }
 
 .card-details p {
-    font-size: 0.95rem;
-    color: var(--gris-texto);
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 0.6rem;
     line-height: 1.5;
 }
 
 .card-details strong {
-    color: var(--negro-smile);
+    color: #1e3a5f;
+    font-weight: 800;
 }
 
 .card-footer {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
 }
 
 .card-footer p {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #64748b;
 }
 
 .card-footer a {
-    color: var(--azul-medio);
+    color: #2563eb;
     font-weight: 700;
     text-decoration: underline;
 }
 
-.no-citas-placeholder {
-    padding: 2rem;
-    color: #94a3b8;
-    font-style: italic;
-}
-
 /* --- RESPONSIVE --- */
+
+@media (max-width: 1100px) {
+    .appointments-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
 @media (max-width: 768px) {
     .citas-hero-banner {
         padding: 5rem 5% 3rem;
     }
     .citas-hero-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+    }
+    .appointments-grid {
+        grid-template-columns: 1fr;
     }
     .appointment-premium-card {
-        max-width: 100%;
-        padding: 2rem 1.5rem;
+        padding: 2rem;
     }
 }
