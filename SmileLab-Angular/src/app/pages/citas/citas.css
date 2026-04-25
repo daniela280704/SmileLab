@@ -105,3 +105,37 @@
         padding: 2rem;
     }
 }
+
+/* Empty State */
+.empty-citas-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 6rem 2rem;
+    background: #f8fafc;
+    border: 2px dashed #e2e8f0;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+}
+
+.empty-citas-state h3 {
+    font-size: 1.8rem;
+    color: var(--negro-smile);
+    margin-bottom: 0.8rem;
+    font-weight: 800;
+}
+
+.empty-citas-state p {
+    color: var(--gris-texto);
+    font-size: 1.1rem;
+    max-width: 400px;
+    line-height: 1.6;
+}

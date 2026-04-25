@@ -49,7 +49,7 @@
       <button class="btn-dark-action" routerLink="/citas" style="margin-top: 1.5rem;">Ver mi agenda →</button>
     </div>
   } @else {
-    <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="premium-form-card">
+    <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="premium-form-card animate-in">
       
       @if (errorMsg) {
         <div class="login-error-message" style="margin-bottom: 2rem;">
@@ -146,6 +146,23 @@
         </button>
       </div>
     </form>
+    @if (showSuccessModal) {
+      <div class="success-modal-overlay">
+        <div class="success-modal-card">
+          <div class="modal-icon-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h2>¡Cita Solicitada!</h2>
+          <p>Tu solicitud se ha procesado correctamente. Hemos enviado los detalles a tu correo electrónico.</p>
+          <div class="modal-actions">
+            <button type="button" class="btn-dark-action" (click)="irACitas()">Ver mis citas</button>
+            <button type="button" class="btn-light-action" (click)="cerrarModal()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    }
   }
 </section>
 

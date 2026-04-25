@@ -42,6 +42,7 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   errorMsg: string | null = null;
   successMsg: string | null = null;
   isLoading = false;
+  showSuccessModal = false;
 
   ngOnInit(): void {
     // Cargar profesionales desde el servicio de equipo
@@ -124,30 +125,30 @@ export class ContactoComponent implements OnInit, AfterViewInit {
         }).toPromise();
 
         await this.guardarCita(userCredential.user.uid);
-        this.successMsg = '¡Bienvenido! Registro completado y cita agendada.';
       } else {
         // Solo Cita
         await this.guardarCita(this.usuarioLogueado.uid);
-        this.successMsg = '¡Tu cita ha sido confirmada!';
       }
-      
+      this.showSuccessModal = true;
       this.registroForm.reset();
-      
-      setTimeout(() => {
-        this.router.navigate(['/citas']);
-      }, 2000);
-
+      this.isLoading = false;
     } catch (error: any) {
       this.errorMsg = 'Error: ' + error.message;
-    } finally {
       this.isLoading = false;
     }
+  }
+
+  cerrarModal() {
+    this.showSuccessModal = false;
+  }
+
+  irACitas() {
+    this.router.navigate(['/citas']);
   }
 
   private async guardarCita(uid: string) {
     const values = this.registroForm.value;
     
-    // Obtenemos el perfil más actualizado justo antes de guardar
     const perfil = await firstValueFrom(this.dataService.userProfile$);
     const nombreCompleto = values.nombre || perfil?.nombre || this.usuarioLogueado?.displayName || 'Paciente';
 
