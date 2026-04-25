@@ -18,16 +18,19 @@
   <!-- Grid de Miembros -->
   <section class="team-grid">
     @for (miembro of equipo.miembros; track miembro.nombre) {
-      <article class="member-card">
-        <div class="member-image-box">
-          <img [src]="miembro.imagen" [alt]="miembro.alt" onerror="this.src='img/default-user.png'">
-        </div>
-        <div class="member-info">
-          <h3 class="member-name">{{ miembro.nombre }}</h3>
-          <p class="member-role">{{ miembro.cargo }}</p>
-          <p class="member-desc">{{ miembro.descripcion }}</p>
-        </div>
-      </article>
+      @if (!miembro.ocultoEnPagina) {
+        <article class="member-card">
+          <div class="member-image-box">
+            <img [src]="miembro.imagen" [alt]="miembro.alt" onerror="this.src='img/default-user.png'">
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">{{ miembro.nombre }}</h3>
+            <p class="member-role">{{ miembro.cargo }}</p>
+            <p class="member-desc">{{ miembro.descripcion }}</p>
+          </div>
+        </article>
+      }
     }
   </section>
+
 }

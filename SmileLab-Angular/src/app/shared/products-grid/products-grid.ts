@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, NgZone, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../core/services/data';
@@ -11,6 +11,7 @@ import { DataService } from '../../core/services/data';
   styleUrl: './products-grid.css'
 })
 export class ProductsGridComponent implements OnInit {
+  @Input() limit: number = 3;
   private dataService = inject(DataService);
   private cdr = inject(ChangeDetectorRef);
   private zone = inject(NgZone);
@@ -19,10 +20,10 @@ export class ProductsGridComponent implements OnInit {
   ngOnInit() {
     this.dataService.getProductos().subscribe(data => {
       this.zone.run(() => {
-        // Barajar y coger exactamente 3
+        // Barajar y coger según el límite
         this.productos = [...data]
           .sort(() => 0.5 - Math.random())
-          .slice(0, 3);
+          .slice(0, this.limit);
         this.cdr.detectChanges();
       });
     });

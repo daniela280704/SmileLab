@@ -1,4 +1,4 @@
-/* Estilos Premium para la página de Servicios */
+/* Estilos Premium para la página de Servicios - Ajuste Responsivo Total */
 
 .servicios-page {
     padding: 4rem 0 6rem;
@@ -15,22 +15,20 @@
     font-size: 2.8rem;
     font-weight: 800;
     color: var(--negro-smile);
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
 }
 
 .service-cards-container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 5%;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 3rem;
 }
 
+/* Card General (Desktop) */
 .service-premium-card {
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 0;
     background: var(--blanco);
     border-radius: 24px;
     box-shadow: var(--shadow);
@@ -39,71 +37,74 @@
     border: 1px solid rgba(226, 232, 240, 0.5);
 }
 
-.service-premium-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-hover);
+.card-layout-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Más espacio al texto */
+    width: 100%;
 }
 
 .card-image {
     width: 100%;
-    overflow: hidden;
+    aspect-ratio: 16/11;
 }
 
 .card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
     display: block;
 }
 
-.service-premium-card:hover .card-image img {
-    transform: scale(1.05);
-}
-
 .card-content {
-    padding: 3.5rem;
+    padding: 2.5rem 3rem; /* Padding más equilibrado */
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.card-mobile-header {
-    display: none; /* Oculto en desktop */
 }
 
 .service-name-desktop {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--negro-smile);
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.3px;
+    margin-bottom: 1.2rem;
 }
 
-/* --- RESPONSIVE --- */
+.service-desc {
+    font-size: 1.05rem;
+    color: var(--gris-texto);
+    line-height: 1.6;
+}
 
-@media (max-width: 1024px) {
+/* Elementos de Móvil ocultos por defecto */
+.card-mobile-header {
+    display: none;
+}
+
+/* --- TABLET / SMALL DESKTOP (Ajuste para evitar texto cortado) --- */
+@media (max-width: 1100px) {
+    .card-layout-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-image {
+        aspect-ratio: 16/9;
+    }
+
     .card-content {
         padding: 2.5rem;
+        text-align: center;
     }
+
     .service-name-desktop {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
 }
 
+/* --- MÓVIL (Images 3 & 4 - Acordeón) --- */
 @media (max-width: 768px) {
-    .section-title-premium {
-        font-size: 2rem;
-        margin-bottom: 3rem;
-    }
-
-    .service-cards-container {
-        gap: 1.5rem;
-    }
-
-    /* Ocultamos el título de desktop en el móvil para usar el del header */
-    .service-name-desktop {
-        display: none;
+    .service-premium-card {
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
     .card-mobile-header {
@@ -112,59 +113,57 @@
         align-items: center;
         padding: 1.5rem 2rem;
         cursor: pointer;
-        width: 100%;
+        background: white;
     }
 
     .service-name-mobile {
-        font-size: 1.2rem;
-        font-weight: 700;
+        font-size: 1.25rem;
+        font-weight: 800;
         color: var(--negro-smile);
         margin: 0;
     }
 
     .toggle-btn {
-        background: black;
+        width: 36px;
+        height: 36px;
+        background: var(--negro-smile);
         color: white;
-        width: 32px;
-        height: 32px;
-        border-radius: 6px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
-    .service-premium-card {
-        grid-template-columns: 1fr;
-        flex-direction: column;
-        height: auto;
+    .is-expanded .toggle-btn {
+        background: #000;
     }
 
-    /* Lógica de expansión */
+    /* Ocultamos el contenido por defecto */
     .expandable-content {
-        display: none; /* Cerrado por defecto */
-        width: 100%;
+        display: none;
+        border-top: 1px solid #f1f5f9;
     }
 
-    .service-premium-card.is-expanded .expandable-content {
+    .is-expanded .expandable-content {
         display: block;
     }
 
-    .service-premium-card.is-expanded .card-mobile-header {
-        border-bottom: 1px solid #f1f5f9;
-    }
-
-    .card-image {
-        aspect-ratio: 16/10;
-        border-radius: 0;
+    /* Ajuste del contenido expandido */
+    .card-layout-wrapper {
+        grid-template-columns: 1fr;
     }
 
     .card-content {
-        padding: 2rem 1.5rem;
-        text-align: center;
+        padding: 2rem 1.5rem 2.5rem;
+    }
+
+    .service-name-desktop {
+        display: none; /* Ya se ve en el header del acordeón */
     }
 
     .service-desc {
+        text-align: left;
         font-size: 1rem;
     }
 }

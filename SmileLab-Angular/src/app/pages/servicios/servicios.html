@@ -1,38 +1,41 @@
-<section class="servicios-page" *ngIf="servicios">
-  <!-- Título Principal -->
-  <div class="servicios-header">
-    <h2 class="section-title-premium">{{ servicios.titulo }}</h2>
-  </div>
+@if (servicios) {
+  <section class="servicios-page animate-in">
+    <header class="servicios-header">
+      <h1 class="section-title-premium">{{ servicios.titulo }}</h1>
+    </header>
 
-  <!-- Bloques de Servicios -->
-  <div class="service-cards-container">
-    @for (item of servicios.items; track item.titulo; let i = $index) {
-      <article class="service-premium-card" [class.is-expanded]="itemExpandido === i">
-        
-        <!-- Cabecera de la tarjeta (Visible siempre o como toggle en móvil) -->
-        <div class="card-mobile-header" (click)="toggleExpand(i)">
-          <h3 class="service-name-mobile">{{ item.titulo }}</h3>
-          <button class="toggle-btn">
-            @if (itemExpandido === i) {
-              <span class="close-icon">✕</span>
-            } @else {
-              <span class="burger-icon">☰</span>
-            }
-          </button>
-        </div>
-
-        <!-- Contenido expandible -->
-        <div class="expandable-content">
-          <div class="card-image">
-            <img [src]="item.imagen" [alt]="item.alt" onerror="this.src='img/logo.jpeg'">
+    <div class="service-cards-container">
+      @for (servicio of servicios.items; track $index) {
+        <article class="service-premium-card" [class.is-expanded]="itemExpandido === $index">
+          
+          <!-- Header visible solo en móvil para el acordeón -->
+          <div class="card-mobile-header" (click)="toggleExpand($index)">
+            <h3 class="service-name-mobile">{{ servicio.titulo }}</h3>
+            <div class="toggle-btn">
+              @if (itemExpandido === $index) {
+                <span class="icon-close">✕</span>
+              } @else {
+                <span class="icon-open">☰</span>
+              }
+            </div>
           </div>
-          <div class="card-content">
-            <h3 class="service-name-desktop">{{ item.titulo }}</h3>
-            <p class="service-desc">{{ item.descripcion }}</p>
-          </div>
-        </div>
 
-      </article>
-    }
-  </div>
-</section>
+          <!-- Contenido que se expande en móvil y siempre se ve en desktop -->
+          <div class="expandable-content">
+            <div class="card-layout-wrapper">
+              <div class="card-image">
+                <img [src]="servicio.imagen" [alt]="servicio.alt" onerror="this.src='img/servicio-default.jpg'">
+              </div>
+              <div class="card-content">
+                <h2 class="service-name-desktop">{{ servicio.titulo }}</h2>
+                <p class="service-desc">{{ servicio.descripcion }}</p>
+              </div>
+            </div>
+          </div>
+
+        </article>
+      }
+    </div>
+
+  </section>
+}
