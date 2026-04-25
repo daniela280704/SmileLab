@@ -94,10 +94,49 @@
 
 @media (max-width: 768px) {
   .productos-page {
-    padding: 2rem 5% 4rem;
+    padding: 2rem 4% 4rem;
   }
+  
   .product-container {
+    grid-template-columns: 1fr 1fr; /* Forzamos 2 columnas */
+    gap: 1rem; /* Menos espacio entre productos */
     padding: 0;
-    gap: 1.5rem;
+  }
+
+  .product-info {
+    padding: 1rem; /* Reducimos padding interno */
+  }
+
+  .product-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    min-height: 3rem; /* Reservamos espacio para 2 líneas siempre */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-info p {
+    display: none;
+  }
+
+  .product-footer {
+    padding-top: 0.8rem;
+    margin-top: auto; /* Empuja el footer siempre al fondo de la tarjeta */
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+
+  .product-price {
+    font-size: 1.1rem;
+  }
+
+  .btn-detail {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    text-align: center;
   }
 }

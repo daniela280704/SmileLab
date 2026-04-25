@@ -208,13 +208,19 @@
 @media (max-width: 600px) {
     .banner-title {
         font-size: 2.2rem;
+        margin-bottom: 2rem;
     }
     .banner-actions {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row; /* En fila */
+        justify-content: center;
+        gap: 1rem;
+        padding: 0 5%;
     }
     .btn-dark-action, .btn-light-action {
-        width: 100%;
-        max-width: 250px;
+        width: 45%; /* Ancho proporcional */
+        min-width: auto; /* Quitamos el mínimo para que quepan */
+        padding: 1rem 0.5rem;
+        font-size: 0.95rem;
+        border-radius: 12px;
     }
 }
