@@ -38,77 +38,115 @@
   <div class="form-header">
     <h3>{{ usuarioLogueado ? 'Solicita una nueva cita' : 'Solicita tu cita y crea tu cuenta' }}</h3>
   </div>
-  <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="premium-form-card">
-    
-    @if (errorMsg) {
-      <div class="login-error-message" style="margin-bottom: 2rem;">
-        {{ errorMsg }}
+  @if (perfilLogueado?.rol === 'admin') {
+    <div class="admin-no-cita-message">
+      <div class="message-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
       </div>
-    }
-
-    @if (successMsg) {
-      <div class="login-success-message" style="margin-bottom: 2rem;">
-        {{ successMsg }}
-      </div>
-    }
-
-    <div class="form-grid">
-      @if (!usuarioLogueado) {
-        <div class="form-group">
-          <label>Nombre completo:</label>
-          <input type="text" formControlName="nombre" placeholder="Ej: Juan Pérez">
-        </div>
-      }
+      <h3>Acceso Restringido</h3>
+      <p>Has iniciado sesión como <strong>{{ perfilLogueado.cargo || 'profesional' }}</strong>. Las cuentas de personal clínico no pueden solicitar citas para sí mismas.</p>
+      <p>Si deseas pedir una cita como paciente, por favor utiliza una cuenta de cliente estándar.</p>
+      <button class="btn-dark-action" routerLink="/citas" style="margin-top: 1.5rem;">Ver mi agenda →</button>
+    </div>
+  } @else {
+    <form [formGroup]="registroForm" (ngSubmit)="enviarDatos()" class="premium-form-card">
       
-      <div class="form-group" [class.full-width]="usuarioLogueado">
-        <label>Correo electrónico:</label>
-        <input type="email" formControlName="email" placeholder="Ej: juan@email.com" [readOnly]="usuarioLogueado">
-      </div>
-
-      @if (!usuarioLogueado) {
-        <div class="form-group">
-          <label>Teléfono (9 dígitos):</label>
-          <input type="tel" formControlName="telefono" placeholder="Ej: 600123456">
-        </div>
-
-        <div class="form-group">
-          <label>Contraseña (min. 6 caracteres):</label>
-          <input type="password" formControlName="password" placeholder="Para acceder a tu área de paciente">
+      @if (errorMsg) {
+        <div class="login-error-message" style="margin-bottom: 2rem;">
+          {{ errorMsg }}
         </div>
       }
 
-      <div class="form-group">
-        <label>Fecha de la cita:</label>
-        <input type="text" formControlName="fechaCita" id="appointment-day" placeholder="Selecciona fecha">
-      </div>
+      @if (successMsg) {
+        <div class="login-success-message" style="margin-bottom: 2rem;">
+          {{ successMsg }}
+        </div>
+      }
 
-      <div class="form-group">
-        <label>Hora:</label>
-        <input type="text" formControlName="horaCita" id="appointment-time" placeholder="Selecciona hora">
-      </div>
-
-      <div class="form-group full-width">
-        <label>Motivo de la cita:</label>
-        <input type="text" formControlName="motivoCita" placeholder="Ej: Revisión anual">
-      </div>
-
-      <div class="form-group full-width">
-        <label>Nombre del profesional:</label>
-        <select formControlName="profesional" class="premium-select">
-          <option value="" disabled selected>Selecciona un profesional</option>
-          @for (p of profesionales; track p.nombre) {
-            <option [value]="p.nombre">{{ p.nombre }}</option>
+      <div class="form-grid">
+        @if (!usuarioLogueado) {
+          <div class="form-group">
+            <label>Nombre completo:</label>
+            <input type="text" formControlName="nombre" placeholder="Ej: Juan Pérez">
+          @if (registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['pattern']) {
+            <small class="error-text">Nombre incompleto: introduce nombre y apellidos.</small>
           }
-        </select>
-      </div>
-    </div>
+          </div>
+        }
+        
+        <div class="form-group" [class.full-width]="usuarioLogueado">
+          <label>Correo electrónico:</label>
+          <input type="email" formControlName="email" placeholder="Ej: juan@email.com" [readOnly]="usuarioLogueado">
+          @if (registroForm.get('email')?.touched && registroForm.get('email')?.invalid) {
+            <small class="error-text">Introduce un email válido.</small>
+          }
+        </div>
 
-    <div class="form-btn-container">
-      <button type="submit" class="btn-primary-form" [disabled]="registroForm.invalid">
-        {{ usuarioLogueado ? 'Confirmar cita' : 'Enviar y registrarme' }}
-      </button>
-    </div>
-  </form>
+        @if (!usuarioLogueado) {
+          <div class="form-group">
+            <label>Teléfono (9 dígitos):</label>
+            <input type="tel" formControlName="telefono" placeholder="Ej: 600123456">
+            @if (registroForm.get('telefono')?.touched && registroForm.get('telefono')?.invalid) {
+              <small class="error-text">Introduce un teléfono de 9 dígitos.</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Contraseña (min. 6 caracteres):</label>
+            <input type="password" formControlName="password" placeholder="Para acceder a tu área de paciente">
+            @if (registroForm.get('password')?.touched && registroForm.get('password')?.invalid) {
+              <small class="error-text">Mínimo 6 caracteres.</small>
+            }
+          </div>
+        }
+
+        <div class="form-group">
+          <label>Fecha de la cita:</label>
+          <input type="text" formControlName="fechaCita" id="appointment-day" placeholder="Selecciona fecha">
+          @if (registroForm.get('fechaCita')?.touched && registroForm.get('fechaCita')?.invalid) {
+            <small class="error-text">La fecha es obligatoria.</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>Hora:</label>
+          <input type="text" formControlName="horaCita" id="appointment-time" placeholder="Selecciona hora">
+          @if (registroForm.get('horaCita')?.touched && registroForm.get('horaCita')?.invalid) {
+            <small class="error-text">La hora es obligatoria.</small>
+          }
+        </div>
+
+        <div class="form-group full-width">
+          <label>Motivo de la cita:</label>
+          <input type="text" formControlName="motivoCita" placeholder="Ej: Revisión anual">
+          @if (registroForm.get('motivoCita')?.touched && registroForm.get('motivoCita')?.invalid) {
+            <small class="error-text">Escribe el motivo (mín. 5 caracteres).</small>
+          }
+        </div>
+
+        <div class="form-group full-width">
+          <label>Nombre del profesional:</label>
+          <div class="profesionales-radio-group">
+            @for (p of profesionales; track p.nombre) {
+              <label class="profesional-radio-label">
+                <input type="radio" formControlName="profesional" [value]="p.nombre">
+                <span class="profesional-name">{{ p.nombre }}</span>
+              </label>
+            }
+          </div>
+          @if (registroForm.get('profesional')?.touched && registroForm.get('profesional')?.invalid) {
+            <small class="error-text">Selecciona un profesional.</small>
+          }
+        </div>
+      </div>
+
+      <div class="form-btn-container">
+        <button type="submit" class="btn-primary-form" [disabled]="registroForm.invalid">
+          {{ usuarioLogueado ? 'Confirmar cita' : 'Enviar y registrarme' }}
+        </button>
+      </div>
+    </form>
+  }
 </section>
 
 <!-- Sección Ubicación -->

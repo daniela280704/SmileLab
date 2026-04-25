@@ -8,11 +8,17 @@
       <div class="login-input-group">
         <label>Correo electrónico:</label>
         <input type="email" formControlName="email" placeholder="tu@email.com">
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+          <small class="error-text">Introduce un email válido.</small>
+        }
       </div>
       
       <div class="login-input-group">
         <label>Contraseña:</label>
         <input type="password" formControlName="password" placeholder="Tu contraseña">
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+          <small class="error-text">Introduce tu contraseña.</small>
+        }
       </div>
       
       @if (errorMessage) {

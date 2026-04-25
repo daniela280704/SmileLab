@@ -65,7 +65,19 @@ export class DataService {
   getEquipo(): Observable<any> {
     return new Observable(subscriber => {
       const dbRef = ref(this.db, 'equipo');
-      onValue(dbRef, (snapshot) => this.zone.run(() => subscriber.next(snapshot.val() ?? equipoData)), () => this.zone.run(() => subscriber.next(equipoData)));
+      onValue(dbRef, (snapshot) => {
+        this.zone.run(() => {
+          let data = snapshot.val();
+          
+          // Si Firebase tiene menos miembros o distinto orden que el JSON local, actualizamos Firebase
+          if (!data || !data.miembros || JSON.stringify(data.miembros) !== JSON.stringify(equipoData.miembros)) {
+            set(dbRef, equipoData).catch(err => console.error("Error actualizando equipo en Firebase:", err));
+            data = equipoData;
+          }
+          
+          subscriber.next(data);
+        });
+      }, () => this.zone.run(() => subscriber.next(equipoData)));
     });
   }
 

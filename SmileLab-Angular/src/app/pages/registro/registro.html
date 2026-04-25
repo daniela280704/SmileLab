@@ -22,21 +22,33 @@
       <div class="login-input-group">
         <label>Nombre completo:</label>
         <input type="text" formControlName="nombre" placeholder="Tu nombre">
+        @if (registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['pattern']) {
+          <small class="error-text">Nombre incompleto: introduce nombre y apellidos.</small>
+        }
       </div>
 
       <div class="login-input-group">
         <label>Correo electrónico:</label>
         <input type="email" formControlName="email" placeholder="tu@email.com">
+        @if (registroForm.get('email')?.touched && registroForm.get('email')?.invalid) {
+          <small class="error-text">Email inválido.</small>
+        }
       </div>
 
       <div class="login-input-group">
         <label>Teléfono:</label>
         <input type="tel" formControlName="telefono" placeholder="Ej: 600123456">
+        @if (registroForm.get('telefono')?.touched && registroForm.get('telefono')?.invalid) {
+          <small class="error-text">Teléfono inválido (9-15 dígitos).</small>
+        }
       </div>
       
       <div class="login-input-group">
         <label>Contraseña:</label>
         <input type="password" formControlName="password" placeholder="Mínimo 6 caracteres">
+        @if (registroForm.get('password')?.touched && registroForm.get('password')?.invalid) {
+          <small class="error-text">Mínimo 6 caracteres.</small>
+        }
       </div>
 
       <div class="login-input-group admin-code-section">

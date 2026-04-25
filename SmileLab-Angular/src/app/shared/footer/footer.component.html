@@ -1,6 +1,5 @@
 <footer *ngIf="footer">
   <div class="footer-container">
-    <!-- Columna 1: Marca y Redes -->
     <div class="footer-brand">
       <h3 class="footer-logo">{{ footer.marca }}</h3>
       <p class="footer-desc">{{ footer.texto }}</p>
@@ -17,7 +16,6 @@
       </div>
     </div>
 
-    <!-- Columnas dinámicas (Especialidades, Sobre Nosotros) -->
     @for (col of footer.columnas; track col.titulo) {
       <div class="footer-column">
         <h4>{{ col.titulo }}</h4>
@@ -29,7 +27,6 @@
       </div>
     }
 
-    <!-- Columna: Contacto -->
     <div class="footer-column contact-column">
       <h4>{{ footer.contacto.titulo }}</h4>
       <ul class="contact-list">

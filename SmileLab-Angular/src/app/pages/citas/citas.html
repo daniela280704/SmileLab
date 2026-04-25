@@ -17,10 +17,14 @@
           <article class="appointment-premium-card">
             <h3 class="appointment-title">{{ cita.servicio || cita.motivoCita || 'Cita Programada' }}</h3>
             <div class="card-details">
-              <p><strong>Paciente:</strong> {{ perfil?.rol === 'admin' ? (cita.nombre || 'Paciente Anónimo') : (perfil?.nombre || 'Cargando...') }}</p>
+              @if (perfil?.rol === 'admin') {
+                <p><strong>Paciente:</strong> {{ cita.nombre || 'Paciente Anónimo' }}</p>
+              }
               <p><strong>Fecha y hora:</strong> {{ (cita.fecha || cita.fechaCita) | date:'yyyy-MM-dd' }} a las {{ cita.hora || cita.horaCita }}</p>
-              <p><strong>Doctor/a:</strong> {{ cita.profesional || 'Dr. García' }}</p>
-              <p><strong>Estado:</strong> <em>{{ cita.estado === 'pendiente' ? 'Próxima' : cita.estado }}</em></p>
+              @if (perfil?.rol !== 'admin') {
+                <p><strong>Doctor/a:</strong> {{ cita.profesional || 'Dr. García' }}</p>
+              }
+              <p><strong>Estado:</strong>&nbsp;<em>{{ cita.displayEstado || cita.estado }}</em></p>
             </div>
             <div class="card-footer">
               <p>Para modificar o cancelar, <a routerLink="/contacto">contáctanos</a>.</p>

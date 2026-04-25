@@ -63,6 +63,13 @@
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
 }
 
+.error-text {
+    color: #ef4444;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: -0.4rem;
+}
+
 .login-error-message {
     background-color: #fef2f2;
     color: #b91c1c;

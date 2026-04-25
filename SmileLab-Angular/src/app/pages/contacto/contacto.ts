@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, User } from '@angular/fire/auth';
 import { DataService } from '../../core/services/data';
-import { first } from 'rxjs';
+import { first, firstValueFrom } from 'rxjs';
 
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ declare var flatpickr: any;
 @Component({
   selector: 'app-contacto',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './contacto.html',
   styleUrl: './contacto.css',
 })
@@ -24,8 +24,12 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   profesionales: any[] = [];
   
   usuarioLogueado: User | null = null;
+  perfilLogueado: any = null;
   registroForm = new FormGroup({
-    nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    nombre: new FormControl('', [
+      Validators.required, 
+      Validators.pattern(/^(\S+\s+\S+.*)$/)
+    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     telefono: new FormControl('', [Validators.required, Validators.pattern('[0-9]{9}')]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -50,6 +54,7 @@ export class ContactoComponent implements OnInit, AfterViewInit {
     onAuthStateChanged(this.auth, (user) => {
       this.usuarioLogueado = user;
       if (user) {
+        this.dataService.userProfile$.subscribe(p => this.perfilLogueado = p);
         this.registroForm.patchValue({ email: user.email });
         this.registroForm.get('nombre')?.clearValidators();
         this.registroForm.get('password')?.clearValidators();
@@ -66,18 +71,28 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (typeof flatpickr !== 'undefined') {
-      flatpickr('#appointment-day', {
-        dateFormat: 'Y-m-d',
-        minDate: 'today'
-      });
-      flatpickr('#appointment-time', {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: 'H:i',
-        time_24hr: true
-      });
-    }
+    setTimeout(() => {
+      if (typeof flatpickr !== 'undefined') {
+        flatpickr('#appointment-day', {
+          dateFormat: 'Y-m-d',
+          minDate: 'today',
+          onChange: (selectedDates: any, dateStr: string) => {
+            this.registroForm.get('fechaCita')?.setValue(dateStr);
+          }
+        });
+        flatpickr('#appointment-time', {
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true,
+          onChange: (selectedDates: any, timeStr: string) => {
+            this.registroForm.get('horaCita')?.setValue(timeStr);
+          }
+        });
+      } else {
+        console.warn('Flatpickr no está definido.');
+      }
+    }, 200);
   }
 
   async enviarDatos() {
@@ -131,9 +146,14 @@ export class ContactoComponent implements OnInit, AfterViewInit {
 
   private async guardarCita(uid: string) {
     const values = this.registroForm.value;
+    
+    // Obtenemos el perfil más actualizado justo antes de guardar
+    const perfil = await firstValueFrom(this.dataService.userProfile$);
+    const nombreCompleto = values.nombre || perfil?.nombre || this.usuarioLogueado?.displayName || 'Paciente';
+
     await this.dataService.addCita({
       usuarioId: uid,
-      nombre: values.nombre || this.usuarioLogueado?.displayName || 'Paciente',
+      nombre: nombreCompleto,
       fecha: values.fechaCita,
       hora: values.horaCita,
       servicio: values.motivoCita,

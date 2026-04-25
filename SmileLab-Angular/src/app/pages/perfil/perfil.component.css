@@ -93,6 +93,41 @@
     letter-spacing: -1.5px;
 }
 
+.perfil-footer {
+    padding: 3rem 4rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Mini botones de edición */
+.btn-edit-mini, .btn-save-mini, .btn-cancel-mini {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.btn-edit-mini:hover { background: #e2e8f0; }
+.btn-save-mini { color: #10b981; }
+.btn-save-mini:hover { background: #d1fae5; }
+.btn-cancel-mini { color: #ef4444; }
+.btn-cancel-mini:hover { background: #fee2e2; }
+
+.edit-name-input {
+    padding: 4px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 200px;
+}
+
 .banner-actions {
     display: flex;
     justify-content: center;

@@ -2,7 +2,7 @@
   <section class="perfil-premium-wrapper">
     <div class="perfil-main-container">
       <div class="perfil-text-column">
-        <h1 class="perfil-greeting">¡Hola, {{ (perfil.nombre || 'Usuario').split(' ')[0] }}!</h1>
+        <h1 class="perfil-greeting">¡Hola, {{ getFirstName(perfil.nombre || 'Usuario') }}!</h1>
         <div class="perfil-data-list">
           <p><strong>{{ perfil.rol === 'admin' ? 'Administrador:' : 'Paciente:' }}</strong> {{ perfil.nombre }}</p>
           <p><strong>Email:</strong> {{ perfil.email }}</p>

@@ -1,13 +1,11 @@
-<header>
-  <!-- Logo (Lado Izquierdo) -->
+<header [class.menu-abierto]="menuAbierto">
   <div class="logo-container">
-    <a routerLink="/inicio" class="logo-link" (click)="cerrarMenu()">
+    <a routerLink="/inicio" class="logo-link">
       <img src="img/logo2.jpeg" alt="SmileLab" class="logo-img" onerror="this.style.display='none'">
       <span class="logo-text">SmileLab</span>
     </a>
   </div>
 
-  <!-- Navegación (Centro) - Solo enlaces principales -->
   <nav class="desktop-nav">
     <ul>
       <li><a routerLink="/inicio" routerLinkActive="active">Inicio</a></li>
@@ -21,24 +19,22 @@
     </ul>
   </nav>
 
-  <!-- Acciones (Lado Derecho) - Botón dinámico -->
   <div class="header-actions">
     @if (usuarioLogueado$ | async; as user) {
       <button class="btn-dark btn-perfil-desktop" (click)="irAPerfil()">
-        {{ (userProfile$ | async)?.nombre?.split(' ')[0] || 'Paciente' }}
+        {{ getFirstName((userProfile$ | async)?.nombre) || 'Paciente' }}
       </button>
     } @else {
       <a routerLink="/login">
         <button class="btn-dark btn-perfil-desktop">Iniciar Sesión</button>
       </a>
     }
-    <button class="btn-menu-mobile" (click)="toggleMenu()">
-      {{ menuAbierto ? '✕' : 'Menú' }}
+    <button class="btn-menu-mobile" [class.activo]="menuAbierto" (click)="toggleMenu()">
+      {{ menuAbierto ? 'Menú' : 'Menú' }}
     </button>
   </div>
 </header>
 
-<!-- Menú móvil overlay -->
 <div class="mobile-menu-overlay" [class.activo]="menuAbierto">
   <div class="mobile-nav-container">
     <nav class="mobile-nav">
@@ -52,11 +48,12 @@
           <li><a routerLink="/admin-crear-producto" routerLinkActive="active" (click)="cerrarMenu()">Panel Admin</a></li>
         }
         @if (usuarioLogueado$ | async; as user) {
-          <li><button class="btn-perfil-mobile-nav" (click)="irAPerfil()">{{ (userProfile$ | async)?.nombre?.split(' ')[0] || 'Paciente' }}</button></li>
+          <li><button class="btn-perfil-mobile-nav" (click)="irAPerfil()">{{ getFirstName((userProfile$ | async)?.nombre) || 'Paciente' }}</button></li>
         } @else {
           <li><a routerLink="/login" routerLinkActive="active" (click)="cerrarMenu()">Iniciar Sesión</a></li>
         }
       </ul>
     </nav>
   </div>
+  <app-footer></app-footer>
 </div>

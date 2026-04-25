@@ -1,4 +1,3 @@
-/* Estilos Premium para el Footer */
 
 .pre-footer-products {
     background: #f8fafc;
@@ -156,7 +155,6 @@ footer {
     flex: 1;
 }
 
-/* Footer Legal */
 .footer-legal {
     margin-top: 6rem;
     padding-top: 2rem;
@@ -200,15 +198,14 @@ footer {
     font-size: 0.8rem;
 }
 
-/* --- RESPONSIVE --- */
 
 @media (max-width: 1024px) {
     .footer-container {
-        grid-template-columns: repeat(4, 1fr); /* Mantenemos 4 columnas en tablet */
+        grid-template-columns: repeat(4, 1fr);
         gap: 2rem;
     }
     .pre-footer-container {
-        grid-template-columns: repeat(3, 1fr); /* Mantenemos 3 productos en tablet */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -218,12 +215,11 @@ footer {
     }
     
     .footer-container {
-        grid-template-columns: 1fr 1fr; /* 2 columnas para Especialidades y Sobre Nosotros */
+        grid-template-columns: 1fr 1fr;
         text-align: left;
         gap: 3rem 1.5rem;
     }
     
-    /* Brand section (Logo y redes) arriba y centrado */
     .footer-brand {
         grid-column: 1 / span 2;
         text-align: center;
@@ -239,7 +235,6 @@ footer {
         margin-bottom: 1rem;
     }
 
-    /* Contact column abajo y ocupando todo el ancho */
     .contact-column {
         grid-column: 1 / span 2;
         margin-top: 1rem;
@@ -262,7 +257,7 @@ footer {
         flex-wrap: wrap;
         justify-content: center;
         gap: 0.5rem 0.8rem;
-        max-width: 250px; /* Limitar el ancho para forzar el salto del tercer enlace */
+        max-width: 250px;
         margin: 0 auto;
         line-height: 1.2;
     }

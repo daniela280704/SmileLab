@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { Database, ref, onValue, off } from '@angular/fire/database';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { DataService } from '../../core/services/data';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-citas',
@@ -61,7 +62,8 @@ export class CitasComponent implements OnInit, OnDestroy {
     onValue(this.citasRef, (snapshot) => {
       this.zone.run(() => {
         const data = snapshot.val();
-        this.citas = data ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val })) : [];
+        let rawCitas = data ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val })) : [];
+        this.citas = this.procesarYOrdenarCitas(rawCitas);
         this.cdr.detectChanges();
       });
     });
@@ -74,10 +76,70 @@ export class CitasComponent implements OnInit, OnDestroy {
     this.allCitasSub = this.dataService.getAllCitas().subscribe(allCitas => {
       this.zone.run(() => {
         // Filtramos las citas donde el profesional coincide con el nombre del admin
-        this.citas = allCitas.filter(c => c.profesional === adminNombre);
-        this.cdr.detectChanges();
+        let filteredCitas = allCitas.filter(c => c.profesional === adminNombre);
+        
+        // Enriquecemos cada cita con el nombre real del usuario desde la tabla /usuarios
+        const enrichedCitasPromises = filteredCitas.map(async (cita) => {
+          if (cita.userId) {
+            const perfilUsuario = await firstValueFrom(this.dataService.getUsuarioProfile(cita.userId));
+            if (perfilUsuario && perfilUsuario.nombre) {
+              return { ...cita, nombre: perfilUsuario.nombre };
+            }
+          }
+          return cita;
+        });
+
+        Promise.all(enrichedCitasPromises).then(enrichedList => {
+          this.zone.run(() => {
+            this.citas = this.procesarYOrdenarCitas(enrichedList);
+            this.cdr.detectChanges();
+          });
+        });
       });
     });
+  }
+
+  private procesarYOrdenarCitas(citasList: any[]): any[] {
+    const now = new Date();
+    
+    // 1. Primero calculamos la fecha real y el estado base para cada cita
+    const conFecha = citasList.map(cita => {
+      const f = cita.fecha || cita.fechaCita || '1970-01-01';
+      const h = cita.hora || cita.horaCita || '00:00';
+      const d = new Date(`${f}T${h}`);
+      return { ...cita, fullDate: d };
+    });
+
+    // 2. Separamos completadas de futuras/canceladas
+    const completadas = conFecha.filter(c => c.estado !== 'cancelada' && c.fullDate < now);
+    const futurasYCanceladas = conFecha.filter(c => c.estado === 'cancelada' || c.fullDate >= now);
+
+    // 3. De las completadas, solo nos quedamos con la MÁS RECIENTE
+    completadas.sort((a, b) => b.fullDate.getTime() - a.fullDate.getTime());
+    const soloUltimaCompletada = completadas.slice(0, 1).map(c => ({ ...c, displayEstado: 'Completada' }));
+
+    // 4. Procesamos las futuras para marcar cuál es "Próxima" y cuáles "Pendiente"
+    // Las ordenamos de más cercana a más lejana
+    futurasYCanceladas.sort((a, b) => a.fullDate.getTime() - b.fullDate.getTime());
+    
+    let foundProxima = false;
+    const futurasProcesadas = futurasYCanceladas.map(cita => {
+      if (cita.estado === 'cancelada') {
+        cita.displayEstado = 'Cancelada';
+      } else {
+        if (!foundProxima) {
+          cita.displayEstado = 'Próxima';
+          foundProxima = true;
+        } else {
+          cita.displayEstado = 'Pendiente';
+        }
+      }
+      return cita;
+    });
+
+    // 5. Unimos todo y devolvemos ordenado cronológicamente
+    const resultado = [...soloUltimaCompletada, ...futurasProcesadas];
+    return resultado.sort((a, b) => a.fullDate.getTime() - b.fullDate.getTime());
   }
 
   ngOnDestroy() {

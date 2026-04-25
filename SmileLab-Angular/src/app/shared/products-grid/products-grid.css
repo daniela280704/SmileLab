@@ -1,7 +1,6 @@
-/* Estilos Premium para el grid de productos pre-footer */
 
 .pre-footer-products {
-    background: #fbfbfc; /* Un blanco muy sutilmente grisáceo */
+    background: #fbfbfc;
     padding: 6rem 5%;
     border-top: 1px solid var(--gris-borde);
 }
@@ -63,7 +62,7 @@
 
 .product-image-container img {
     width: 100%;
-    max-width: 200px; /* Limitar el tamaño para que no se vea gigante */
+    max-width: 200px;
     aspect-ratio: 1;
     border-radius: 16px;
     object-fit: contain;
@@ -76,7 +75,6 @@
     transform: scale(1.05);
 }
 
-/* --- RESPONSIVE --- */
 
 @media (max-width: 1024px) {
     .product-container {
@@ -86,19 +84,17 @@
 
 @media (max-width: 768px) {
     .product-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas según la imagen */
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
         align-items: flex-start;
     }
     
-    /* Efecto escalonado (staggered) */
     .product-container > *:nth-child(even) {
-        transform: translateY(60px); /* El kit de blanqueamiento baja */
+        transform: translateY(calc(50% + 0.5rem)); 
     }
     
-    /* Añadir espacio al final para compensar el desplazamiento */
     .product-container {
-        padding-bottom: 60px;
+        padding-bottom: 0;
     }
 
     .pre-footer-products {
@@ -106,7 +102,7 @@
     }
     
     .product-card-mini h4 {
-        font-size: 0.95rem; /* Títulos más pequeños para móviles */
+        font-size: 0.95rem;
     }
     
     .product-card-mini header {
