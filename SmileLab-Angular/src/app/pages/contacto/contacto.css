@@ -277,43 +277,6 @@
     font-size: 1.1rem;
 }
 
-.btn-dark-action {
-    background: var(--negro-smile);
-    color: white;
-    padding: 0.9rem 2.5rem;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
-    text-decoration: none;
-}
-
-.btn-dark-action:hover {
-    background: var(--azul-oscuro);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.btn-light-action {
-    background: white;
-    color: var(--negro-smile);
-    padding: 0.9rem 2.5rem;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 1rem;
-    border: 1px solid var(--gris-borde);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.btn-light-action:hover {
-    background: #f8fafc;
-}
-
 /* Modal de éxito */
 .success-modal-overlay {
     position: fixed;
