@@ -1,4 +1,4 @@
-/* Reutilizamos los estilos de login para mantener coherencia */
+/* Estilos encapsulados para el componente Registro */
 @import '../login/login.css';
 
 .admin-code-section {

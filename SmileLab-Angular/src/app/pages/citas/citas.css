@@ -1,7 +1,12 @@
-/* Estilos Premium para la página de Citas - Ajuste de Paridad Exacta */
+/* Estilos encapsulados para el componente Citas */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .citas-hero-banner {
-    background: linear-gradient(to right, #93c5fd, #bfdbfe); /* Degradado azul suave como en la imagen */
+    background: linear-gradient(to right, #93c5fd, #bfdbfe);
     padding: 7rem 10% 5rem;
     text-align: left;
 }
@@ -83,14 +88,21 @@
     text-decoration: underline;
 }
 
-/* --- RESPONSIVE --- */
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1100px) {
     .appointments-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .citas-hero-banner {
         padding: 5rem 5% 3rem;
@@ -106,7 +118,6 @@
     }
 }
 
-/* Empty State */
 .empty-citas-state {
     grid-column: 1 / -1;
     text-align: center;

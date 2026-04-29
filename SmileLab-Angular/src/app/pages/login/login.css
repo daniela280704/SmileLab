@@ -1,4 +1,9 @@
-/* Estilos Premium para la página de Login */
+/* Estilos encapsulados para el componente Login */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .login-page-container {
     padding: 6rem 5% 8rem;
@@ -140,8 +145,11 @@
     text-decoration: underline;
 }
 
-/* --- RESPONSIVE --- */
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .login-page-container {
         padding: 4rem 5%;

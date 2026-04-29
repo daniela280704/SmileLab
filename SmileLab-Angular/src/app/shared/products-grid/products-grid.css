@@ -1,3 +1,9 @@
+/* Estilos encapsulados para el componente Products grid */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .pre-footer-products {
     background: #fbfbfc;
@@ -76,12 +82,20 @@
 }
 
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1024px) {
     .product-container {
         gap: 1.5rem;
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .product-container {
         grid-template-columns: repeat(2, 1fr);

@@ -1,6 +1,9 @@
-/* Estilos Premium para la página de Equipo - Ajustados por Dimensiones */
+/* Estilos encapsulados para el componente Equipo */
 
-/* --- GENERAL & HERO --- */
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .team-hero {
     display: grid;
@@ -51,7 +54,6 @@
     letter-spacing: -0.5px;
 }
 
-/* --- GRID DE PROFESIONALES (DESKTOP) --- */
 
 .team-grid {
     display: grid;
@@ -120,8 +122,11 @@
     line-height: 1.6;
 }
 
-/* --- TABLET (Media Query intermedia) --- */
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1024px) {
     .team-hero {
         display: flex;
@@ -145,7 +150,6 @@
         gap: 2rem;
     }
 
-    /* Layout horizontal para tablet (como en la imagen 2) */
     .member-card {
         flex-direction: row;
         align-items: center;
@@ -167,8 +171,11 @@
     }
 }
 
-/* --- MÓVIL (Punto de corte 768px) --- */
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .team-main-title {
         font-size: 2.4rem;
@@ -208,7 +215,6 @@
     }
 }
 
-/* Pre-footer wrapper */
 .pre-footer-wrapper {
     margin-bottom: 4rem;
 }

@@ -1,4 +1,9 @@
-/* Hoja de estilos global */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
+/* Hoja de estilos global de la aplicación (Variables, Clases base) */
 
 :root {
     --azul-oscuro: #1e40af;
@@ -164,6 +169,10 @@ button, .btn {
     object-fit: cover;
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .hero-section {
         display: flex;

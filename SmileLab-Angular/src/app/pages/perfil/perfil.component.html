@@ -1,3 +1,4 @@
+<!-- Estructura visual (Template) del componente Perfil.component -->
 @if (perfil$ | async; as perfil) {
   <section class="perfil-premium-wrapper">
     <div class="perfil-main-container">
@@ -8,8 +9,8 @@
           <p><strong>Email:</strong> {{ perfil.email }}</p>
           <p><strong>Teléfono:</strong> {{ perfil.telefono || 'No especificado' }}</p>
           @if (perfil.rol !== 'admin') {
-            <p><strong>Próxima limpieza:</strong> 2026-03-25 a las 12:00</p>
-            <p><strong>Doctor habitual:</strong> Dr. García</p>
+            <p><strong>Próxima cita:</strong> {{ proximaCita ? proximaCita.fecha + ' a las ' + proximaCita.hora : 'No tienes citas programadas' }}</p>
+            <p><strong>Doctor habitual:</strong> {{ doctorHabitual }}</p>
           }
         </div>
         <div class="logout-btn-box">
@@ -26,7 +27,6 @@
     </div>
   </section>
 
-  <!-- Banner Inferior de Cita / Gestión (Fuera del contenedor principal para ser full-width) -->
   <section class="cita-appointment-banner">
     <div class="banner-inner-content">
       <h2 class="banner-title">{{ perfil.rol === 'admin' ? 'Consulta tus citas' : 'Pide tu cita aquí' }}</h2>

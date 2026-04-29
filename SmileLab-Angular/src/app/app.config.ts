@@ -1,3 +1,4 @@
+// Archivo de configuración global de Angular
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';

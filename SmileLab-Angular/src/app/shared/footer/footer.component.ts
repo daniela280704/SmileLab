@@ -1,3 +1,4 @@
+// Controlador del componente Footer.component
 import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';

@@ -1,4 +1,9 @@
-/* Estilos Premium para la página de Inicio */
+/* Estilos encapsulados para el componente Inicio */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .main-hero-banner {
     background: var(--gradient-hero-home);
@@ -73,7 +78,7 @@
     aspect-ratio: 16/10;
     background: var(--gradient-util-1);
     overflow: hidden;
-    border-radius: 0; /* Override global border-radius for the top part of the card */
+    border-radius: 0;
 }
 
 .servicio-card .thumb-placeholder img {
@@ -128,30 +133,41 @@
     box-shadow: 0 6px 20px rgba(30, 58, 95, 0.3);
 }
 
-/* --- RESPONSIVE --- */
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1100px) {
     .servicios-grid {
-        grid-template-columns: repeat(3, 1fr); 
+        grid-template-columns: repeat(3, 1fr);
         gap: 1.5rem;
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 900px) {
     .servicios-grid {
-        grid-template-columns: repeat(3, 1fr); /* Seguimos con 3 columnas en tablet mediana */
+        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
     }
-    
+
     .about-title {
         font-size: 2.2rem;
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .main-hero-banner {
         padding: 6rem 5% 5rem;
-        background: var(--gradient-hero-home); /* Coherencia con desktop */
+        background: var(--gradient-hero-home);
     }
     .main-hero-banner h1 {
         font-size: 2.4rem;
@@ -163,7 +179,7 @@
     }
 
     .about-title {
-        text-align: left; /* Como en la imagen */
+        text-align: left;
         font-size: 2.2rem;
         margin-top: 2rem;
         padding: 0 5%;

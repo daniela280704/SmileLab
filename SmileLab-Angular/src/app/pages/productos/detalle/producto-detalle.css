@@ -1,3 +1,9 @@
+/* Estilos encapsulados para el componente Producto detalle */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 .producto-detalle-container {
     padding: 4rem 10% 2rem;
     min-height: 60vh;
@@ -92,11 +98,15 @@
   color: #666;
 }
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1050px) {
     .producto-detalle-container {
         padding: 4rem 5% 2rem;
     }
-    
+
     .product-title {
         font-size: 2.8rem;
     }
@@ -106,6 +116,10 @@
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .producto-detalle-container {
         padding: 2rem 5% 4rem;
@@ -113,13 +127,13 @@
 
     .product-hero-container {
         display: flex;
-        flex-direction: column-reverse; /* Imagen arriba */
+        flex-direction: column-reverse;
         gap: 2.5rem;
-        text-align: left; /* Alineado a la izquierda según la imagen */
+        text-align: left;
     }
 
     .product-info-side {
-        align-items: flex-start; /* Asegura que el botón de precio también se alinee a la izquierda */
+        align-items: flex-start;
         gap: 1.5rem;
     }
 

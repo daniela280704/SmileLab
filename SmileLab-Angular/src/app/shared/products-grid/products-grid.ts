@@ -1,3 +1,4 @@
+// Controlador del componente Products grid
 import { Component, OnInit, inject, ChangeDetectorRef, NgZone, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -20,7 +21,6 @@ export class ProductsGridComponent implements OnInit {
   ngOnInit() {
     this.dataService.getProductos().subscribe(data => {
       this.zone.run(() => {
-        // Barajar y coger según el límite
         this.productos = [...data]
           .sort(() => 0.5 - Math.random())
           .slice(0, this.limit);

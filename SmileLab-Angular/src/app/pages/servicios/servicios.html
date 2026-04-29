@@ -1,3 +1,4 @@
+<!-- Estructura visual (Template) del componente Servicios -->
 @if (servicios) {
   <section class="servicios-page animate-in">
     <header class="servicios-header">
@@ -7,8 +8,7 @@
     <div class="service-cards-container">
       @for (servicio of servicios.items; track $index) {
         <article class="service-premium-card" [class.is-expanded]="itemExpandido === $index">
-          
-          <!-- Header visible solo en móvil para el acordeón -->
+
           <div class="card-mobile-header" (click)="toggleExpand($index)">
             <h3 class="service-name-mobile">{{ servicio.titulo }}</h3>
             <div class="toggle-btn">
@@ -20,7 +20,6 @@
             </div>
           </div>
 
-          <!-- Contenido que se expande en móvil y siempre se ve en desktop -->
           <div class="expandable-content">
             <div class="card-layout-wrapper">
               <div class="card-image">

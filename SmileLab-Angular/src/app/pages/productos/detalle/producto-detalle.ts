@@ -1,3 +1,4 @@
+// Controlador del componente Producto detalle
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';

@@ -1,4 +1,9 @@
-/* Estilos Premium para la página de Servicios - Ajuste Responsivo Total */
+/* Estilos encapsulados para el componente Servicios */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .servicios-page {
     padding: 4rem 0 6rem;
@@ -27,7 +32,6 @@
     gap: 3rem;
 }
 
-/* Card General (Desktop) */
 .service-premium-card {
     background: var(--blanco);
     border-radius: 24px;
@@ -39,7 +43,7 @@
 
 .card-layout-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1.5fr; /* Más espacio al texto */
+    grid-template-columns: 1fr 1.5fr;
     width: 100%;
 }
 
@@ -56,7 +60,7 @@
 }
 
 .card-content {
-    padding: 2.5rem 3rem; /* Padding más equilibrado */
+    padding: 2.5rem 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,17 +79,19 @@
     line-height: 1.6;
 }
 
-/* Elementos de Móvil ocultos por defecto */
 .card-mobile-header {
     display: none;
 }
 
-/* --- TABLET / SMALL DESKTOP (Ajuste para evitar texto cortado) --- */
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1100px) {
     .card-layout-wrapper {
         grid-template-columns: 1fr;
     }
-    
+
     .card-image {
         aspect-ratio: 16/9;
     }
@@ -100,7 +106,10 @@
     }
 }
 
-/* --- MÓVIL (Images 3 & 4 - Acordeón) --- */
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .service-premium-card {
         border-radius: 16px;
@@ -139,7 +148,6 @@
         background: #000;
     }
 
-    /* Ocultamos el contenido por defecto */
     .expandable-content {
         display: none;
         border-top: 1px solid #f1f5f9;
@@ -149,7 +157,6 @@
         display: block;
     }
 
-    /* Ajuste del contenido expandido */
     .card-layout-wrapper {
         grid-template-columns: 1fr;
     }
@@ -159,7 +166,7 @@
     }
 
     .service-name-desktop {
-        display: none; /* Ya se ve en el header del acordeón */
+        display: none;
     }
 
     .service-desc {

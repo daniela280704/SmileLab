@@ -1,5 +1,5 @@
+<!-- Estructura visual (Template) del componente Equipo -->
 @if (equipo) {
-  <!-- Hero Equipo -->
   <section class="team-hero">
     <div class="hero-content">
       <h1 class="team-main-title">{{ equipo.titulo }}</h1>
@@ -10,12 +10,10 @@
     </div>
   </section>
 
-  <!-- Título Sección Profesionales -->
   <div class="section-title-container">
     <h2 class="professional-title">{{ equipo.subtitulo }}</h2>
   </div>
 
-  <!-- Grid de Miembros -->
   <section class="team-grid">
     @for (miembro of equipo.miembros; track miembro.nombre) {
       @if (!miembro.ocultoEnPagina) {

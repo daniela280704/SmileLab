@@ -1,3 +1,4 @@
+// Controlador del componente Citas
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -31,13 +32,11 @@ export class CitasComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authUnsubscribe = onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        // 1. Cargar Perfil para saber el Rol
         this.perfilRef = ref(this.db, `usuarios/${user.uid}`);
         onValue(this.perfilRef, (snapshot) => {
           this.zone.run(() => {
             this.perfil = snapshot.val();
-            
-            // 2. Dependiendo del rol, cargamos unas citas u otras
+
             if (this.perfil?.rol === 'admin') {
               this.cargarCitasParaAdmin(this.perfil.nombre);
             } else {
@@ -70,15 +69,13 @@ export class CitasComponent implements OnInit, OnDestroy {
   }
 
   private cargarCitasParaAdmin(adminNombre: string) {
-    // Si ya estamos escuchando todas, no hace falta re-suscribirse (aunque el nombre cambie)
     if (this.allCitasSub) return;
 
     this.allCitasSub = this.dataService.getAllCitas().subscribe(allCitas => {
       this.zone.run(() => {
-        // Filtramos las citas donde el profesional coincide con el nombre del admin
+        // Solo nos interesan las citas asignadas a este administrador
         let filteredCitas = allCitas.filter(c => c.profesional === adminNombre);
-        
-        // Enriquecemos cada cita con el nombre real del usuario desde la tabla /usuarios
+
         const enrichedCitasPromises = filteredCitas.map(async (cita) => {
           if (cita.userId) {
             const perfilUsuario = await firstValueFrom(this.dataService.getUsuarioProfile(cita.userId));
@@ -101,8 +98,7 @@ export class CitasComponent implements OnInit, OnDestroy {
 
   private procesarYOrdenarCitas(citasList: any[]): any[] {
     const now = new Date();
-    
-    // 1. Primero calculamos la fecha real y el estado base para cada cita
+
     const conFecha = citasList.map(cita => {
       const f = cita.fecha || cita.fechaCita || '1970-01-01';
       const h = cita.hora || cita.horaCita || '00:00';
@@ -110,18 +106,16 @@ export class CitasComponent implements OnInit, OnDestroy {
       return { ...cita, fullDate: d };
     });
 
-    // 2. Separamos completadas de futuras/canceladas
+    // Separamos las citas que ya pasaron (histórico) de las que están por venir
     const completadas = conFecha.filter(c => c.estado !== 'cancelada' && c.fullDate < now);
     const futurasYCanceladas = conFecha.filter(c => c.estado === 'cancelada' || c.fullDate >= now);
 
-    // 3. De las completadas, solo nos quedamos con la MÁS RECIENTE
     completadas.sort((a, b) => b.fullDate.getTime() - a.fullDate.getTime());
     const soloUltimaCompletada = completadas.slice(0, 1).map(c => ({ ...c, displayEstado: 'Completada' }));
 
-    // 4. Procesamos las futuras para marcar cuál es "Próxima" y cuáles "Pendiente"
-    // Las ordenamos de más cercana a más lejana
     futurasYCanceladas.sort((a, b) => a.fullDate.getTime() - b.fullDate.getTime());
-    
+
+    // Solo la cita futura más inmediata debe aparecer como "Próxima", el resto quedan "Pendientes"
     let foundProxima = false;
     const futurasProcesadas = futurasYCanceladas.map(cita => {
       if (cita.estado === 'cancelada') {
@@ -137,7 +131,6 @@ export class CitasComponent implements OnInit, OnDestroy {
       return cita;
     });
 
-    // 5. Unimos todo y devolvemos ordenado cronológicamente
     const resultado = [...soloUltimaCompletada, ...futurasProcesadas];
     return resultado.sort((a, b) => a.fullDate.getTime() - b.fullDate.getTime());
   }

@@ -1,3 +1,4 @@
+// Controlador del componente Admin crear producto
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -30,6 +31,7 @@ export class AdminCrearProducto {
   onFileSelected(event: any) {
     this.errorMsg = null;
     const file = event.target.files[0];
+    // Capturamos el archivo de imagen seleccionado por el usuario para pasárselo al servicio de Firebase
     if (file && file.type.startsWith('image/')) {
       this.selectedFile = file;
       const reader = new FileReader();
@@ -54,14 +56,13 @@ export class AdminCrearProducto {
     this.uploadProgress = 20;
 
     const rawValues = this.productoForm.value;
-    
-    // Mapeamos el objeto para que coincida exactamente con lo que espera el catálogo de SmileLab
+
     const productoParaFirebase = {
       nombre: rawValues.nombre,
       descripcion: rawValues.descripcion,
-      precio: `${rawValues.precio}€`, // Añadimos el símbolo de euro como en el JSON original
-      alt: `Imagen de ${rawValues.nombre}`, // Generamos el texto ALT automáticamente
-      href: `#${rawValues.nombre?.toLowerCase().replace(/ /g, '_')}`, // Generamos un ID amigable
+      precio: `${rawValues.precio}€`,
+      alt: `Imagen de ${rawValues.nombre}`,
+      href: `#${rawValues.nombre?.toLowerCase().replace(/ /g, '_')}`,
       placeholderClass: 'product-placeholder-new'
     };
 

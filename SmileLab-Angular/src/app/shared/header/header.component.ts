@@ -1,3 +1,4 @@
+// Controlador del componente Header.component
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';

@@ -1,3 +1,9 @@
+/* Estilos encapsulados para el componente Header.component */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 header {
     display: flex;
@@ -141,6 +147,10 @@ header {
     color: var(--azul-claro);
 }
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1050px) {
     .desktop-nav ul {
         gap: 0.1rem;
@@ -161,6 +171,10 @@ header {
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 850px) {
     .logo-container {
         flex: 0 0 auto;
@@ -173,6 +187,10 @@ header {
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .desktop-nav {
         display: none;

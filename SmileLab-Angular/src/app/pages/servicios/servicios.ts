@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+// Controlador del componente Servicios
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data';
 
@@ -11,11 +12,15 @@ import { DataService } from '../../core/services/data';
 })
 export class ServiciosComponent implements OnInit {
   private dataService = inject(DataService);
+  private cdr = inject(ChangeDetectorRef);
   servicios: any = null;
   itemExpandido: number | null = null;
 
   ngOnInit() {
-    this.dataService.getServicios().subscribe(data => this.servicios = data);
+    this.dataService.getServicios().subscribe(data => {
+      this.servicios = data;
+      this.cdr.detectChanges();
+    });
   }
 
   toggleExpand(index: number) {

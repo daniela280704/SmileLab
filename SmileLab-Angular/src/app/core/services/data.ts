@@ -1,10 +1,11 @@
+// Servicio centralizado para gestionar las llamadas a Firebase
 import { Injectable, inject, NgZone } from '@angular/core';
 import { Database, ref, onValue, push, set } from '@angular/fire/database';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-// Datos de respaldo (fallback)
+
 import inicioData from './data-fallback/inicio.json';
 import equipoData from './data-fallback/equipo.json';
 import serviciosData from './data-fallback/servicios.json';
@@ -17,19 +18,15 @@ export class DataService {
   private auth = inject(Auth);
   private zone = inject(NgZone);
 
-  // BehaviorSubject que mantiene el perfil cargado permanentemente
   private profileSubject = new BehaviorSubject<any>(null);
   public userProfile$ = this.profileSubject.asObservable();
 
-  // BehaviorSubject para las citas (empieza con [] para no bloquear el template)
   private citasSubject = new BehaviorSubject<any[]>([]);
   public userCitas$ = this.citasSubject.asObservable();
 
   constructor() {
-    // Escuchar cambios de autenticación globalmente
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        // En cuanto hay usuario, escuchamos su perfil de forma permanente
         const uRef = ref(this.db, `usuarios/${user.uid}`);
         onValue(uRef, (snapshot) => {
           this.zone.run(() => {
@@ -37,7 +34,6 @@ export class DataService {
           });
         });
 
-        // También escuchamos sus citas permanentemente
         const citasRef = ref(this.db, `citas/${user.uid}`);
         onValue(citasRef, (snapshot) => {
           this.zone.run(() => {
@@ -68,13 +64,12 @@ export class DataService {
       onValue(dbRef, (snapshot) => {
         this.zone.run(() => {
           let data = snapshot.val();
-          
-          // Si Firebase tiene menos miembros o distinto orden que el JSON local, actualizamos Firebase
+
           if (!data || !data.miembros || JSON.stringify(data.miembros) !== JSON.stringify(equipoData.miembros)) {
             set(dbRef, equipoData).catch(err => console.error("Error actualizando equipo en Firebase:", err));
             data = equipoData;
           }
-          
+
           subscriber.next(data);
         });
       }, () => this.zone.run(() => subscriber.next(equipoData)));
@@ -102,8 +97,8 @@ export class DataService {
         this.zone.run(() => {
           const data = snapshot.val();
           const firebaseList = data ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val })) : [];
-          
-          // Combinar con los locales, priorizando Firebase si hay choque de IDs
+
+          // Combinamos los productos que vienen de Firebase con los del JSON local por si hay nuevos
           const combined = [...firebaseList];
           productosData.items.forEach((localProd: any) => {
             if (!combined.some(p => p.id === localProd.id)) {
@@ -124,7 +119,6 @@ export class DataService {
         this.zone.run(() => {
           let data = snapshot.val();
           if (!data) {
-            // Buscar en fallback local
             data = productosData.items.find((p: any) => p.id === id);
           }
           subscriber.next(data);
@@ -137,11 +131,12 @@ export class DataService {
     return new Observable(subscriber => {
       const reader = new FileReader();
       reader.onload = () => {
+        // Convertimos la imagen a Base64 para guardarla directamente en la base de datos de texto
         const base64String = reader.result as string;
-        const finalProduct = { 
-          ...producto, 
-          imagen: base64String, 
-          fechaCreacion: new Date().toISOString() 
+        const finalProduct = {
+          ...producto,
+          imagen: base64String,
+          fechaCreacion: new Date().toISOString()
         };
         push(ref(this.db, 'productos/items'), finalProduct)
           .then(() => {
@@ -183,7 +178,8 @@ export class DataService {
             subscriber.next([]);
             return;
           }
-          
+
+          // Extraemos todas las citas de todos los usuarios iterando sobre el árbol JSON de Firebase
           const lista: any[] = [];
           Object.entries(allData).forEach(([userId, userCitas]: [string, any]) => {
             Object.entries(userCitas).forEach(([citaId, cita]: [string, any]) => {

@@ -1,4 +1,9 @@
-/* Estilos Perfil con Paridad Exacta Final */
+/* Estilos encapsulados para el componente Perfil.component */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .perfil-premium-wrapper {
     padding: 8rem 10% 4rem;
@@ -76,17 +81,16 @@
     height: 80%;
 }
 
-/* Banner de Cita - Ajustado para full-width */
 
 .cita-appointment-banner {
-    background-color: #d1e9ff; /* Azul suave similar a la imagen */
+    background-color: #d1e9ff;
     padding: 8rem 5%;
     text-align: center;
     width: 100%;
 }
 
 .banner-title {
-    font-size: 3.2rem; 
+    font-size: 3.2rem;
     font-weight: 800;
     color: #1e3a5f;
     margin-bottom: 3rem;
@@ -101,7 +105,6 @@
     border-top: 1px solid #e2e8f0;
 }
 
-/* Mini botones de edición */
 .btn-edit-mini, .btn-save-mini, .btn-cancel-mini {
     background: none;
     border: none;
@@ -165,13 +168,16 @@
     box-shadow: 0 12px 25px rgba(0,0,0,0.1);
 }
 
-/* --- RESPONSIVE --- */
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1050px) {
     .perfil-premium-wrapper {
         padding: 6rem 5% 4rem;
     }
-    
+
     .avatar-giant-circle {
         width: 320px;
         height: 320px;
@@ -190,6 +196,10 @@
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .perfil-main-container {
         grid-template-columns: 1fr;
@@ -205,20 +215,24 @@
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 600px) {
     .banner-title {
         font-size: 2.2rem;
         margin-bottom: 2rem;
     }
     .banner-actions {
-        flex-direction: row; /* En fila */
+        flex-direction: row;
         justify-content: center;
         gap: 1rem;
         padding: 0 5%;
     }
     .btn-dark-action, .btn-light-action {
-        width: 45%; /* Ancho proporcional */
-        min-width: auto; /* Quitamos el mínimo para que quepan */
+        width: 45%;
+        min-width: auto;
         padding: 1rem 0.5rem;
         font-size: 0.95rem;
         border-radius: 12px;

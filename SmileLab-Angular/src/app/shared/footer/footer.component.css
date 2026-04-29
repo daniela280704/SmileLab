@@ -1,3 +1,9 @@
+/* Estilos encapsulados para el componente Footer.component */
+
+/* ========================================= */
+/* --- ESTILOS DESKTOP (Pantallas grandes) --- */
+/* ========================================= */
+
 
 .pre-footer-products {
     background: #f8fafc;
@@ -52,6 +58,10 @@
     margin: 0;
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     .pre-footer-container {
         grid-template-columns: 1fr;
@@ -199,6 +209,10 @@ footer {
 }
 
 
+
+/* ========================================= */
+/* --- ESTILOS TABLET (Pantallas medianas) --- */
+/* ========================================= */
 @media (max-width: 1024px) {
     .footer-container {
         grid-template-columns: repeat(4, 1fr);
@@ -209,6 +223,10 @@ footer {
     }
 }
 
+
+/* ========================================= */
+/* --- ESTILOS MÓVIL (Pantallas pequeñas) --- */
+/* ========================================= */
 @media (max-width: 768px) {
     footer {
         padding: 4rem 5% 3rem;

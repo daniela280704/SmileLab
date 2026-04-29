@@ -1,3 +1,4 @@
+// Controlador del componente Login
 import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';

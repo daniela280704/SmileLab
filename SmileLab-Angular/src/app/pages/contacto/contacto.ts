@@ -1,3 +1,4 @@
+// Controlador del componente Contacto
 import { Component, OnInit, inject, AfterViewInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,14 +21,14 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   private auth = inject(Auth);
   private dataService = inject(DataService);
   private router = inject(Router);
-  
+
   profesionales: any[] = [];
-  
+
   usuarioLogueado: User | null = null;
   perfilLogueado: any = null;
   registroForm = new FormGroup({
     nombre: new FormControl('', [
-      Validators.required, 
+      Validators.required,
       Validators.pattern(/^(\S+\s+\S+.*)$/)
     ]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -45,7 +46,6 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   showSuccessModal = false;
 
   ngOnInit(): void {
-    // Cargar profesionales desde el servicio de equipo
     this.dataService.getEquipo().pipe(first()).subscribe(data => {
       if (data && data.miembros) {
         this.profesionales = data.miembros;
@@ -107,16 +107,15 @@ export class ContactoComponent implements OnInit, AfterViewInit {
 
     this.isLoading = true;
     const values = this.registroForm.value;
-    
+
     try {
       if (!this.usuarioLogueado) {
-        // Registro + Cita
         const userCredential = await createUserWithEmailAndPassword(
           this.auth,
           values.email!,
           values.password!
         );
-        
+
         await this.dataService.setUsuarioProfile(userCredential.user.uid, {
           nombre: values.nombre,
           email: values.email,
@@ -126,7 +125,6 @@ export class ContactoComponent implements OnInit, AfterViewInit {
 
         await this.guardarCita(userCredential.user.uid);
       } else {
-        // Solo Cita
         await this.guardarCita(this.usuarioLogueado.uid);
       }
       this.showSuccessModal = true;
@@ -148,7 +146,7 @@ export class ContactoComponent implements OnInit, AfterViewInit {
 
   private async guardarCita(uid: string) {
     const values = this.registroForm.value;
-    
+
     const perfil = await firstValueFrom(this.dataService.userProfile$);
     const nombreCompleto = values.nombre || perfil?.nombre || this.usuarioLogueado?.displayName || 'Paciente';
 

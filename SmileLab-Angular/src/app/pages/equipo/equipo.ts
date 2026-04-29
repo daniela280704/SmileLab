@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+// Controlador del componente Equipo
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data';
 
@@ -11,18 +12,19 @@ import { DataService } from '../../core/services/data';
 })
 export class EquipoComponent implements OnInit {
   private dataService = inject(DataService);
+  private cdr = inject(ChangeDetectorRef);
   equipo: any = null;
 
   ngOnInit() {
     this.dataService.getEquipo().subscribe(data => {
       if (data && data.miembros) {
-        // Clonamos el objeto para no modificar la fuente original global
         const filteredData = { ...data };
         filteredData.miembros = data.miembros.filter((m: any) => !m.ocultoEnPagina);
         this.equipo = filteredData;
       } else {
         this.equipo = data;
       }
+      this.cdr.detectChanges();
     });
   }
 }
