@@ -1,5 +1,5 @@
 // Controlador del componente Admin crear producto
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data';
@@ -13,6 +13,7 @@ import { DataService } from '../../core/services/data';
 })
 export class AdminCrearProducto {
   private dataService = inject(DataService);
+  private cdr = inject(ChangeDetectorRef);
 
   productoForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -35,7 +36,10 @@ export class AdminCrearProducto {
     if (file && file.type.startsWith('image/')) {
       this.selectedFile = file;
       const reader = new FileReader();
-      reader.onload = (e: any) => this.previewUrl = e.target.result;
+      reader.onload = (e: any) => {
+        this.previewUrl = e.target.result;
+        this.cdr.detectChanges(); // Forzamos la detección de cambios para mostrar la imagen al instante
+      };
       reader.readAsDataURL(file);
     } else {
       this.errorMsg = 'Por favor, selecciona una imagen válida.';
