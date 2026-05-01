@@ -22,6 +22,9 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   private dataService = inject(DataService);
   private router = inject(Router);
 
+  private fpDay: any;
+  private fpTime: any;
+
   profesionales: any[] = [];
 
   usuarioLogueado: User | null = null;
@@ -72,29 +75,50 @@ export class ContactoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      if (typeof flatpickr !== 'undefined') {
-        flatpickr('#appointment-day', {
-          dateFormat: 'Y-m-d',
-          minDate: 'today',
-          // Quitamos appendTo y static para manejarlo 100% por CSS global
-          onChange: (selectedDates: any, dateStr: string) => {
-            this.registroForm.get('fechaCita')?.setValue(dateStr);
-          }
-        });
-        flatpickr('#appointment-time', {
-          enableTime: true,
-          noCalendar: true,
-          dateFormat: 'H:i',
-          time_24hr: true,
-          onChange: (selectedDates: any, timeStr: string) => {
-            this.registroForm.get('horaCita')?.setValue(timeStr);
-          }
-        });
-      } else {
-        console.warn('Flatpickr no está definido.');
-      }
-    }, 200);
+    this.initFlatpickr();
+  }
+
+  ngOnDestroy(): void {
+    if (this.fpDay) this.fpDay.destroy();
+    if (this.fpTime) this.fpTime.destroy();
+  }
+
+  private initFlatpickr(attempts = 0): void {
+    if (typeof flatpickr !== 'undefined') {
+      // Destruir instancias previas para evitar duplicados en memoria o en el DOM
+      if (this.fpDay) this.fpDay.destroy();
+      if (this.fpTime) this.fpTime.destroy();
+
+      const isMobile = window.innerWidth <= 992;
+      const commonConfig = {
+        locale: 'es',
+        disableMobile: true, // Forzamos la UI personalizada para control total de estilos
+        static: !isMobile,
+        appendTo: isMobile ? document.body : undefined,
+      };
+
+      this.fpDay = flatpickr('#appointment-day', {
+        ...commonConfig,
+        dateFormat: 'Y-m-d',
+        minDate: 'today',
+        onChange: (selectedDates: any, dateStr: string) => {
+          this.registroForm.get('fechaCita')?.setValue(dateStr);
+        }
+      });
+
+      this.fpTime = flatpickr('#appointment-time', {
+        ...commonConfig,
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: 'H:i',
+        time_24hr: true,
+        onChange: (selectedDates: any, timeStr: string) => {
+          this.registroForm.get('horaCita')?.setValue(timeStr);
+        }
+      });
+    } else if (attempts < 10) {
+      setTimeout(() => this.initFlatpickr(attempts + 1), 100);
+    }
   }
 
   async enviarDatos() {

@@ -3,7 +3,6 @@ export const environment = {
   firebase: {
     apiKey: "AIzaSyB4I9rc1K00rDYxfi8ATTwsTGmm3B-ldmg",
     authDomain: "smilelab-angular.firebaseapp.com",
-    databaseURL: "https://smilelab-angular-default-rtdb.firebaseio.com",
     projectId: "smilelab-angular",
     storageBucket: "smilelab-angular.firebasestorage.app",
     messagingSenderId: "436045669533",

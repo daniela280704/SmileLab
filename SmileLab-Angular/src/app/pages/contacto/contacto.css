@@ -122,6 +122,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    position: relative; /* Para que el calendario estático se posicione bien */
 }
 
 .full-width {

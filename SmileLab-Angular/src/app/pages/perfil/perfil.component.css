@@ -173,7 +173,7 @@
 /* ========================================= */
 /* --- ESTILOS TABLET (Pantallas medianas) --- */
 /* ========================================= */
-@media (max-width: 1050px) {
+@media (max-width: 992px) {
     .perfil-premium-wrapper {
         padding: 6rem 5% 4rem;
     }

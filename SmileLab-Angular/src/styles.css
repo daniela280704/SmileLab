@@ -217,34 +217,36 @@ article:hover .thumb-placeholder img {
 /* --- FLATPICKR: Fix Nuclear para móvil         --- */
 /* Centrado absoluto en pantalla (tipo modal)       */
 /* ================================================ */
-@media (max-width: 600px) {
+@media (max-width: 992px) {
     .flatpickr-calendar {
         position: fixed !important;
         top: 50% !important;
         left: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
         transform: translate(-50%, -50%) !important;
         margin: 0 !important;
-        z-index: 999999 !important;
-        box-shadow: 0 0 0 100vmax rgba(0,0,0,0.4), 0 15px 30px rgba(0,0,0,0.2) !important;
-        border-radius: 20px !important;
+        z-index: 9999999 !important;
+        box-shadow: 0 0 0 100vmax rgba(0,0,0,0.5), 0 15px 45px rgba(0,0,0,0.3) !important;
+        border-radius: 24px !important;
         border: none !important;
+        background: white !important;
+        display: none;
     }
 
-    /* Ajuste de días para que no se vea apretado */
+    .flatpickr-calendar.open {
+        display: block !important;
+    }
+
     .flatpickr-days, 
     .dayContainer,
     .flatpickr-rContainer,
     .flatpickr-innerContainer {
-        width: 300px !important;
-        min-width: 300px !important;
+        width: 307px !important;
+        min-width: 307px !important;
+        max-width: 307px !important;
     }
 
-    .flatpickr-day {
-        height: 40px !important;
-        line-height: 40px !important;
-    }
-
-    /* Ocultar la flechita que apunta al input */
     .flatpickr-calendar:before,
     .flatpickr-calendar:after {
         display: none !important;
