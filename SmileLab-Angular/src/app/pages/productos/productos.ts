@@ -1,5 +1,5 @@
 // Controlador del componente Productos
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -13,9 +13,16 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class ProductosComponent implements OnInit {
   private dataService = inject(DataService);
+  private cdr = inject(ChangeDetectorRef);
+  private zone = inject(NgZone);
   productos: any[] = [];
 
   ngOnInit() {
-    this.dataService.getProductos().subscribe(data => this.productos = data);
+    this.dataService.getProductos().subscribe(data => {
+      this.zone.run(() => {
+        this.productos = data;
+        this.cdr.detectChanges();
+      });
+    });
   }
 }

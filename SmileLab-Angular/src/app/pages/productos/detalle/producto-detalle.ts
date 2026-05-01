@@ -1,5 +1,5 @@
 // Controlador del componente Producto detalle
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DataService } from '../../../core/services/data';
@@ -14,7 +14,9 @@ import { DataService } from '../../../core/services/data';
 export class ProductoDetalle implements OnInit {
   private route = inject(ActivatedRoute);
   private dataService = inject(DataService);
-  
+  private cdr = inject(ChangeDetectorRef);
+  private zone = inject(NgZone);
+
   producto: any = null;
 
   ngOnInit() {
@@ -22,7 +24,10 @@ export class ProductoDetalle implements OnInit {
       const id = params.get('id');
       if (id) {
         this.dataService.getProductoById(id).subscribe((data: any) => {
-          this.producto = data;
+          this.zone.run(() => {
+            this.producto = data;
+            this.cdr.detectChanges();
+          });
         });
       }
     });

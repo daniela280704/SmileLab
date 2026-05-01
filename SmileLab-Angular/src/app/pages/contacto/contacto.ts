@@ -77,6 +77,7 @@ export class ContactoComponent implements OnInit, AfterViewInit {
         flatpickr('#appointment-day', {
           dateFormat: 'Y-m-d',
           minDate: 'today',
+          // Quitamos appendTo y static para manejarlo 100% por CSS global
           onChange: (selectedDates: any, dateStr: string) => {
             this.registroForm.get('fechaCita')?.setValue(dateStr);
           }

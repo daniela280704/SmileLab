@@ -1,10 +1,17 @@
 // Servicio centralizado para gestionar las llamadas a Firebase
 import { Injectable, inject, NgZone } from '@angular/core';
-import { Database, ref, onValue, push, set } from '@angular/fire/database';
+import {
+  Firestore,
+  collection,
+  doc,
+  onSnapshot,
+  addDoc,
+  setDoc,
+  query,
+  where
+} from '@angular/fire/firestore';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
 
 import inicioData from './data-fallback/inicio.json';
 import equipoData from './data-fallback/equipo.json';
@@ -14,7 +21,7 @@ import productosData from './data-fallback/productos.json';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  private db = inject(Database);
+  private firestore = inject(Firestore);
   private auth = inject(Auth);
   private zone = inject(NgZone);
 
@@ -24,24 +31,42 @@ export class DataService {
   private citasSubject = new BehaviorSubject<any[]>([]);
   public userCitas$ = this.citasSubject.asObservable();
 
+  // Guardamos las funciones para cancelar las suscripciones
+  private profileUnsub: (() => void) | null = null;
+  private userCitasUnsub: (() => void) | null = null;
+
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        const uRef = ref(this.db, `usuarios/${user.uid}`);
-        onValue(uRef, (snapshot) => {
-          this.zone.run(() => {
-            this.profileSubject.next(snapshot.val());
-          });
-        });
+      // Limpiamos suscripciones anteriores si existen
+      if (this.profileUnsub) this.profileUnsub();
+      if (this.userCitasUnsub) this.userCitasUnsub();
 
-        const citasRef = ref(this.db, `citas/${user.uid}`);
-        onValue(citasRef, (snapshot) => {
-          this.zone.run(() => {
-            const data = snapshot.val();
-            const lista = data ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val })) : [];
-            this.citasSubject.next(lista);
-          });
-        });
+      if (user) {
+        // Escuchamos el documento del usuario en la colección "usuarios"
+        const userDocRef = doc(this.firestore, `usuarios/${user.uid}`);
+        this.profileUnsub = onSnapshot(userDocRef,
+          snapshot => this.zone.run(() => this.profileSubject.next(snapshot.data() ?? null)),
+          err => {
+            // Solo logueamos el error si no es por falta de permisos al cerrar sesión
+            if (err.code !== 'permission-denied') {
+              console.error('[Firestore] Error perfil usuario:', err.message);
+            }
+          }
+        );
+
+        // Escuchamos las citas del usuario filtradas por su UID
+        const citasQuery = query(collection(this.firestore, 'citas'), where('usuarioId', '==', user.uid));
+        this.userCitasUnsub = onSnapshot(citasQuery,
+          snapshot => {
+            const lista = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+            this.zone.run(() => this.citasSubject.next(lista));
+          },
+          err => {
+            if (err.code !== 'permission-denied') {
+              console.error('[Firestore] Error citas usuario:', err.message);
+            }
+          }
+        );
       } else {
         this.zone.run(() => {
           this.profileSubject.next(null);
@@ -51,79 +76,103 @@ export class DataService {
     });
   }
 
-  getInicio(): Observable<any> {
-    return new Observable(subscriber => {
-      const dbRef = ref(this.db, 'inicio');
-      onValue(dbRef, (snapshot) => this.zone.run(() => subscriber.next(snapshot.val() ?? inicioData)), () => this.zone.run(() => subscriber.next(inicioData)));
+  // Método auxiliar: lee un documento de Firestore con fallback al JSON local
+  private getDocConFallback<T>(ruta: string, fallback: T): Observable<T> {
+    return new Observable<T>(subscriber => {
+      // Emitimos los datos locales mientras Firestore responde
+      subscriber.next(fallback);
+
+      const docRef = doc(this.firestore, ruta);
+      const unsub = onSnapshot(
+        docRef,
+        snapshot => {
+          this.zone.run(() => {
+            if (snapshot.exists()) {
+              subscriber.next(snapshot.data() as T);
+            }
+          });
+        },
+        err => {
+          console.error(`[Firestore] Error al leer ${ruta}:`, err.code, '-', err.message);
+        }
+      );
+
+      return () => unsub();
     });
+  }
+
+  getInicio(): Observable<any> {
+    return this.getDocConFallback('inicio/datos', inicioData);
   }
 
   getEquipo(): Observable<any> {
-    return new Observable(subscriber => {
-      const dbRef = ref(this.db, 'equipo');
-      onValue(dbRef, (snapshot) => {
-        this.zone.run(() => {
-          let data = snapshot.val();
-
-          if (!data || !data.miembros || JSON.stringify(data.miembros) !== JSON.stringify(equipoData.miembros)) {
-            set(dbRef, equipoData).catch(err => console.error("Error actualizando equipo en Firebase:", err));
-            data = equipoData;
-          }
-
-          subscriber.next(data);
-        });
-      }, () => this.zone.run(() => subscriber.next(equipoData)));
-    });
+    return this.getDocConFallback('equipo/datos', equipoData);
   }
 
   getServicios(): Observable<any> {
-    return new Observable(subscriber => {
-      const dbRef = ref(this.db, 'servicios');
-      onValue(dbRef, (snapshot) => this.zone.run(() => subscriber.next(snapshot.val() ?? serviciosData)), () => this.zone.run(() => subscriber.next(serviciosData)));
-    });
+    return this.getDocConFallback('servicios/datos', serviciosData);
   }
 
   getFooter(): Observable<any> {
-    return new Observable(subscriber => {
-      const dbRef = ref(this.db, 'footer');
-      onValue(dbRef, (snapshot) => this.zone.run(() => subscriber.next(snapshot.val() ?? footerData)), () => this.zone.run(() => subscriber.next(footerData)));
-    });
+    return this.getDocConFallback('footer/datos', footerData);
   }
 
   getProductos(): Observable<any[]> {
-    return new Observable(subscriber => {
-      const productosRef = ref(this.db, 'productos/items');
-      onValue(productosRef, (snapshot) => {
-        this.zone.run(() => {
-          const data = snapshot.val();
-          const firebaseList = data ? Object.entries(data).map(([key, val]: [string, any]) => ({ id: key, ...val })) : [];
+    return new Observable<any[]>(subscriber => {
+      // Emitimos los datos locales de inmediato
+      subscriber.next(productosData.items);
 
-          // Combinamos los productos que vienen de Firebase con los del JSON local por si hay nuevos
-          const combined = [...firebaseList];
-          productosData.items.forEach((localProd: any) => {
-            if (!combined.some(p => p.id === localProd.id)) {
-              combined.push(localProd);
+      const productosRef = collection(this.firestore, 'productos');
+      const unsub = onSnapshot(
+        productosRef,
+        snapshot => {
+          this.zone.run(() => {
+            if (!snapshot.empty) {
+              const firebaseList = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+              // Combinamos productos de Firestore con los locales si hay alguno nuevo
+              const combined = [...firebaseList];
+              productosData.items.forEach((localProd: any) => {
+                if (!combined.some(p => p['id'] === localProd.id)) {
+                  combined.push(localProd);
+                }
+              });
+              subscriber.next(combined);
             }
           });
+        },
+        err => console.error('[Firestore] Error productos:', err.code, '-', err.message)
+      );
 
-          subscriber.next(combined);
-        });
-      }, () => this.zone.run(() => subscriber.next(productosData.items)));
+      return () => unsub();
     });
   }
 
   getProductoById(id: string): Observable<any> {
+    const fallback = productosData.items.find((p: any) => p.id === id) ?? null;
     return new Observable(subscriber => {
-      const pRef = ref(this.db, `productos/items/${id}`);
-      onValue(pRef, (snapshot) => {
-        this.zone.run(() => {
-          let data = snapshot.val();
-          if (!data) {
-            data = productosData.items.find((p: any) => p.id === id);
-          }
-          subscriber.next(data);
-        });
-      });
+      // Solo emitimos datos locales si el producto existe en el JSON
+      if (fallback) {
+        subscriber.next(fallback);
+      }
+
+      const docRef = doc(this.firestore, `productos/${id}`);
+      const unsub = onSnapshot(
+        docRef,
+        snapshot => {
+          this.zone.run(() => {
+            if (snapshot.exists()) {
+              // El producto existe en Firestore, lo usamos
+              subscriber.next({ id: snapshot.id, ...snapshot.data() });
+            } else {
+              // No existe en Firestore ni en local: emitimos null para mostrar el error
+              subscriber.next(fallback);
+            }
+          });
+        },
+        err => console.error('[Firestore] Error producto:', err.message)
+      );
+
+      return () => unsub();
     });
   }
 
@@ -131,69 +180,62 @@ export class DataService {
     return new Observable(subscriber => {
       const reader = new FileReader();
       reader.onload = () => {
-        // Convertimos la imagen a Base64 para guardarla directamente en la base de datos de texto
+        // Convertimos la imagen a Base64 para guardarla en Firestore
         const base64String = reader.result as string;
         const finalProduct = {
           ...producto,
           imagen: base64String,
           fechaCreacion: new Date().toISOString()
         };
-        push(ref(this.db, 'productos/items'), finalProduct)
+        addDoc(collection(this.firestore, 'productos'), finalProduct)
           .then(() => {
             this.zone.run(() => {
               subscriber.next(null);
               subscriber.complete();
             });
           })
-          .catch(err => {
-            this.zone.run(() => subscriber.error(err));
-          });
+          .catch(err => this.zone.run(() => subscriber.error(err)));
       };
-      reader.onerror = (err) => this.zone.run(() => subscriber.error(err));
+      reader.onerror = err => this.zone.run(() => subscriber.error(err));
       reader.readAsDataURL(imagen);
     });
   }
 
   setUsuarioProfile(uid: string, profile: any): Observable<void> {
-    return from(set(ref(this.db, `usuarios/${uid}`), profile));
+    const docRef = doc(this.firestore, `usuarios/${uid}`);
+    return from(setDoc(docRef, profile, { merge: true }));
   }
 
   getUsuarioProfile(uid: string): Observable<any> {
     return new Observable(subscriber => {
-      const uRef = ref(this.db, `usuarios/${uid}`);
-      const unsubscribe = onValue(uRef, (snapshot) => {
-        this.zone.run(() => subscriber.next(snapshot.val()));
-      }, (error) => this.zone.run(() => subscriber.error(error)));
-      return () => unsubscribe();
+      const docRef = doc(this.firestore, `usuarios/${uid}`);
+      const unsub = onSnapshot(
+        docRef,
+        snapshot => this.zone.run(() => subscriber.next(snapshot.data() ?? null)),
+        err => this.zone.run(() => subscriber.error(err))
+      );
+      return () => unsub();
     });
   }
 
   getAllCitas(): Observable<any[]> {
-    return new Observable(subscriber => {
-      const citasRef = ref(this.db, 'citas');
-      onValue(citasRef, (snapshot) => {
-        this.zone.run(() => {
-          const allData = snapshot.val();
-          if (!allData) {
-            subscriber.next([]);
-            return;
-          }
-
-          // Extraemos todas las citas de todos los usuarios iterando sobre el árbol JSON de Firebase
-          const lista: any[] = [];
-          Object.entries(allData).forEach(([userId, userCitas]: [string, any]) => {
-            Object.entries(userCitas).forEach(([citaId, cita]: [string, any]) => {
-              lista.push({ id: citaId, userId, ...cita });
-            });
-          });
-          subscriber.next(lista);
-        });
-      }, (error) => this.zone.run(() => subscriber.error(error)));
+    // En Firestore, todas las citas están en una única colección plana
+    return new Observable<any[]>(subscriber => {
+      const citasRef = collection(this.firestore, 'citas');
+      const unsub = onSnapshot(
+        citasRef,
+        snapshot => {
+          const lista = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+          this.zone.run(() => subscriber.next(lista));
+        },
+        err => this.zone.run(() => subscriber.error(err))
+      );
+      return () => unsub();
     });
   }
 
   addCita(cita: any): Observable<any> {
-    const uid = cita.usuarioId;
-    return from(push(ref(this.db, `citas/${uid}`), cita));
+    // Guardamos la cita como un nuevo documento en la colección "citas"
+    return from(addDoc(collection(this.firestore, 'citas'), cita));
   }
 }

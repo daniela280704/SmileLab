@@ -357,6 +357,41 @@
     .modal-actions button {
         width: 100%;
     }
+
+    /* ── Flatpickr static: el calendario está en el flujo del DOM ── */
+    .flatpickr-calendar.open {
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative !important;
+        box-shadow: none !important;
+        border: 1px solid var(--gris-borde) !important;
+        border-radius: 14px !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .flatpickr-days,
+    .dayContainer {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .flatpickr-day {
+        max-width: none !important;
+        flex-basis: 13.5% !important;
+        height: 36px !important;
+        line-height: 36px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .flatpickr-weekday {
+        flex: 1 !important;
+        font-size: 0.8rem !important;
+    }
+
+    .flatpickr-months {
+        width: 100% !important;
+    }
 }
 
 .error-text {
