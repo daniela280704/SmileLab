@@ -1,6 +1,7 @@
 # 🦷 SmileLab - Sistema de Gestión Web para Clínica Dental
 
 ## 👥 Componentes del Grupo
+
 * **Daniela Melián Salem**
 * **Oscar Segura Guerrero**
 * **Giuseppe Aniello**
@@ -8,85 +9,337 @@
 ---
 
 ## 📝 Descripción del Proyecto
-SmileLab es una aplicación web diseñada para la gestión de una clínica dental. El proyecto ofrece una interfaz intuitiva para que los pacientes puedan conocer los servicios, el equipo médico, solicitar citas, gestionar su perfil de usuario y contactar con la clínica. 
+
+SmileLab es una aplicación web diseñada para la gestión de una clínica dental. El proyecto ofrece una interfaz intuitiva para que los pacientes puedan conocer los servicios de la clínica, consultar el equipo médico, revisar productos destacados, solicitar citas, gestionar su perfil de usuario y contactar con la clínica.
+
+En el Sprint 3, el proyecto se ha migrado a **Angular**, transformando la web en una aplicación estructurada mediante componentes, rutas y servicios. Además, se ha integrado **Firebase** como backend para gestionar autenticación de usuarios, base de datos en tiempo real y almacenamiento de imágenes.
+
+---
 
 ## 🎯 Listado de Requisitos Funcionales
-* El sistema debe proporcionar un formulario de contacto específico que permita a cualquier usuario solicitar una cita. El formulario solicitará: nombre, teléfono, email y motivo de la consulta. Al enviarlo, el sistema registrará la solicitud o enviará un aviso a la clínica.
-* El sistema dispondrá de un "Área de Cliente" con acceso restringido (usuario y contraseña). Una vez autenticado, el usuario podrá visualizar una agenda o listado con sus próximas citas confirmadas, incluyendo fecha, hora y tipo de tratamiento
-* El sistema mostrará una sección informativa ("Quiénes somos" o "Equipo") donde se presentarán los perfiles de los profesionales de la clínica, incluyendo fotografía, nombre y especialidad.
-* El sistema ofrecerá un catálogo organizado donde los usuarios podrán consultar los diferentes tratamientos dentales que ofrece la clínica, con una breve descripción de cada uno.
-* El sistema mostrará de forma clara la ubicación física de la clínica, integrando preferiblemente un mapa interactivo (Google Maps) y las instrucciones de cómo llegar.
-* El sistema debe hacer énfasis visual en una sección de "Tienda" o productos destacados. Esta sección mostrará artículos relacionados con la salud dental que la clínica promociona o vende.
+
+* El sistema debe proporcionar un formulario de contacto que permita a cualquier usuario solicitar una cita.
+* El sistema debe disponer de un área de cliente con acceso restringido mediante usuario y contraseña.
+* El usuario autenticado podrá visualizar información asociada a su perfil y sus citas.
+* El sistema mostrará una sección informativa del equipo médico de la clínica.
+* El sistema ofrecerá un catálogo organizado de tratamientos dentales.
+* El sistema mostrará productos destacados relacionados con la salud dental.
+* El sistema permitirá diferenciar contenido según el usuario autenticado y su rol.
+* El sistema permitirá crear nuevos productos desde un panel de administración.
+* El sistema permitirá subir imágenes a Firebase Storage y almacenar su URL en Firebase Realtime Database.
+* La aplicación debe mantener un diseño responsive adaptable a distintos tamaños de pantalla.
+
+---
 
 ## 🎨 Diseño y Planificación
-* **Archivo de Mockups:** `MOCKUPS.pdf` (Documento PDF con el diseño de las interfaces). Ubicado de forma local en el directorio raíz del proyecto.
+
+* **Archivo de Mockups:** `MOCKUPS.pdf`, ubicado de forma local en el directorio raíz del proyecto.
 * **Storyboard:** [Ver vídeo demostrativo de la navegación (OneDrive)](https://ulpgc-my.sharepoint.com/:f:/g/personal/daniela_melian102_alu_ulpgc_es/IgAEp6X6x1D7SayT0C3R1E-RAcBixE2dy0MqR7onQR3IyGk?e=rDSZto)
----
-
-## 📄 Estructura de Páginas HTML
-> **Página de inicio de la aplicación web:** `index.html` (y su versión navegable referenciada en el menú `pages/inicio.html`)
-
-| Archivo HTML     | Nombre del Mockup que implementa | Descripción                                              |
-|:-----------------| :--- |:---------------------------------------------------------|
-| `index.html` / `pages/inicio.html` | Mockup_Inicio | Página principal con el resumen de la clínica.           |
-| `pages/servicios.html` | Mockup_Servicios | Catálogo de tratamientos dentales ofrecidos.             |
-| `pages/equipo.html`    | Mockup_Equipo | Presentación de los profesionales médicos.               |
-| `pages/contacto.html`  | Mockup_Contacto | Formulario de contacto y datos de ubicación.             |
-| `pages/perfil.html`    | Mockup_Perfil | Panel de control del paciente.                           |
-| `pages/citas.html`     | Mockup_Citas | Interfaz para obtener información de citas.              |
-| `pages/login.html`     | Mockup_Login | Página de inicio de sesión de usuario y registro.        |
-| `pages/cepillo_electrico.html` | Mockup_Productos | Información detallada del producto: Cepillo Eléctrico.   |
-| `pages/kit_blanqueamiento.html`| Mockup_Productos | Información detallada del producto: Kit Blanqueamiento.  |
-| `pages/irrigador_bucal.html` | Mockup_Productos | Información detallada del producto: Irrigador Bucal.     |
-
-### Detalles Técnicos por Página (Sprint 2)
-* Ubicación de la Base de Datos simulada: **Local**, en el archivo `db.json` alojado en la raíz del proyecto (simulando un "fake server" Json-Server / Strapi).
-
-* **`inicio.html`**: 
-  * *Responsive:* Hero banner apilado en móvil y reordenación Flexbox. Adaptable a Tablet (1024px) y Móvil (768px).
-  * *Carga JSON:* Sí, carga título, sección de "Sobre nosotros", footer y productos dinámicamente desde el archivo `db.json`.
-* **`servicios.html`**:
-  * *Responsive:* CSS Grid (Desktop 3 columnas -> Tablet 2 columnas -> Móvil 1 columna).
-  * *Carga JSON:* Sí, genera las tarjetas de los servicios de la clínica iterando la matriz contenida en el fichero JSON.
-* **`equipo.html`**:
-  * *Responsive:* Flex/Grid colapsable a 1 columna apilada en pantallas de móvil.
-  * *Carga JSON:* Sí, carga dinámicamente los nombres, descripciones y fotografías de la plantilla médica actualizados del `db.json`.
-* **`contacto.html` / Formulario Citas**:
-  * *Responsive:* Layout horizontal de 2 columnas colapsable a 1 sola columna vertical apilada en tablet/móvil.
-  * *Carga JSON:* Sí, extrae dinámicamente los horarios, datos de contacto (tel/email) y las direcciones de los mapas de Google Maps de forma local desde el JSON.
-  * *Validaciones de Formulario (Nativas HTML5):* Uso sistemático del atributo `required` para control de envíos, entrada restringida de formato de mail mediante `type="email"`, forzado de selector de tiempos con `type="date"` y `type="time"`, además del uso avanzado de validación telefónica basada en expresiones regulares (`pattern="[0-9]{9}"`) validando prefijos españoles con mínimo requerido de tres dígitos mediante `minlength="3"`.
-* **`login.html` / Inicio de Sesión / Registro**:
-  * *Responsive:* Contenedor de ancho autoajustable al 95% para márgenes transpirables en terminales móviles pequeños, favoreciendo la legibilidad.
-  * *Carga JSON:* Sí, valida el intento de autorización cruzando las credenciales formuladas por el usuario con el nodo de `usuarios` provisto internamente en el JSON para asignar la cookie de rol en sesión.
-  * *Validaciones de Formulario (Nativas HTML5):* Obligatoriedad requerida mediante el uso de campos `required`, ofuscación visual de datos forzada con `type="password"`, entrada forzada de arrobas en `type="email"`, y longitud mínima de medidas de contraseñas blindada de parte del cliente a través de la propiedad `minlength="6"`.
-  * **Usuarios y contraseñas de prueba creados:** 
-    * Perfil Paciente: Email `paciente@web.com` / Contraseña `123456`
-    * Perfil Sanitario (Enfermero): Email `enfermero@web.com` / Contraseña `1234567`
-* **Perfil (`perfil.html`) y Citas (`citas.html`)**: 
-  * *Responsive:* Tablas fluidas, redimensionables, y Grid flexible colpasando con auto-márgenes al 100% de la capa vista (viewport) en móviles.
-  * *Carga JSON:* Sí, recuperan los datos específicos del usuario local (sesión) que el `fetch` cruzó en primer punto mediante parseo JSON. Modifica su apariencia según es detectado rol usuario o enfermero.
-* **Productos de tienda (`cepillo_electrico.html`, `irrigador_bucal.html`, `kit_blanqueamiento.html`)**:
-  * *Responsive:* Las divisiones de información y detalles colapsan reorganizando el bloque Flexbox. Reducción inteligente hacia una sola vertical protagonizada con imagen superior maximizada para su compra desde teléfono inteligente.
-  * *Carga JSON:* Sí, todas las descripciones completas, así como los metadatos fotográficos e importes de inventario figuran guardados localmente listados en el fichero `db.json` cargándose asíncronamente vía scripts.
 
 ---
 
-## 🧩 Arquitectura de Plantillas (Templates)
-Para cumplir con el principio DRY (*Don't Repeat Yourself*) y optimizar el rendimiento, el proyecto aísla los componentes repetitivos en la carpeta `/templates/`:
+## 🧱 Estructura del código del proyecto web
 
-1. **`templates/header.html`**: Contiene la barra de navegación superior. **Se carga en:** Todas las páginas principales (`index.html`, `contacto.html`, etc.).
-2. **`templates/footer.html`**: Contiene los enlaces de pie de página. **Se carga en:** Todas las páginas principales.
-3. **`templates/hero.html`**: Plantilla dinámica que genera la sección principal de cada página (Título, descripción, botón e imagen). **Se carga en:** `inicio.html`, `equipo.html`, `perfil.html`, `contacto.html`, `cepillo_electrico.html`, `irrigador_bucal.html` y `kit_blanqueamiento.html`. El contenido inyectado es único para cada página y se pasa a través de metadatos procesados en JS.
-4. **`templates/products.html`**: Componente visual que muestra una cuadrícula (Grid) destacando 3 productos físicos que se venden en la clínica. **Se carga en:** Todas las páginas principales excepto en `login.html`.
-5. **`templates/form.html`**: Plantilla reutilizable para estructurar los elementos de formulario indicando clases, la acción y renderizando campos dinámicamente (`slot`). **Se carga en:** `contacto.html` y `login.html`.
+El proyecto del Sprint 3 se ha desarrollado con Angular, organizando la aplicación en componentes, servicios, rutas y guards. La estructura principal se encuentra dentro de:
+
+```text
+SmileLab-Angular/src/app
+```
+
+Estructura general:
+
+```text
+src/app/
+├── app.config.ts
+├── app.routes.ts
+├── app.html
+├── app.ts
+├── core/
+│   ├── data.service.ts
+│   ├── guards/
+│   │   ├── auth.guard.ts
+│   │   └── admin.guard.ts
+│   └── services/
+│       ├── data.ts
+│       └── data-fallback/
+├── pages/
+│   ├── inicio/
+│   ├── equipo/
+│   ├── servicios/
+│   ├── productos/
+│   ├── contacto/
+│   ├── login/
+│   ├── registro/
+│   ├── perfil/
+│   ├── citas/
+│   └── admin-crear-producto/
+└── shared/
+    ├── header/
+    ├── footer/
+    └── products-grid/
+```
 
 ---
 
-## 🚀 Otros Aspectos de Evaluación a Considerar
+## 🧩 Componentes principales
 
-* **Ubicación del contenido JSON y Enfoque Flexible:** El fichero base (`db.json`) está alojado de manera **local** en la raíz del proyecto para simular la abstracción limpia de una base de datos externa. Esta información extraída se consume explícitamente a pulso sintiéndose orgánico sin intermediarios Frameworks utilizando Vanilla JS nativo mediante la potente API `fetch()`, lo cual deja estructuralmente la aplicación empaquetada y totalmente preparada para ser migrada su conexión (*Endpoint root pointer*) en un salto de línea sin el mayor coste con vistas en un despliegue completo de un Pseudo-servidor intermedio como son herramientas del tipo *JSON-Server* o Back-end *Strapi*. 
-* **Renderización de Nodos y Componentes Web Modularizados mediante JS Puro:** A falta de frameworks del mercado, este entregable incluye escrito del propio teclado desde cero de un compilador de rutinas asíncronas (`xLuIncludeFile()`) implementada sobre los mimbres Vanilla utilizando recursividad a base de API de `Fetch` permitiendo al navegador cargar múltiples carpetas *templates* e insertarlas al mismo DOM simuláneamente de manera segura.
-* **Arquitectura de Hojas de Estilo (CSS) y Look & Feel:**
-  * **Metodología BEM (Block, Element, Modifier):** Se ha utilizado la nomenclatura estructural BEM para organizar las clases CSS.
-  * Se han aplicado los conceptos de **CSS Grid Flexbox** en el 100% vital de los requerimientos para la alineación interna de componentes (Header, Hero layout), logrando el estándar propuesto de RWD.
-  * Implementación limpia, pulida mediante transiciones con redondez perimetral de un mínimo de 8 píxeles en su diseño UI/UX.
+### `app`
+
+Es el componente raíz de la aplicación. Define la estructura general del sitio mediante:
+
+* `app-header`: cabecera común.
+* `router-outlet`: zona donde Angular carga cada página según la ruta activa.
+* `app-products-grid`: bloque reutilizable de productos.
+* `app-footer`: pie de página común.
+
+Desde este componente se organiza la composición general de la aplicación y se sustituyen las antiguas plantillas HTML del Sprint 2 por componentes Angular reutilizables.
+
+---
+
+## 🔁 Componentes compartidos
+
+### `shared/header`
+
+Componente reutilizable para la cabecera de la web. Contiene la navegación principal mediante `routerLink`, sustituyendo el sistema anterior basado en enlaces con `#`.
+
+Permite navegar entre las rutas principales de la aplicación:
+
+* Inicio
+* Equipo
+* Servicios
+* Productos
+* Contacto
+* Login
+* Perfil
+* Citas
+* Panel de administración
+
+### `shared/footer`
+
+Componente reutilizable para el pie de página. Se muestra de forma común en las páginas principales de la aplicación.
+
+### `shared/products-grid`
+
+Componente encargado de mostrar productos destacados mediante tarjetas. Obtiene los datos desde el servicio correspondiente y permite reutilizar el bloque de productos en distintas zonas del sitio.
+
+---
+
+## 📄 Componentes de páginas
+
+### `pages/inicio`
+
+Página principal de la aplicación. Muestra el hero inicial, una sección de presentación de la clínica y servicios destacados. Su contenido se carga dinámicamente mediante los servicios de datos.
+
+### `pages/equipo`
+
+Página dedicada al equipo profesional de la clínica. Renderiza información de los miembros del equipo, incluyendo nombre, especialidad, descripción e imagen.
+
+### `pages/servicios`
+
+Página donde se muestran los tratamientos dentales disponibles. Utiliza renderizado dinámico para generar las tarjetas de servicios.
+
+### `pages/productos`
+
+Página de catálogo de productos. Muestra productos relacionados con la salud dental mediante datos cargados desde el backend.
+
+### `pages/productos/detalle`
+
+Componente de detalle de producto. Utiliza una ruta con parámetro para mostrar la información concreta de un producto seleccionado.
+
+### `pages/contacto`
+
+Página de contacto de la clínica. Incluye información de contacto y formulario para solicitar cita.
+
+### `pages/login`
+
+Componente para iniciar sesión. Está conectado con Firebase Authentication para validar usuarios reales.
+
+### `pages/registro`
+
+Componente para crear una cuenta nueva. Utiliza formularios de Angular y registra usuarios en Firebase Authentication.
+
+### `pages/perfil`
+
+Página protegida del usuario autenticado. Muestra datos personales y contenido asociado al usuario.
+
+### `pages/citas`
+
+Página protegida para consultar citas. Su contenido puede variar según el usuario autenticado y su rol.
+
+### `pages/admin-crear-producto`
+
+Panel de administración protegido. Permite crear nuevos productos, subir imágenes y guardar la información en Firebase.
+
+---
+
+## 🧭 Sistema de rutas
+
+La navegación se gestiona mediante **Angular Router** en el archivo:
+
+```text
+src/app/app.routes.ts
+```
+
+Rutas principales:
+
+```text
+/inicio
+/equipo
+/servicios
+/productos
+/productos/:id
+/contacto
+/login
+/registro
+/perfil
+/citas
+/admin-crear-producto
+```
+
+Las rutas privadas se protegen mediante guards para controlar el acceso según autenticación y rol.
+
+---
+
+## 🛡️ Guards de acceso
+
+### `auth.guard.ts`
+
+Protege rutas privadas como `perfil` o `citas`. Comprueba si existe un usuario autenticado antes de permitir el acceso.
+
+### `admin.guard.ts`
+
+Protege rutas de administración, como `admin-crear-producto`. Verifica que el usuario autenticado tenga permisos de administrador.
+
+---
+
+## 🗃️ Servicios y gestión de datos
+
+### `core/data.service.ts`
+
+Servicio utilizado en la fase local para cargar contenido desde `db.json` mediante `HttpClient`.
+
+### `core/services/data.ts`
+
+Servicio principal de datos. Centraliza el acceso a Firebase Realtime Database y proporciona métodos para obtener o modificar información como:
+
+* Inicio
+* Equipo
+* Servicios
+* Productos
+* Footer
+* Perfil de usuario
+* Citas
+
+También incluye datos de respaldo mediante `data-fallback`, permitiendo que la aplicación mantenga contenido disponible si Firebase no devuelve información.
+
+---
+
+## 🔥 Integración con Firebase
+
+En el Sprint 3 se ha integrado Firebase como backend de la aplicación. La configuración se encuentra en:
+
+```text
+src/app/app.config.ts
+```
+
+Firebase se utiliza para:
+
+### Firebase Authentication
+
+Gestiona el registro, inicio de sesión y sesión activa de los usuarios.
+
+### Firebase Realtime Database
+
+Almacena los datos dinámicos de la aplicación, sustituyendo el uso del JSON local como fuente final de datos.
+
+### Firebase Storage
+
+Permite subir imágenes desde el frontend, obtener su URL y asociarla a productos o elementos almacenados en la base de datos.
+
+---
+
+## 📝 Formularios y validaciones
+
+La aplicación incluye formularios desarrollados con Angular, aplicando validaciones en cliente.
+
+Formularios principales:
+
+* Login
+* Registro
+* Contacto / solicitud de cita
+* Creación de productos en el panel de administración
+
+Se aplican validaciones como:
+
+* Campos obligatorios
+* Formato correcto de email
+* Longitud mínima de contraseña
+* Validación de datos de cita
+* Validación de campos de producto
+* Subida de archivo para imágenes
+
+---
+
+## 🛒 Panel de administración
+
+El panel de administración permite añadir nuevos productos a la aplicación. Desde este panel se puede:
+
+* Introducir nombre, descripción y otros datos del producto.
+* Subir una imagen a Firebase Storage.
+* Obtener la URL de la imagen subida.
+* Guardar el producto completo en Firebase Realtime Database.
+* Mostrar el producto dinámicamente en el catálogo.
+
+---
+
+## 📱 Diseño responsive
+
+El diseño se mantiene adaptable a diferentes tamaños de pantalla mediante CSS, Flexbox y Grid. La interfaz se ajusta a:
+
+* Escritorio
+* Tablet
+* Móvil
+
+Se ha trabajado para que las secciones principales, tarjetas, formularios, cabecera y pie de página mantengan una visualización correcta en distintos dispositivos.
+
+---
+
+## 🚀 Instalación y ejecución
+
+Para ejecutar el proyecto Angular:
+
+```bash
+cd SmileLab-Angular
+npm install
+ng serve
+```
+
+Después, abrir en el navegador:
+
+```text
+http://localhost:4200
+```
+
+---
+
+## 📦 Tecnologías utilizadas
+
+* Angular
+* TypeScript
+* HTML
+* CSS
+* Angular Router
+* Angular Forms
+* Firebase Authentication
+* Firebase Realtime Database
+* Firebase Storage
+* GitHub
+* Trello
+
+---
+
+## ✅ Resumen del Sprint 3
+
+En este sprint se ha migrado la aplicación SmileLab a Angular, sustituyendo la estructura anterior basada en HTML, templates y JavaScript por una arquitectura de componentes, rutas y servicios.
+
+Además, se ha integrado Firebase como backend para gestionar usuarios, datos dinámicos e imágenes. La aplicación queda preparada como una SPA moderna, modular, responsive y conectada a servicios en la nube.
