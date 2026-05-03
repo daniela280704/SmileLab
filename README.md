@@ -12,7 +12,7 @@
 
 SmileLab es una aplicación web diseñada para la gestión de una clínica dental. El proyecto ofrece una interfaz intuitiva para que los pacientes puedan conocer los servicios de la clínica, consultar el equipo médico, revisar productos destacados, solicitar citas, gestionar su perfil de usuario y contactar con la clínica.
 
-En el Sprint 3, el proyecto se ha migrado a **Angular**, transformando la web en una aplicación estructurada mediante componentes, rutas y servicios. Además, se ha integrado **Firebase** como backend para gestionar autenticación de usuarios, base de datos en tiempo real y almacenamiento de imágenes.
+En el Sprint 3, el proyecto se ha migrado a **Angular**, transformando la web en una aplicación estructurada mediante componentes, rutas y servicios. Además, se ha integrado **Firebase** como backend para gestionar autenticación de usuarios, base de datos Cloud Firestore y almacenamiento de imágenes.
 
 ---
 
@@ -26,58 +26,72 @@ En el Sprint 3, el proyecto se ha migrado a **Angular**, transformando la web en
 * El sistema mostrará productos destacados relacionados con la salud dental.
 * El sistema permitirá diferenciar contenido según el usuario autenticado y su rol.
 * El sistema permitirá crear nuevos productos desde un panel de administración.
-* El sistema permitirá subir imágenes a Firebase Storage y almacenar su URL en Firebase Realtime Database.
+* El sistema permitirá convertir imágenes a formato Base64 para almacenarlas directamente en Cloud Firestore.
 * La aplicación debe mantener un diseño responsive adaptable a distintos tamaños de pantalla.
-
----
-
-## 🎨 Diseño y Planificación
-
-* **Archivo de Mockups:** `MOCKUPS.pdf`, ubicado de forma local en el directorio raíz del proyecto.
-* **Storyboard:** [Ver vídeo demostrativo de la navegación (OneDrive)](https://ulpgc-my.sharepoint.com/:f:/g/personal/daniela_melian102_alu_ulpgc_es/IgAEp6X6x1D7SayT0C3R1E-RAcBixE2dy0MqR7onQR3IyGk?e=rDSZto)
 
 ---
 
 ## 🧱 Estructura del código del proyecto web
 
-El proyecto del Sprint 3 se ha desarrollado con Angular, organizando la aplicación en componentes, servicios, rutas y guards. La estructura principal se encuentra dentro de:
+El proyecto del Sprint 3 se ha desarrollado con Angular, organizando la aplicación en componentes, servicios, rutas y guards. A continuación se detalla la estructura completa del proyecto:
 
 ```text
-SmileLab-Angular/src/app
+SmileLab-Angular/
+├── public/
+│   ├── img/              # Imágenes estáticas y de respaldo
+│   └── db.json           # Base de datos local (fallback)
+├── src/
+│   ├── app/
+│   │   ├── app.config.ts
+│   │   ├── app.routes.ts
+│   │   ├── app.html
+│   │   ├── app.ts
+│   │   ├── core/
+│   │   │   ├── data.service.ts
+│   │   │   ├── guards/
+│   │   │   │   ├── auth.guard.ts
+│   │   │   │   └── admin.guard.ts
+│   │   │   └── services/
+│   │   │       ├── data.ts
+│   │   │       └── data-fallback/
+│   │   ├── pages/
+│   │   │   ├── inicio/
+│   │   │   ├── equipo/
+│   │   │   ├── servicios/
+│   │   │   ├── productos/
+│   │   │   │   └── detalle/
+│   │   │   ├── contacto/
+│   │   │   ├── login/
+│   │   │   ├── registro/
+│   │   │   ├── perfil/
+│   │   │   ├── citas/
+│   │   │   └── admin-crear-producto/
+│   │   └── shared/
+│   │       ├── header/
+│   │       ├── footer/
+│   │       └── products-grid/
+│   ├── environments/
+│   │   └── environment.ts
+│   ├── index.html
+│   ├── main.ts
+│   └── styles.css
 ```
 
-Estructura general:
+---
 
-```text
-src/app/
-├── app.config.ts
-├── app.routes.ts
-├── app.html
-├── app.ts
-├── core/
-│   ├── data.service.ts
-│   ├── guards/
-│   │   ├── auth.guard.ts
-│   │   └── admin.guard.ts
-│   └── services/
-│       ├── data.ts
-│       └── data-fallback/
-├── pages/
-│   ├── inicio/
-│   ├── equipo/
-│   ├── servicios/
-│   ├── productos/
-│   ├── contacto/
-│   ├── login/
-│   ├── registro/
-│   ├── perfil/
-│   ├── citas/
-│   └── admin-crear-producto/
-└── shared/
-    ├── header/
-    ├── footer/
-    └── products-grid/
-```
+## 🏗️ Archivos base del proyecto
+
+### `index.html`
+
+Es el archivo HTML principal de la aplicación. Contiene la etiqueta `<app-root>`, donde Angular renderiza toda la interfaz. Incluye los enlaces a las fuentes de Google Fonts (Outfit).
+
+### `main.ts`
+
+El punto de entrada principal del código TypeScript. Se encarga de arrancar (bootstrapping) la aplicación standalone utilizando la configuración definida en `app.config.ts`.
+
+### `styles.css`
+
+Hoja de estilos global de la aplicación. Define las variables de color (diseño premium), las tipografías base y las animaciones generales (como `animate-in`) que se utilizan en todos los componentes.
 
 ---
 
@@ -136,7 +150,7 @@ Página dedicada al equipo profesional de la clínica. Renderiza información de
 
 ### `pages/servicios`
 
-Página donde se muestran los tratamientos dentales disponibles. Utiliza renderizado dinámico para generar las tarjetas de servicios.
+Página donde se muestran los tratamientos dentales disponibles. Utiliza renderizado dinámico para generar las tarjetas de servicios e incluye interactividad para expandir la información detallada, optimizando la visualización en dispositivos móviles.
 
 ### `pages/productos`
 
@@ -156,7 +170,7 @@ Componente para iniciar sesión. Está conectado con Firebase Authentication par
 
 ### `pages/registro`
 
-Componente para crear una cuenta nueva. Utiliza formularios de Angular y registra usuarios en Firebase Authentication.
+Componente para crear una cuenta nueva. Utiliza formularios de Angular, registra usuarios en Firebase Authentication y crea su perfil inicial en Cloud Firestore.
 
 ### `pages/perfil`
 
@@ -164,7 +178,7 @@ Página protegida del usuario autenticado. Muestra datos personales y contenido 
 
 ### `pages/citas`
 
-Página protegida para consultar citas. Su contenido puede variar según el usuario autenticado y su rol.
+Página protegida para consultar citas. Su contenido varía según el usuario autenticado y su rol, incluyendo lógica avanzada para clasificar y ordenar las citas en categorías (Próximas, Pendientes, Históricas o Canceladas).
 
 ### `pages/admin-crear-producto`
 
@@ -220,7 +234,7 @@ Servicio utilizado en la fase local para cargar contenido desde `db.json` median
 
 ### `core/services/data.ts`
 
-Servicio principal de datos. Centraliza el acceso a Firebase Realtime Database y proporciona métodos para obtener o modificar información como:
+Servicio principal de datos. Centraliza el acceso a Cloud Firestore y proporciona métodos para obtener o modificar información como:
 
 * Inicio
 * Equipo
@@ -236,7 +250,13 @@ También incluye datos de respaldo mediante `data-fallback`, permitiendo que la 
 
 ## 🔥 Integración con Firebase
 
-En el Sprint 3 se ha integrado Firebase como backend de la aplicación. La configuración se encuentra en:
+En el Sprint 3 se ha integrado Firebase como backend de la aplicación. La configuración técnica (claves de API y credenciales del proyecto) se encuentra en:
+
+```text
+src/environments/environment.ts
+```
+
+Y su inicialización en el proveedor de la aplicación:
 
 ```text
 src/app/app.config.ts
@@ -248,13 +268,13 @@ Firebase se utiliza para:
 
 Gestiona el registro, inicio de sesión y sesión activa de los usuarios.
 
-### Firebase Realtime Database
+### Cloud Firestore
 
-Almacena los datos dinámicos de la aplicación, sustituyendo el uso del JSON local como fuente final de datos.
+Almacena los datos dinámicos de la aplicación mediante documentos y colecciones, sustituyendo el uso del JSON local como fuente final de datos.
 
-### Firebase Storage
+### Almacenamiento de imágenes (Base64)
 
-Permite subir imágenes desde el frontend, obtener su URL y asociarla a productos o elementos almacenados en la base de datos.
+Permite procesar imágenes desde el frontend, convertirlas a formato Base64 y almacenarlas directamente en los documentos de la base de datos.
 
 ---
 
@@ -285,9 +305,8 @@ Se aplican validaciones como:
 El panel de administración permite añadir nuevos productos a la aplicación. Desde este panel se puede:
 
 * Introducir nombre, descripción y otros datos del producto.
-* Subir una imagen a Firebase Storage.
-* Obtener la URL de la imagen subida.
-* Guardar el producto completo en Firebase Realtime Database.
+* Procesar la imagen y convertirla a formato Base64.
+* Guardar el producto completo (incluyendo la imagen codificada) en Cloud Firestore.
 * Mostrar el producto dinámicamente en el catálogo.
 
 ---
@@ -331,8 +350,8 @@ http://localhost:4200
 * Angular Router
 * Angular Forms
 * Firebase Authentication
-* Firebase Realtime Database
-* Firebase Storage
+* Cloud Firestore
+* Almacenamiento Base64 (imágenes)
 * GitHub
 * Trello
 
