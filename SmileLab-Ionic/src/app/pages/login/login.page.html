@@ -1,0 +1,38 @@
+<ion-content [fullscreen]="true">
+  <section class="login-page-container">
+    <div class="login-header">
+      <h2 class="login-main-title">Identifícate</h2>
+    </div>
+    
+    <div class="login-card-wrapper">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="premium-login-form">
+        <div class="login-input-group">
+          <label>Correo electrónico:</label>
+          <ion-input type="email" formControlName="email" placeholder="tu@email.com" class="custom-input"></ion-input>
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+            <small class="error-text">Introduce un email válido.</small>
+          </div>
+        </div>
+        
+        <div class="login-input-group">
+          <label>Contraseña:</label>
+          <ion-input type="password" formControlName="password" placeholder="Tu contraseña" class="custom-input"></ion-input>
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+            <small class="error-text">Introduce tu contraseña.</small>
+          </div>
+        </div>
+        
+        <div class="login-action-container">
+          <button type="submit" [disabled]="loginForm.invalid || isSubmitting" class="btn-login-submit">
+            <span *ngIf="!isSubmitting">Iniciar sesión →</span>
+            <ion-spinner *ngIf="isSubmitting" name="crescent"></ion-spinner>
+          </button>
+        </div>
+
+        <div class="login-footer-links">
+          <p>¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</ion-content>

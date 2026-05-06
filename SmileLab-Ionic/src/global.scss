@@ -1,0 +1,54 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ */
+
+:root {
+  --azul-oscuro: #1e40af;
+  --azul-medio: #2563eb;
+  --azul: #3b82f6;
+  --azul-claro: #60a5fa;
+  --azul-pastel: #93c5fd;
+  --azul-muy-claro: #bfdbfe;
+  --azul-fondo: #dbeafe;
+  --azul-hielo: #eff6ff;
+  --negro-smile: #1e3a5f;
+  --gris-texto: #64748b;
+  --gris-fondo: #f8fafc;
+  --gris-borde: #e2e8f0;
+  --blanco: #ffffff;
+  --azul-transparente: rgba(37, 99, 235, 0.1);
+  --shadow: 0 10px 25px rgba(30, 64, 175, 0.1);
+  --shadow-hover: 0 20px 35px rgba(30, 64, 175, 0.15);
+}
+
+* {
+  font-family: 'Outfit', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import '@ionic/angular/css/palettes/dark.system.css';
