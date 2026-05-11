@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
       await signInWithEmailAndPassword(this.auth, email, password);
       await loading.dismiss();
       this.presentToast('Bienvenido de nuevo', 'success');
-      this.router.navigateByUrl('/home'); 
+      this.router.navigateByUrl('/favoritos');
     } catch (error: any) {
       await loading.dismiss();
       let message = 'Error al iniciar sesión';
