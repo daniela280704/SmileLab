@@ -61,6 +61,11 @@ export class FavoritosPage implements OnInit {
 
     this.productosService.getProductos().subscribe(productos => {
       console.log('Productos Firestore:', productos);
+
+      productos.forEach(producto => {
+        console.log('Producto:', producto.nombre, 'ID:', producto.id);
+      });
+
       this.productos = productos;
     });
   }
@@ -71,12 +76,14 @@ export class FavoritosPage implements OnInit {
 
   async cargarFavoritos() {
     const favoritos = await this.favoritosService.getFavoritosIds();
+
     this.favoritosIds = favoritos.map(id => String(id));
+
     console.log('Favoritos locales:', this.favoritosIds);
   }
 
   esFavorito(productoId: string): boolean {
-    return this.favoritosIds.map(id => String(id)).includes(String(productoId));
+    return this.favoritosIds.includes(String(productoId));
   }
 
   verDetalle(producto: Producto) {
