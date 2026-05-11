@@ -1,13 +1,45 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>favoritos</ion-title>
+    <ion-title>Productos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">favoritos</ion-title>
+      <ion-title size="large">Productos</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list>
+    <ion-item
+      button
+      detail="true"
+      *ngFor="let producto of productos"
+      (click)="verDetalle(producto)"
+    >
+      <ion-img
+        slot="start"
+        [src]="producto.imagen"
+        [alt]="producto.nombre"
+        class="producto-img"
+      ></ion-img>
+
+      <ion-label>
+        <h2>{{ producto.nombre }}</h2>
+        <p>{{ producto.descripcion }}</p>
+        <p *ngIf="producto.precio">{{ producto.precio }} €</p>
+      </ion-label>
+
+      <ion-badge
+        slot="end"
+        color="warning"
+        *ngIf="esFavorito(producto.id)"
+      >
+        Favorito
+      </ion-badge>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
