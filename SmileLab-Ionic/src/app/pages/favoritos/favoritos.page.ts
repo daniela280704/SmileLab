@@ -60,6 +60,7 @@ export class FavoritosPage implements OnInit {
     this.favoritosIds = await this.favoritosService.getFavoritosIds();
 
     this.productosService.getProductos().subscribe(productos => {
+      console.log('Productos Firestore:', productos);
       this.productos = productos;
     });
   }
