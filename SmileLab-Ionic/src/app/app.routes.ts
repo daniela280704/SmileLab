@@ -17,5 +17,9 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
+  },  {
+    path: 'favoritos',
+    loadComponent: () => import('./pages/favoritos/favoritos.page').then( m => m.FavoritosPage)
   },
+
 ];
