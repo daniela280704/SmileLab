@@ -14,31 +14,39 @@
 
   <ion-list>
     <ion-item
-      button
-      detail="true"
+      lines="none"
+      class="producto-item"
       *ngFor="let producto of productos"
-      (click)="verDetalle(producto)"
     >
       <ion-img
         slot="start"
         [src]="producto.imagen"
         [alt]="producto.nombre"
         class="producto-img"
+        (click)="verDetalle(producto)"
       ></ion-img>
 
-      <ion-label>
+      <ion-label (click)="verDetalle(producto)">
         <h2>{{ producto.nombre }}</h2>
         <p>{{ producto.descripcion }}</p>
         <p *ngIf="producto.precio">{{ producto.precio }} €</p>
       </ion-label>
 
-      <ion-badge
-        slot="end"
-        color="warning"
-        *ngIf="esFavorito(producto.id)"
-      >
-        Favorito
-      </ion-badge>
+      <ion-buttons slot="end">
+        <ion-button (click)="toggleFavorito(producto, $event)">
+          <ion-icon
+            slot="icon-only"
+            [name]="esFavorito(producto.id) ? 'heart' : 'heart-outline'"
+            [color]="esFavorito(producto.id) ? 'danger' : 'medium'"
+          ></ion-icon>
+        </ion-button>
+        <ion-badge
+          color="warning"
+          *ngIf="esFavorito(producto.id)"
+        >
+          Fav
+        </ion-badge>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 

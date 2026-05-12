@@ -1,7 +1,48 @@
+.producto-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-radius: 16px;
+  --background: var(--ion-color-light);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.producto-img, ion-label {
+  cursor: pointer;
+}
+
 .producto-img {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 10px;
-  margin-right: 12px;
+  border-radius: 8px;
+  margin-right: 16px;
+}
+
+ion-label {
+  h2 {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--ion-color-step-600);
+    margin-bottom: 2px;
+  }
+}
+
+ion-badge {
+  font-size: 0.65rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+ion-buttons {
+  display: flex;
+  align-items: center;
 }

@@ -16,8 +16,13 @@ import {
   IonLabel,
   IonList,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { heart, heartOutline } from 'ionicons/icons';
 
 import { Productos, Producto } from '../../services/productos';
 import { Favoritos } from '../../services/favoritos';
@@ -42,7 +47,10 @@ import { Favoritos } from '../../services/favoritos';
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
-    IonCardContent
+    IonCardContent,
+    IonButtons,
+    IonButton,
+    IonIcon
   ]
 })
 export class FavoritosPage implements OnInit {
@@ -54,7 +62,9 @@ export class FavoritosPage implements OnInit {
     private productosService: Productos,
     private favoritosService: Favoritos,
     private router: Router
-  ) {}
+  ) {
+    addIcons({ heart, heartOutline });
+  }
 
   async ngOnInit() {
     await this.cargarFavoritos();
@@ -88,5 +98,11 @@ export class FavoritosPage implements OnInit {
 
   verDetalle(producto: Producto) {
     this.router.navigate(['/detalle-producto', producto.id]);
+  }
+
+  async toggleFavorito(producto: Producto, event: Event) {
+    event.stopPropagation();
+    await this.favoritosService.toggleFavorito(producto.id);
+    await this.cargarFavoritos();
   }
 }
