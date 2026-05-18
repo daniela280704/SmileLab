@@ -1,6 +1,7 @@
 <ion-content [fullscreen]="true">
   <section class="login-page-container">
     <div class="login-header">
+      <img src="assets/img/logo.jpeg" alt="SmileLab Logo" class="brand-logo" />
       <h2 class="login-main-title">Crea tu cuenta</h2>
       <p class="login-subtitle">Únete a la familia SmileLab</p>
     </div>
@@ -8,11 +9,29 @@
     <div class="login-card-wrapper">
       <form [formGroup]="registroForm" (ngSubmit)="onRegister()" class="premium-login-form">
         
+        <div class="avatar-upload-container" (click)="tomarFoto()">
+          <div class="avatar-preview">
+            <img *ngIf="imagenPerfil" [src]="imagenPerfil" alt="Perfil" />
+            <ion-icon *ngIf="!imagenPerfil" name="camera" class="camera-icon"></ion-icon>
+          </div>
+          <p class="avatar-label">{{ imagenPerfil ? 'Cambiar foto' : 'Añadir foto de perfil' }}</p>
+        </div>
+
         <div class="login-input-group">
-          <label>Nombre completo:</label>
+          <label>Nombre:</label>
           <ion-input type="text" formControlName="nombre" placeholder="Tu nombre" class="custom-input"></ion-input>
           <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.invalid">
-            <small class="error-text">Introduce tu nombre.</small>
+            <small class="error-text" *ngIf="registroForm.get('nombre')?.errors?.['required']">Introduce tu nombre.</small>
+            <small class="error-text" *ngIf="registroForm.get('nombre')?.errors?.['pattern']">El nombre no puede contener números.</small>
+          </div>
+        </div>
+
+        <div class="login-input-group">
+          <label>Apellidos:</label>
+          <ion-input type="text" formControlName="apellidos" placeholder="Tus apellidos" class="custom-input"></ion-input>
+          <div *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.invalid">
+            <small class="error-text" *ngIf="registroForm.get('apellidos')?.errors?.['required']">Introduce tus apellidos.</small>
+            <small class="error-text" *ngIf="registroForm.get('apellidos')?.errors?.['pattern']">Los apellidos no pueden contener números.</small>
           </div>
         </div>
 

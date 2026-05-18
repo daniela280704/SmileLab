@@ -31,12 +31,19 @@
     <div class="info-card">
       <div class="info-header">
         <h1 class="producto-nombre">{{ producto.nombre }}</h1>
-        <span class="precio-badge">{{ producto.precio }} €</span>
+        <span class="precio-badge">{{ producto.precio }}</span>
       </div>
       <p class="producto-descripcion">{{ producto.descripcion }}</p>
     </div>
 
   </div>
+
+  <!-- Botón de Favorito Flotante -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="!cargando && producto">
+    <ion-fab-button (click)="toggleFavorito()" class="fav-fab-btn" [class.is-fav]="esFavorito">
+      <ion-icon [name]="esFavorito ? 'heart' : 'heart-outline'"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
   <!-- Producto no encontrado -->
   <div *ngIf="!cargando && !producto" class="not-found">

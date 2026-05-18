@@ -1,12 +1,84 @@
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --color: var(--negro-smile, #1e293b);
+  }
+
+  .user-header-actions {
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-right: 4px;
+
+    ion-icon {
+      font-size: 1.25rem;
+      color: var(--azul-medio, #2563eb);
+    }
+
+    .user-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--negro-smile, #1e293b);
+      white-space: nowrap;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .logout-btn {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    margin: 0;
+    
+    ion-icon {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+ion-content {
+  --background: #f8fafc;
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+.favoritos-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
 .producto-item {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --padding-top: 12px;
-  --padding-bottom: 12px;
-  margin-bottom: 12px;
-  border-radius: 16px;
-  --background: var(--ion-color-light);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --padding-start: 1.2rem;
+  --padding-end: 1.2rem;
+  --padding-top: 1.2rem;
+  --padding-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-radius: 20px;
+  --background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  --inner-border-width: 0;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .producto-img, ion-label {
@@ -14,35 +86,60 @@
 }
 
 .producto-img {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-right: 16px;
+  border-radius: 14px;
+  margin-right: 1.2rem;
+  background: #f1f5f9;
+  border: 1px solid rgba(226, 232, 240, 0.6);
 }
 
 ion-label {
   h2 {
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-bottom: 4px;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--negro-smile, #1e293b);
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
   }
 
-  p {
+  .producto-desc {
     font-size: 0.9rem;
-    color: var(--ion-color-step-600);
-    margin-bottom: 2px;
+    color: var(--gris-texto, #64748b);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    white-space: normal;
+  }
+
+  .precio-texto {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--azul-medio, #2563eb);
+    margin: 0;
   }
 }
 
-ion-badge {
-  font-size: 0.65rem;
-  padding: 2px 4px;
-  border-radius: 4px;
-  margin-left: 4px;
-}
+
 
 ion-buttons {
   display: flex;
   align-items: center;
+}
+
+ion-button {
+  --border-radius: 50%;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  height: 48px;
+  width: 48px;
+  margin: 0;
+  
+  ion-icon {
+    font-size: 1.6rem;
+  }
 }

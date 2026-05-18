@@ -3,12 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import {
-  IonBadge,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonContent,
   IonHeader,
   IonImg,
@@ -22,10 +16,13 @@ import {
   IonIcon
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { heart, heartOutline } from 'ionicons/icons';
+import { heart, heartOutline, logOutOutline, personCircleOutline } from 'ionicons/icons';
 
 import { Productos, Producto } from '../../services/productos';
 import { Favoritos } from '../../services/favoritos';
+import { AuthService } from '../../services/auth.service';
+import { Auth, signOut } from '@angular/fire/auth';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-favoritos',
@@ -42,12 +39,6 @@ import { Favoritos } from '../../services/favoritos';
     IonItem,
     IonLabel,
     IonImg,
-    IonBadge,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardContent,
     IonButtons,
     IonButton,
     IonIcon
@@ -57,17 +48,36 @@ export class FavoritosPage implements OnInit {
 
   productos: Producto[] = [];
   favoritosIds: string[] = [];
+  nombreUsuario: string = '';
 
   constructor(
     private productosService: Productos,
     private favoritosService: Favoritos,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private auth: Auth,
+    private firestore: Firestore
   ) {
-    addIcons({ heart, heartOutline });
+    addIcons({ heart, heartOutline, logOutOutline, personCircleOutline });
   }
 
   async ngOnInit() {
     await this.cargarFavoritos();
+
+    this.authService.getUser().subscribe(async (user) => {
+      if (user) {
+        try {
+          const userDoc = await getDoc(doc(this.firestore, 'usuarios', user.uid));
+          if (userDoc.exists()) {
+            this.nombreUsuario = userDoc.data()?.['nombre'];
+          } else {
+            this.nombreUsuario = user.email?.split('@')[0] || 'Usuario';
+          }
+        } catch (e) {
+          this.nombreUsuario = user.email?.split('@')[0] || 'Usuario';
+        }
+      }
+    });
 
     this.productosService.getProductos().subscribe(productos => {
       console.log('Productos Firestore:', productos);
@@ -104,5 +114,10 @@ export class FavoritosPage implements OnInit {
     event.stopPropagation();
     await this.favoritosService.toggleFavorito(producto.id);
     await this.cargarFavoritos();
+  }
+
+  async cerrarSesion() {
+    await signOut(this.auth);
+    this.router.navigateByUrl('/login');
   }
 }

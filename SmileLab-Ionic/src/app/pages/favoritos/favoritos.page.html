@@ -1,10 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Productos</ion-title>
+    <ion-buttons slot="end" class="user-header-actions">
+      <div class="user-info" *ngIf="nombreUsuario">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <span class="user-name">Hola, {{ nombreUsuario }}</span>
+      </div>
+      <ion-button (click)="cerrarSesion()" class="logout-btn" fill="clear" color="danger">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="favoritos-container">
 
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -28,8 +38,8 @@
 
       <ion-label (click)="verDetalle(producto)">
         <h2>{{ producto.nombre }}</h2>
-        <p>{{ producto.descripcion }}</p>
-        <p *ngIf="producto.precio">{{ producto.precio }} €</p>
+        <p class="producto-desc">{{ producto.descripcion }}</p>
+        <p *ngIf="producto.precio" class="precio-texto">{{ producto.precio }}</p>
       </ion-label>
 
       <ion-buttons slot="end">
@@ -40,14 +50,10 @@
             [color]="esFavorito(producto.id) ? 'danger' : 'medium'"
           ></ion-icon>
         </ion-button>
-        <ion-badge
-          color="warning"
-          *ngIf="esFavorito(producto.id)"
-        >
-          Fav
-        </ion-badge>
+
       </ion-buttons>
     </ion-item>
   </ion-list>
 
+  </div>
 </ion-content>

@@ -1,3 +1,25 @@
+ion-header {
+  ion-toolbar {
+    --background: #ffffff !important;
+    --color: var(--negro-smile, #1e293b) !important;
+    --border-color: rgba(226, 232, 240, 0.6);
+  }
+  ion-back-button {
+    --color: var(--negro-smile, #1e293b) !important;
+  }
+}
+
+.fav-fab-btn {
+  --background: #ffffff;
+  --color: #64748b; /* Gris oscuro */
+  --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  
+  &.is-fav {
+    --background: #ef4444; /* Rojo */
+    --color: #ffffff;
+  }
+}
+
 .detalle-content {
   --background: var(--gris-fondo);
 }

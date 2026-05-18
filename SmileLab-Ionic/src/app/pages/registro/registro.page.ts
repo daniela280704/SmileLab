@@ -5,6 +5,9 @@ import { IonicModule, LoadingController, ToastController } from '@ionic/angular'
 import { Router, RouterModule } from '@angular/router';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { addIcons } from 'ionicons';
+import { camera } from 'ionicons/icons';
 
 @Component({
   selector: 'app-registro',
@@ -16,6 +19,7 @@ import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 export class RegistroPage implements OnInit {
   registroForm: FormGroup;
   isSubmitting = false;
+  imagenPerfil: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -25,8 +29,10 @@ export class RegistroPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
   ) {
+    addIcons({ camera });
     this.registroForm = this.fb.group({
-      nombre: ['', [Validators.required]],
+      nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+      apellidos: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{9,15}$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -34,6 +40,28 @@ export class RegistroPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  async tomarFoto() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Prompt,
+        promptLabelHeader: 'Foto de perfil',
+        promptLabelCancel: 'Cancelar',
+        promptLabelPhoto: 'Elegir de la galería',
+        promptLabelPicture: 'Tomar foto'
+      });
+
+      if (image.base64String) {
+        this.imagenPerfil = `data:image/${image.format};base64,${image.base64String}`;
+      }
+    } catch (error) {
+      console.error('Error al tomar foto', error);
+      this.presentToast('No se pudo obtener la imagen', 'warning');
+    }
+  }
 
   async onRegister() {
     if (this.registroForm.invalid) return;
@@ -45,7 +73,7 @@ export class RegistroPage implements OnInit {
     });
     await loading.present();
 
-    const { email, password, nombre, telefono } = this.registroForm.value;
+    const { email, password, nombre, apellidos, telefono } = this.registroForm.value;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
@@ -55,14 +83,16 @@ export class RegistroPage implements OnInit {
       await setDoc(doc(this.firestore, 'usuarios', user.uid), {
         uid: user.uid,
         nombre,
+        apellidos,
         email,
         telefono,
+        imagenPerfil: this.imagenPerfil,
         fechaRegistro: new Date().toISOString()
       });
 
       await loading.dismiss();
       this.presentToast('Registro completado con éxito', 'success');
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/favoritos');
 
     } catch (error: any) {
       await loading.dismiss();

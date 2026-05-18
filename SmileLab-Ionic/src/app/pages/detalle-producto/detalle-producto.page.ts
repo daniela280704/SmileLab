@@ -9,9 +9,15 @@ import {
   IonButtons,
   IonBackButton,
   IonSkeletonText,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { heart, heartOutline } from 'ionicons/icons';
 
 import { Productos, Producto } from '../../services/productos';
+import { Favoritos } from '../../services/favoritos';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -27,25 +33,41 @@ import { Productos, Producto } from '../../services/productos';
     IonButtons,
     IonBackButton,
     IonSkeletonText,
+    IonFab,
+    IonFabButton,
+    IonIcon
   ],
 })
 export class DetalleProductoPage implements OnInit {
 
   producto: Producto | null = null;
   cargando = true;
+  esFavorito = false;
 
   constructor(
     private route: ActivatedRoute,
-    private productosService: Productos
-  ) {}
+    private productosService: Productos,
+    private favoritosService: Favoritos
+  ) {
+    addIcons({ heart, heartOutline });
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      // Comprobar estado de favorito al cargar
+      this.esFavorito = await this.favoritosService.esFavorito(id);
+
       this.productosService.getProductoById(id).subscribe((producto) => {
         this.producto = producto;
         this.cargando = false;
       });
+    }
+  }
+
+  async toggleFavorito() {
+    if (this.producto) {
+      this.esFavorito = await this.favoritosService.toggleFavorito(this.producto.id);
     }
   }
 }
