@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Punto de entrada de la aplicación Ionic/Angular de SmileLab.
+ * Inicializa la aplicación y configura los proveedores globales (enrutamiento, Firebase, SQLite, etc.).
+ */
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';

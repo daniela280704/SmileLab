@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Servicio de persistencia local de favoritos.
+ * Utiliza Capacitor SQLite en dispositivos nativos y LocalStorage como fallback en web.
+ */
 import { Injectable } from '@angular/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { Capacitor } from '@capacitor/core';
@@ -7,27 +11,34 @@ import { Auth } from '@angular/fire/auth';
   providedIn: 'root',
 })
 export class Favoritos {
+  // Instancia de conexión con SQLite nativo
   private sqlite: SQLiteConnection = new SQLiteConnection(CapacitorSQLite);
+  // Referencia a la base de datos abierta
   private db!: SQLiteDBConnection;
+  // Indica si la base de datos ha terminado de inicializarse
   private isReady = false;
 
   constructor(private auth: Auth) {
     this.initDatabase();
   }
 
+  // Obtiene el ID del usuario actual de Firebase, o 'guest' si no hay sesión
   private getUserId(): string {
     return this.auth.currentUser?.uid || 'guest';
   }
 
+  // Obtiene los favoritos del LocalStorage (Fallback para web)
   private getWebFavoritos(): string[] {
     const saved = localStorage.getItem(`favoritos_web_${this.getUserId()}`);
     return saved ? JSON.parse(saved) : [];
   }
 
+  // Guarda la lista de favoritos en LocalStorage (Fallback para web)
   private saveWebFavoritos(favs: string[]) {
     localStorage.setItem(`favoritos_web_${this.getUserId()}`, JSON.stringify(favs));
   }
 
+  // Inicializa la base de datos SQLite y crea la tabla si no existe
   private async initDatabase() {
     try {
       const platform = Capacitor.getPlatform();
@@ -37,8 +48,17 @@ export class Favoritos {
         return;
       }
 
-      this.db = await this.sqlite.createConnection('favoritos_db_v2', false, 'no-encryption', 1, false);
-      await this.db.open();
+      const isConn = await this.sqlite.isConnection('favoritos_db_v2', false);
+      if (isConn.result) {
+        this.db = await this.sqlite.retrieveConnection('favoritos_db_v2', false);
+      } else {
+        this.db = await this.sqlite.createConnection('favoritos_db_v2', false, 'no-encryption', 1, false);
+      }
+
+      const isOpen = await this.db.isDBOpen();
+      if (!isOpen.result) {
+        await this.db.open();
+      }
 
       const schema = `
         CREATE TABLE IF NOT EXISTS user_favorites (
@@ -54,12 +74,14 @@ export class Favoritos {
     }
   }
 
+  // Asegura que la base de datos esté lista antes de hacer cualquier consulta
   private async ensureDbReady() {
     if (!this.isReady) {
       await this.initDatabase();
     }
   }
 
+  // Devuelve un array con los IDs de todos los productos marcados como favoritos
   async getFavoritosIds(): Promise<string[]> {
     await this.ensureDbReady();
     
@@ -77,6 +99,7 @@ export class Favoritos {
     }
   }
 
+  // Alterna el estado de favorito de un producto (lo añade si no está, lo borra si está)
   async toggleFavorito(productoId: string): Promise<boolean> {
     await this.ensureDbReady();
     
@@ -108,6 +131,7 @@ export class Favoritos {
     }
   }
 
+  // Comprueba de forma booleana si un producto concreto está en favoritos
   async esFavorito(productoId: string): Promise<boolean> {
     await this.ensureDbReady();
 

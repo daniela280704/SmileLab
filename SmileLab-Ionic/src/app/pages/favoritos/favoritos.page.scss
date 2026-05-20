@@ -1,7 +1,21 @@
+/* Estilos del catálogo de productos: tarjetas, rejilla, imágenes hero y botones de favoritos interactivos. */
 ion-header {
   ion-toolbar {
     --background: #ffffff;
     --color: var(--negro-smile, #1e293b);
+  }
+
+  .title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-logo {
+    height: 36px;
+    width: 36px;
+    object-fit: contain;
+    border-radius: 6px;
   }
 
   .user-header-actions {
@@ -10,6 +24,7 @@ ion-header {
     padding-right: 8px;
   }
 
+  /* Etiqueta de información del usuario (píldora superior) */
   .user-info {
     display: flex;
     align-items: center;
@@ -62,6 +77,7 @@ ion-list {
   padding-bottom: 2rem;
 }
 
+/* Tarjeta de cada producto en la lista: bordes suaves, sombra ligera y efecto hover */
 .producto-item {
   --padding-start: 1.2rem;
   --padding-end: 1.2rem;

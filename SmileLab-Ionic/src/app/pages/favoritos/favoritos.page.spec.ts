@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Pruebas unitarias para la página de favoritos (catálogo principal).
+ * Verifica la correcta creación de la página y su integración.
+ */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavoritosPage } from './favoritos.page';
 

@@ -1,3 +1,5 @@
+<!-- Vista HTML del detalle ampliado de un producto. -->
+<!-- Muestra información extendida y permite marcar/desmarcar el producto en favoritos (SQLite). -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -26,6 +28,9 @@
 
     <div class="hero-img-container">
       <img [src]="producto.imagen" [alt]="producto.nombre" class="hero-img" />
+      <ion-button fill="clear" (click)="toggleFavorito()" class="fav-image-btn" [class.is-fav]="esFavorito">
+        <ion-icon slot="icon-only" [name]="esFavorito ? 'heart' : 'heart-outline'"></ion-icon>
+      </ion-button>
     </div>
 
     <div class="info-card">
@@ -38,12 +43,6 @@
 
   </div>
 
-  <!-- Botón de Favorito Flotante -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="!cargando && producto">
-    <ion-fab-button (click)="toggleFavorito()" class="fav-fab-btn" [class.is-fav]="esFavorito">
-      <ion-icon [name]="esFavorito ? 'heart' : 'heart-outline'"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
   <!-- Producto no encontrado -->
   <div *ngIf="!cargando && !producto" class="not-found">

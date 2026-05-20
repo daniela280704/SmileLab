@@ -1,6 +1,13 @@
+<!-- Vista HTML del Maestro de Favoritos (Catálogo de productos). -->
+<!-- Listado dinámico de productos desde Firestore y sus respectivos botones de favorito (SQLite). -->
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Productos</ion-title>
+    <ion-title>
+      <div class="title-container">
+        <img src="assets/img/logo2.jpeg" class="header-logo" alt="Logo SmileLab" />
+        <span>Productos</span>
+      </div>
+    </ion-title>
     <ion-buttons slot="end" class="user-header-actions">
       <div class="user-info" *ngIf="nombreUsuario">
         <ion-icon name="person-circle-outline"></ion-icon>

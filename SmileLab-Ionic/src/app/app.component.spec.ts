@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Pruebas unitarias para el componente raíz de la aplicación.
+ * Verifica la correcta creación del componente app.
+ */
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AppComponent } from './app.component';

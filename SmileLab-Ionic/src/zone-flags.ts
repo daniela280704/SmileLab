@@ -1,4 +1,8 @@
 /**
+ * @fileoverview Configuración de flags de Zone.js previos al arranque de Angular.
+ * Optimiza el rendimiento desactivando el parcheo automático de Web Components de Ionic.
+ */
+/**
  * Prevents Angular change detection from
  * running with certain Web Component callbacks
  */

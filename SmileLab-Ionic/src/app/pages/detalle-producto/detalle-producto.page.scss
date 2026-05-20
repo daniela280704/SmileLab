@@ -1,3 +1,4 @@
+/* Estilos de la vista de detalle: imagen destacada, contenedor de texto, skeleton loaders y botón flotante de favorito. */
 ion-header {
   ion-toolbar {
     --background: #ffffff !important;
@@ -9,22 +10,11 @@ ion-header {
   }
 }
 
-.fav-fab-btn {
-  --background: #ffffff;
-  --color: #64748b; /* Gris oscuro */
-  --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  
-  &.is-fav {
-    --background: #ef4444; /* Rojo */
-    --color: #ffffff;
-  }
-}
-
 .detalle-content {
   --background: var(--gris-fondo);
 }
 
-// ── Skeleton ─────────────────────────────────────────────────────────────────
+/* Animaciones Skeleton */
 
 .skeleton-wrapper {
   padding: 1rem;
@@ -45,15 +35,40 @@ ion-header {
   padding: 0 0.5rem;
 }
 
-// ── Imagen hero ───────────────────────────────────────────────────────────────
+/* Contenedor de la Imagen Hero */
 
 .hero-img-container {
+  position: relative;
   background: var(--blanco);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem 1.5rem;
   border-bottom: 1px solid var(--gris-borde);
+}
+
+/* Botón flotante para marcar como favorito superpuesto en la imagen hero */
+.fav-image-btn {
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.5rem;
+  --background: #ffffff;
+  --color: #64748b; /* Gris oscuro */
+  --border-radius: 50%;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  height: 46px !important;
+  width: 46px !important;
+  margin: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  &.is-fav {
+    --color: #ef4444; /* Rojo */
+  }
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
 }
 
 .hero-img {
@@ -63,7 +78,7 @@ ion-header {
   border-radius: 16px;
 }
 
-// ── Tarjeta de información ────────────────────────────────────────────────────
+/* Tarjeta de información del producto */
 
 .info-card {
   background: var(--blanco);
@@ -106,6 +121,8 @@ ion-header {
   flex-shrink: 0;
 }
 
+
+
 .producto-descripcion {
   font-size: 1rem;
   color: var(--gris-texto);
@@ -113,7 +130,7 @@ ion-header {
   margin: 0;
 }
 
-// ── No encontrado ─────────────────────────────────────────────────────────────
+/* Estado: Producto no encontrado */
 
 .not-found {
   display: flex;

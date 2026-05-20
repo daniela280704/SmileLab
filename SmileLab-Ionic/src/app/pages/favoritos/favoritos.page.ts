@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * @fileoverview Controlador de la pantalla principal (Maestro de favoritos).
+ * Muestra el catálogo de productos consultando Firestore y destaca los favoritos guardados en la base de datos local SQLite.
+ */
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -46,8 +50,14 @@ import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 })
 export class FavoritosPage implements OnInit {
 
+  // Referencia al ion-content para poder controlar el scroll de forma programática
+  @ViewChild(IonContent, { static: false }) content!: IonContent;
+
+  // Lista completa de productos cargados desde Firestore
   productos: Producto[] = [];
+  // IDs de los productos marcados como favoritos en SQLite
   favoritosIds: string[] = [];
+  // Nombre del usuario autenticado mostrado en la cabecera
   nombreUsuario: string = '';
 
   constructor(
@@ -61,6 +71,7 @@ export class FavoritosPage implements OnInit {
     addIcons({ heart, heartOutline, logOutOutline, personCircleOutline });
   }
 
+  // Inicializa la página: carga favoritos y se suscribe al usuario y al catálogo de Firestore
   async ngOnInit() {
     await this.cargarFavoritos();
 
@@ -90,10 +101,19 @@ export class FavoritosPage implements OnInit {
     });
   }
 
+  // Se ejecuta cada vez que la página se muestra: recarga el estado de favoritos
   async ionViewWillEnter() {
     await this.cargarFavoritos();
   }
 
+  // Se ejecuta al terminar la transición de entrada: fuerza el scroll al inicio de la página
+  ionViewDidEnter() {
+    if (this.content) {
+      this.content.scrollToTop(0);
+    }
+  }
+
+  // Obtiene los IDs de favoritos desde SQLite y los almacena localmente
   async cargarFavoritos() {
     const favoritos = await this.favoritosService.getFavoritosIds();
 
@@ -102,20 +122,24 @@ export class FavoritosPage implements OnInit {
     console.log('Favoritos locales:', this.favoritosIds);
   }
 
+  // Comprueba si un producto está marcado como favorito comparando su ID con la lista local
   esFavorito(productoId: string): boolean {
     return this.favoritosIds.includes(String(productoId));
   }
 
+  // Navega a la pantalla de detalle pasando el ID del producto como parámetro de ruta
   verDetalle(producto: Producto) {
     this.router.navigate(['/detalle-producto', producto.id]);
   }
 
+  // Añade o elimina el producto de favoritos en SQLite y recarga el estado
   async toggleFavorito(producto: Producto, event: Event) {
     event.stopPropagation();
     await this.favoritosService.toggleFavorito(producto.id);
     await this.cargarFavoritos();
   }
 
+  // Cierra la sesión de Firebase y redirige al usuario a la pantalla de login
   async cerrarSesion() {
     await signOut(this.auth);
     this.router.navigateByUrl('/login');

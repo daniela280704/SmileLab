@@ -1,3 +1,4 @@
+/* Estilos de la pantalla de registro y visualización del avatar de perfil. */
 .login-page-container {
     padding: 3rem 5% 4rem;
     background: white;
@@ -19,6 +20,7 @@
     border-radius: 16px;
 }
 
+/* Título principal de la pantalla de registro: peso extrabold y color oscuro */
 .login-main-title {
     font-size: 2.2rem;
     font-weight: 800;
@@ -62,6 +64,7 @@
     color: var(--gris-texto);
 }
 
+/* Estilos personalizados para sobreescribir la apariencia nativa de los inputs */
 .custom-input {
     --padding-start: 1.1rem;
     --padding-end: 1.1rem;
@@ -139,6 +142,7 @@
     cursor: pointer;
 }
 
+/* Previsualización del avatar de usuario: estilo circular con borde discontinuo */
 .avatar-preview {
     width: 90px;
     height: 90px;

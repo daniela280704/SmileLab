@@ -1,3 +1,5 @@
+/* Estilos de la pantalla de inicio de sesión: tipografía, colores corporativos y formato del formulario. */
+/* Contenedor principal: ocupa toda la altura (100vh) y centra su contenido verticalmente con flexbox */
 .login-page-container {
     padding: 4rem 5% 6rem;
     background: white;
@@ -19,6 +21,7 @@
     border-radius: 16px;
 }
 
+/* Título principal: peso extrabold y color corporativo oscuro */
 .login-main-title {
     font-size: 2.5rem;
     font-weight: 800;
@@ -33,6 +36,7 @@
     margin: 0 auto;
 }
 
+/* Tarjeta principal estilo "premium": bordes muy redondeados y sombra suave para dar profundidad */
 .premium-login-form {
     background: var(--blanco);
     padding: 2.5rem 2rem;
@@ -56,6 +60,7 @@
     color: var(--gris-texto);
 }
 
+/* Estilos personalizados para sobreescribir la apariencia de los inputs nativos de Ionic */
 .custom-input {
     --padding-start: 1.2rem;
     --padding-end: 1.2rem;
@@ -87,6 +92,7 @@
     margin-top: 1rem;
 }
 
+/* Estilo del botón principal de envío: redondeado tipo píldora, fondo oscuro y transición */
 .btn-login-submit {
     width: 100%;
     background: var(--negro-smile);

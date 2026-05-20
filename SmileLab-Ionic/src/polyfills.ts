@@ -1,4 +1,8 @@
 /**
+ * @fileoverview Importación de polyfills necesarios para dar soporte a distintos navegadores.
+ * Configurado específicamente para el funcionamiento correcto de Angular.
+ */
+/**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
  *

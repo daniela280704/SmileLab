@@ -1,3 +1,6 @@
+/**
+ * @fileoverview Pruebas unitarias para el servicio de catálogo de productos.
+ */
 import { TestBed } from '@angular/core/testing';
 
 import { Productos } from './productos';

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Configuración de variables de entorno para producción.
+ * Contiene los datos de conexión a Firebase para el entorno desplegado.
+ */
 export const environment = {
   production: true,
   firebase: {
